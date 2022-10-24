@@ -8,6 +8,8 @@ foreach (var device in bthPortDevices)
         if (!UtilsConsole.Confirm($"Found device {device}, want me to patch its record?"))
             continue;
 
+        Console.WriteLine($"Patched record: {string.Join(", ", patched.Select(b => $"0x{b:X2}"))}");
+
         device.CachedServices = patched;
 
         Console.WriteLine("Patch applied successfully");
