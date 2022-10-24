@@ -51,6 +51,11 @@ public class HidReportDescriptorParser
         };
     }
 
+    /// <summary>
+    ///     Parses a provided descriptor buffer into individual items.
+    /// </summary>
+    /// <param name="descriptor">The raw descriptor buffer.</param>
+    /// <returns>True if the full report could be parsed, false if it got interrupted by the user or by error.</returns>
     public unsafe bool Parse(byte[] descriptor)
     {
         ushort index = 0;
