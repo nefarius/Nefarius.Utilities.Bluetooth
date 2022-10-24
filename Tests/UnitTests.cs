@@ -16,7 +16,7 @@ namespace Tests
 
             foreach (var device in d)
             {
-                if (SdpPatcher.Patch(device.CachedServices.ToArray(), out var patched))
+                if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out var patched))
                 {
                     var t = 01;
                 }

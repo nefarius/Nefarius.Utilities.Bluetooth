@@ -7,7 +7,14 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 
 public static class SdpPatcher
 {
-    public static bool Patch(byte[] input, out byte[] output)
+    /// <summary>
+    ///     Attempts to find a SDP_ATTRIB_HID_DESCRIPTOR_LIST attribute and patches the HID Report Descriptor to a Vendor
+    ///     Defined device on success.
+    /// </summary>
+    /// <param name="input"></param>
+    /// <param name="output"></param>
+    /// <returns>True if detection and patching was successful, false otherwise.</returns>
+    public static bool AlterHidDeviceToVenderDefined(byte[] input, out byte[] output)
     {
         try
         {
