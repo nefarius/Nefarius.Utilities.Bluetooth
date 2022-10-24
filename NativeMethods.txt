@@ -1,0 +1,12 @@
+﻿CreateFile
+DeviceIoControl
+GetVolumePathNamesForVolumeNameW
+FindFirstVolume
+FindNextVolume
+QueryDosDevice
+METHOD_BUFFERED 
+METHOD_IN_DIRECT
+METHOD_OUT_DIRECT
+METHOD_NEITHER
+FILE_ACCESS_FLAGS
+FormatMessage
