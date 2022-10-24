@@ -54,27 +54,7 @@ public static class SdpPatcher
             // find all size fields before the descriptor element
             var sizeFieldsOffsets = new BoyerMoore(new byte[] { 0x36 })
                 .Search(input.Take(dataElementSizeIndex).ToArray()).ToList();
-
-            // maps usage (pages) to replacement elements
-            var usageReplacementMap = new Dictionary<byte[], byte[]>
-            {
-                /* Usage Pages */
-                { new Byte[] { 0x05 /* Gamepad */, 0x01 /* Generic Desktop Ctrls */}, new Byte[] { 0x06, 0x01, 0xFF } },
-                { new Byte[] { 0x05 /* Gamepad */, 0x09 /* Button */ }, new Byte[] { 0x06, 0x09, 0xFF } },
-                /* Usages */
-                //{ new Byte[] { 0x09 /* Button */, 0x05 }, new Byte[] { 0x09, 0x35 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x30 }, new Byte[] { 0x09, 0x60 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x31 }, new Byte[] { 0x09, 0x61 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x32 }, new Byte[] { 0x09, 0x62 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x33 }, new Byte[] { 0x09, 0x62 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x34 }, new Byte[] { 0x09, 0x62 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x35 }, new Byte[] { 0x09, 0x65 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x36 }, new Byte[] { 0x09, 0x65 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x37 }, new Byte[] { 0x09, 0x65 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x38 }, new Byte[] { 0x09, 0x65 } },
-                //{ new Byte[] { 0x09 /* Button */, 0x39 }, new Byte[] { 0x09, 0x69 } },
-            };
-
+            
             // copy descriptor
             var patchedHidReportDescriptor = hidReportDescriptor.ToList();
             
