@@ -49,16 +49,46 @@ public static class SdpPatcher
             // extract HID Report Descriptor
             var hidReportDescriptor = input.Skip(dataBufferValueIndex).Take(dataElementSize).ToArray();
 
-            // vendor HID device usage header
-            var usagePageVendorDevice = new byte[]
-            {
-                0x06, 0x01, 0xFF, // Usage Page (Vendor Defined 0xFF01)
-                0x09, 0x01 // Usage (0x01)
-            };
-
             // find all size fields before the descriptor element
             var sizeFieldsOffsets = new BoyerMoore(new byte[] { 0x36 })
                 .Search(input.Take(dataElementSizeIndex).ToArray()).ToList();
+
+            // maps usage (pages) to replacement elements
+            var usageReplacementMap = new Dictionary<byte[], byte[]>
+            {
+                /* Usage Pages */
+                { new Byte[] { 0x05 /* Gamepad */, 0x01 /* Generic Desktop Ctrls */}, new Byte[] { 0x06, 0x01, 0xFF } },
+                { new Byte[] { 0x05 /* Gamepad */, 0x09 /* Button */ }, new Byte[] { 0x06, 0x09, 0xFF } },
+                /* Usages */
+                //{ new Byte[] { 0x09 /* Button */, 0x05 }, new Byte[] { 0x09, 0x35 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x30 }, new Byte[] { 0x09, 0x60 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x31 }, new Byte[] { 0x09, 0x61 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x32 }, new Byte[] { 0x09, 0x62 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x33 }, new Byte[] { 0x09, 0x62 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x34 }, new Byte[] { 0x09, 0x62 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x35 }, new Byte[] { 0x09, 0x65 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x36 }, new Byte[] { 0x09, 0x65 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x37 }, new Byte[] { 0x09, 0x65 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x38 }, new Byte[] { 0x09, 0x65 } },
+                //{ new Byte[] { 0x09 /* Button */, 0x39 }, new Byte[] { 0x09, 0x69 } },
+            };
+
+            // copy descriptor
+            var patchedHidReportDescriptor = hidReportDescriptor.ToList();
+
+            // replace usages and pages with vendor defined entries
+            foreach (var (usage, replacement) in usageReplacementMap)
+            {
+                var matcher = new BoyerMoore(usage);
+
+                var matches = matcher.Search(patchedHidReportDescriptor.ToArray()).ToList();
+
+                foreach (var match in matches)
+                {
+                    patchedHidReportDescriptor.RemoveRange(match, usage.Length);
+                    patchedHidReportDescriptor.InsertRange(match, replacement);
+                }
+            }
 
             var patchedRecord = new List<byte>();
 
@@ -79,8 +109,8 @@ public static class SdpPatcher
                     .Skip(offset + 1 /* skip field type itself */)
                     .Take(2).Reverse().ToArray());
 
-                // we only need one extra byte
-                var newSize = sizeFieldValue + 1;
+                // adjust size depending on report size difference
+                var newSize = sizeFieldValue + (patchedHidReportDescriptor.Count - hidReportDescriptor.Length);
 
                 // add new size segment
                 patchedRecord.Add(0x36);
@@ -91,10 +121,7 @@ public static class SdpPatcher
 
             // add start pattern
             patchedRecord.AddRange(descriptorValueStartPattern);
-
-            // build patched descriptor
-            var patchedHidReportDescriptor = usagePageVendorDevice.Concat(hidReportDescriptor.Skip(4)).ToList();
-
+            
             // add size of patched descriptor
             patchedRecord.AddRange(BitConverter.GetBytes((ushort)patchedHidReportDescriptor.Count()).Reverse());
 
