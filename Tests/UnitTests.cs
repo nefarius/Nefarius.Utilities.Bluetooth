@@ -13,6 +13,7 @@ public class Tests
     [Test]
     public void Test1()
     {
+        /*
         var descriptor = new byte[]
         {
             0x05, 0x01, // Usage Page (Generic Desktop Ctrls)
@@ -247,6 +248,7 @@ public class Tests
         };
 
         parser.Parse(descriptor);
+        */
 
         var buffer = new byte[]
         {

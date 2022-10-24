@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
+
 using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
@@ -75,23 +77,34 @@ public static class SdpPatcher
 
             // copy descriptor
             var patchedHidReportDescriptor = hidReportDescriptor.ToList();
+            
+            // report parser
+            var parser = new HidReportDescriptorParser();
 
-            // replace usages and pages with vendor defined entries
-            foreach (var (usage, replacement) in usageReplacementMap)
+            byte usageIndex = 0x01;
+
+            // look for Usage Pages
+            parser.GlobalItemParsed += item =>
             {
-                var matcher = new BoyerMoore(usage);
-
-                // find offsets of usage occurrences
-                var matches = matcher.Search(patchedHidReportDescriptor.ToArray()).ToList();
-
-                foreach (var match in matches)
+                // original pages have 1 byte size, patched are 2 bytes
+                if (!item.IsUsagePage || item.ItemSize != 1)
                 {
-                    // remove existing
-                    patchedHidReportDescriptor.RemoveRange(match, usage.Length);
-                    // splice in replacement
-                    patchedHidReportDescriptor.InsertRange(match, replacement);
+                    return;
                 }
-            }
+
+                // remove existing
+                patchedHidReportDescriptor.RemoveRange(item.Index, item.ItemSize + 1);
+                // splice in replacement
+                patchedHidReportDescriptor.InsertRange(item.Index, new Byte[] { 0x06, usageIndex++, 0xFF });
+
+                // recursively parse until no more original pages are left
+                parser.Parse(patchedHidReportDescriptor.ToArray());
+
+                // abort previous parser run
+                item.StopParsing = true;
+            };
+
+            parser.Parse(patchedHidReportDescriptor.ToArray());
 
             var patchedRecord = new List<byte>();
 
