@@ -5,14 +5,17 @@ using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
 
+/// <summary>
+///     Service Discovery Record Patching Utility.
+/// </summary>
 public static class SdpPatcher
 {
     /// <summary>
     ///     Attempts to find a SDP_ATTRIB_HID_DESCRIPTOR_LIST attribute and patches the HID Report Descriptor to a Vendor
     ///     Defined device on success.
     /// </summary>
-    /// <param name="input"></param>
-    /// <param name="output"></param>
+    /// <param name="input">The original record array.</param>
+    /// <param name="output">The patched record array.</param>
     /// <returns>True if detection and patching was successful, false otherwise.</returns>
     public static bool AlterHidDeviceToVenderDefined(byte[] input, out byte[] output)
     {
