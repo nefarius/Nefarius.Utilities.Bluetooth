@@ -236,7 +236,17 @@ public class Tests
             // best guess: USB HID Report Descriptor
         };
 
-        HidReportDescriptorParser.Parse(descriptor);
+        var parser = new HidReportDescriptorParser();
+
+        parser.GlobalItemParsed += item =>
+        {
+            if (item.IsUsagePage)
+            {
+
+            }
+        };
+
+        parser.Parse(descriptor);
 
         var buffer = new byte[]
         {

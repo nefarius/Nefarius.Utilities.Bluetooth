@@ -1,10 +1,14 @@
-﻿namespace Nefarius.Utilities.Bluetooth.Util;
+﻿using System;
+
+using JetBrains.Annotations;
+
+namespace Nefarius.Utilities.Bluetooth.Util;
 
 /// <summary>
 ///     HID Report Descriptor parser.
 /// </summary>
 /// <remarks>Source: https://github.com/uint32tMnstr/USB-HID-Report-Parser</remarks>
-public static class HidReportDescriptorParser
+public class HidReportDescriptorParser
 {
     private const int TAG_OFFSET = 4;
     private const int TYPE_OFFSET = 2;
@@ -29,6 +33,105 @@ public static class HidReportDescriptorParser
     private const int MAIN_ITEM = 0x00 << TYPE_OFFSET;
     private const int GLOBAL_ITEM = 0x01 << TYPE_OFFSET;
     private const int LOCAL_ITEM = 0x02 << TYPE_OFFSET;
+
+
+    private static int GetItemSize(int sizeMask)
+    {
+        return (byte)sizeMask == Size_4B ? 4 : (byte)sizeMask;
+    }
+
+    private static unsafe int GetItemData(byte* itemData, byte size)
+    {
+        return size switch
+        {
+            1 => *itemData,
+            2 => *(short*)itemData,
+            4 => *(int*)itemData,
+            _ => 0
+        };
+    }
+
+    public unsafe bool Parse(byte[] descriptor)
+    {
+        ushort index = 0;
+
+        while (index < descriptor.Length)
+        {
+            byte itemTag = (byte)(descriptor[index] & TAG_MASK);
+            byte itemSize = (byte)GetItemSize(descriptor[index] & SIZE_MASK);
+
+            if (index + itemSize >= descriptor.Length)
+            {
+                break;
+            }
+
+            fixed (byte* ptr = descriptor)
+            {
+                int itemData = GetItemData(&ptr[index + 1], itemSize);
+
+                switch (itemTag & TYPE_MASK)
+                {
+                    case MAIN_ITEM:
+                        MainItemParsed?.Invoke(new HidReportDescriptorItem(index, itemTag, itemSize, itemData));
+                        break;
+                    case GLOBAL_ITEM:
+                        GlobalItemParsed?.Invoke(new HidReportDescriptorItem(index, itemTag, itemSize, itemData));
+                        break;
+                    case LOCAL_ITEM:
+                        LocalItemParsed?.Invoke(new HidReportDescriptorItem(index, itemTag, itemSize, itemData));
+                        break;
+                }
+            }
+
+            index += (ushort)(itemSize + 1);
+        }
+
+        return index < descriptor.Length;
+    }
+
+    /// <summary>
+    ///     Raised when a main item has been parsed.
+    /// </summary>
+    public event Action<HidReportDescriptorItem> MainItemParsed;
+
+    /// <summary>
+    ///     Raised when a global item has been parsed.
+    /// </summary>
+    public event Action<HidReportDescriptorItem> GlobalItemParsed;
+
+    /// <summary>
+    ///     Raised when a local item has been parsed.
+    /// </summary>
+    public event Action<HidReportDescriptorItem> LocalItemParsed;
+}
+
+public sealed class HidReportDescriptorItem : EventArgs
+{
+    private const int TAG_OFFSET = 4;
+    private const int TYPE_OFFSET = 2;
+    private const int SIZE_OFFSET = 0;
+
+    private const int TYPE_MASK = 0x03 << TYPE_OFFSET;
+
+    private const int TAG_MASK = (0x0F << TAG_OFFSET) | TYPE_MASK;
+
+    /* size(2bit): 00 - 0B, 01 - 1B, 10 - 2B, 11 - 4B */
+    private const int SIZE_MASK = 0x03 << SIZE_OFFSET;
+
+    /* Short Item Size
+    */
+    private const int Size_0B = 0;
+    private const int Size_1B = 1;
+    private const int Size_2B = 2;
+    private const int Size_4B = 3;
+
+    /* Short Item Type
+    */
+    private const int MAIN_ITEM = 0x00 << TYPE_OFFSET;
+    private const int GLOBAL_ITEM = 0x01 << TYPE_OFFSET;
+    private const int LOCAL_ITEM = 0x02 << TYPE_OFFSET;
+
+    #region Constants
 
     /* Input, Output and Feature Items(1B) Data bit
     */
@@ -115,158 +218,7 @@ public static class HidReportDescriptorParser
     private const int UP_Camera_Control_Page = 0x90;
     private const int UP_Arcade_Page = 0x91;
 
-    /* Main Item Tag
-    */
-    private static int Input(int size)
-    {
-        return MAIN_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Output(int size)
-    {
-        return MAIN_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Feature(int size)
-    {
-        return MAIN_ITEM | (0x0B << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Collection(int size)
-    {
-        return MAIN_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int End_Collection(int size)
-    {
-        return MAIN_ITEM | (0x0C << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    /* Global Item Tag
-    */
-    private static int Usage_Page(int size)
-    {
-        return GLOBAL_ITEM | (0x00 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Logical_Minimum(int size)
-    {
-        return GLOBAL_ITEM | (0x01 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Logical_Maximum(int size)
-    {
-        return GLOBAL_ITEM | (0x02 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Physical_Minimum(int size)
-    {
-        return GLOBAL_ITEM | (0x03 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Physical_Maximum(int size)
-    {
-        return GLOBAL_ITEM | (0x04 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    /* Unit Exponent: |   Code   | 0x5 | 0x6 | 0x7 | 0x8 | 0x9 | 0xA | 0xB | 0xC | 0xD | 0xE | 0xF |
-    **                | Exponent |  5  |  6  |  7  | -8  | -7  | -6  | -5  | -4  | -3  | -2  | -1  |
-    */
-    private static int Unit_Exponent(int size)
-    {
-        return GLOBAL_ITEM | (0x05 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    /* Unit: 按半字节(Nibble)拆分，最低位半字节声明使用的计量系统，其余每个半字节声明对应单位的指数(-7~7)
-    **  | Nibble |   0    |    1   |  2   |  3   |      4      |    5    |         6          |    7     |
-    **  | Parts  | System | Length | Mass | Time | Temperature | Current | Luminous intensity | Reversed |
-    **
-    **  | Value  | 0x0  |    0x1    |     0x2     |      0x3       |        0x4       |  Other   |
-    **  | System | None | SI Linear | SI Rotation | English Linear | English Rotation | Reversed |
-    */
-    private static int Unit(int size)
-    {
-        return GLOBAL_ITEM | (0x06 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Report_Size(int size)
-    {
-        return GLOBAL_ITEM | (0x07 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Report_ID(int size)
-    {
-        return GLOBAL_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Report_Count(int size)
-    {
-        return GLOBAL_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Push(int size)
-    {
-        return GLOBAL_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Pop(int size)
-    {
-        return GLOBAL_ITEM | (0x0B << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    /* Local Item Tag
-    */
-    private static int Usage(int size)
-    {
-        return LOCAL_ITEM | (0x00 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Usage_Minimum(int size)
-    {
-        return LOCAL_ITEM | (0x01 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Usage_Maximum(int size)
-    {
-        return LOCAL_ITEM | (0x02 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Designator_Index(int size)
-    {
-        return LOCAL_ITEM | (0x03 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Designator_Minimum(int size)
-    {
-        return LOCAL_ITEM | (0x04 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Designator_Maximum(int size)
-    {
-        return LOCAL_ITEM | (0x05 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int String_Index(int size)
-    {
-        return LOCAL_ITEM | (0x07 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int String_Minimum(int size)
-    {
-        return LOCAL_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int String_Maximum(int size)
-    {
-        return LOCAL_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-
-    private static int Delimiter(int size)
-    {
-        return LOCAL_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
-    }
-    //Reversed 0x92U~0xFEFFU
-    //Vendor-defined 0xFF00U~0xFFFFU
+    #endregion
 
     #region Usages
 
@@ -1344,63 +1296,182 @@ public static class HidReportDescriptorParser
 
     #endregion
 
-    private static int ri_ItemSize(int sizeMask)
+    internal HidReportDescriptorItem(int index, byte itemTag, byte itemSize, int itemData)
     {
-        return ((byte)(sizeMask) == Size_4B ? 4 : (byte)(sizeMask));
+        Index = index;
+        ItemTag = itemTag;
+        ItemSize = itemSize;
+        ItemData = itemData;
     }
 
-    private static unsafe int ri_GetItemData(byte* itemData, byte size)
+    [UsedImplicitly]
+    public int Index { get; }
+
+    [UsedImplicitly]
+    public byte ItemTag { get; }
+
+    [UsedImplicitly]
+    public byte ItemSize { get; }
+
+    [UsedImplicitly]
+    public int ItemData { get; }
+
+    /// <summary>
+    ///     True if this item is a Usage Page, false otherwise.
+    /// </summary>
+    [UsedImplicitly]
+    public bool IsUsagePage => ItemTag == Usage_Page(0);
+
+    /* Main Item Tag
+    */
+    private static int Input(int size)
     {
-        return size switch
-        {
-            1 => *itemData,
-            2 => *(short*)itemData,
-            4 => *(int*)itemData,
-            _ => 0
-        };
+        return MAIN_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
     }
 
-    public static unsafe bool Parse(byte[] descriptor)
+    private static int Output(int size)
     {
-        byte space = 0;
-        ushort index = 0;
-        int sUsagePage = -1;
-
-        while (index < descriptor.Length)
-        {
-            byte itemTag = (byte)(descriptor[index] & TAG_MASK);
-            byte itemSize = (byte)ri_ItemSize(descriptor[index] & SIZE_MASK);
-            int itemData = 0;
-
-            if (index + itemSize >= descriptor.Length)
-            {
-                break;
-            }
-
-            fixed (byte* ptr = descriptor)
-            {
-                itemData = ri_GetItemData(&ptr[index + 1], itemSize);
-
-                switch(itemTag & TYPE_MASK)
-                {
-                    case MAIN_ITEM:
-                        //ri_MainItem(itemTag, itemData, &space);
-                        break;
-                    case GLOBAL_ITEM:
-                        //ri_GlobalItem(itemTag, itemData, space, &sUsagePage);
-                        break;
-                    case LOCAL_ITEM:
-                        //ri_LocalItem(itemTag, itemData, space, sUsagePage);
-                        break;
-                    default:
-                        //LOG("Unknown Type: %02X, index: %d\r\n", itemTag, index);
-                        break;
-                }
-            }
-
-            index += (ushort)(itemSize + 1);
-        }
-
-        return index < descriptor.Length;
+        return MAIN_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
     }
+
+    private static int Feature(int size)
+    {
+        return MAIN_ITEM | (0x0B << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Collection(int size)
+    {
+        return MAIN_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int End_Collection(int size)
+    {
+        return MAIN_ITEM | (0x0C << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    /* Global Item Tag
+    */
+    private static int Usage_Page(int size)
+    {
+        return GLOBAL_ITEM | (0x00 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Logical_Minimum(int size)
+    {
+        return GLOBAL_ITEM | (0x01 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Logical_Maximum(int size)
+    {
+        return GLOBAL_ITEM | (0x02 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Physical_Minimum(int size)
+    {
+        return GLOBAL_ITEM | (0x03 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Physical_Maximum(int size)
+    {
+        return GLOBAL_ITEM | (0x04 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    /* Unit Exponent: |   Code   | 0x5 | 0x6 | 0x7 | 0x8 | 0x9 | 0xA | 0xB | 0xC | 0xD | 0xE | 0xF |
+    **                | Exponent |  5  |  6  |  7  | -8  | -7  | -6  | -5  | -4  | -3  | -2  | -1  |
+    */
+    private static int Unit_Exponent(int size)
+    {
+        return GLOBAL_ITEM | (0x05 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    /* Unit: 按半字节(Nibble)拆分，最低位半字节声明使用的计量系统，其余每个半字节声明对应单位的指数(-7~7)
+    **  | Nibble |   0    |    1   |  2   |  3   |      4      |    5    |         6          |    7     |
+    **  | Parts  | System | Length | Mass | Time | Temperature | Current | Luminous intensity | Reversed |
+    **
+    **  | Value  | 0x0  |    0x1    |     0x2     |      0x3       |        0x4       |  Other   |
+    **  | System | None | SI Linear | SI Rotation | English Linear | English Rotation | Reversed |
+    */
+    private static int Unit(int size)
+    {
+        return GLOBAL_ITEM | (0x06 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Report_Size(int size)
+    {
+        return GLOBAL_ITEM | (0x07 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Report_ID(int size)
+    {
+        return GLOBAL_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Report_Count(int size)
+    {
+        return GLOBAL_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Push(int size)
+    {
+        return GLOBAL_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Pop(int size)
+    {
+        return GLOBAL_ITEM | (0x0B << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    /* Local Item Tag
+    */
+    private static int Usage(int size)
+    {
+        return LOCAL_ITEM | (0x00 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Usage_Minimum(int size)
+    {
+        return LOCAL_ITEM | (0x01 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Usage_Maximum(int size)
+    {
+        return LOCAL_ITEM | (0x02 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Designator_Index(int size)
+    {
+        return LOCAL_ITEM | (0x03 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Designator_Minimum(int size)
+    {
+        return LOCAL_ITEM | (0x04 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Designator_Maximum(int size)
+    {
+        return LOCAL_ITEM | (0x05 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int String_Index(int size)
+    {
+        return LOCAL_ITEM | (0x07 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int String_Minimum(int size)
+    {
+        return LOCAL_ITEM | (0x08 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int String_Maximum(int size)
+    {
+        return LOCAL_ITEM | (0x09 << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+
+    private static int Delimiter(int size)
+    {
+        return LOCAL_ITEM | (0x0A << TAG_OFFSET) | ((byte)size & SIZE_MASK);
+    }
+    //Reversed 0x92U~0xFEFFU
+    //Vendor-defined 0xFF00U~0xFFFFU
 }
