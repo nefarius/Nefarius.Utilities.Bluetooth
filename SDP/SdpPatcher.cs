@@ -81,11 +81,14 @@ public static class SdpPatcher
             {
                 var matcher = new BoyerMoore(usage);
 
+                // find offsets of usage occurrences
                 var matches = matcher.Search(patchedHidReportDescriptor.ToArray()).ToList();
 
                 foreach (var match in matches)
                 {
+                    // remove existing
                     patchedHidReportDescriptor.RemoveRange(match, usage.Length);
+                    // splice in replacement
                     patchedHidReportDescriptor.InsertRange(match, replacement);
                 }
             }
