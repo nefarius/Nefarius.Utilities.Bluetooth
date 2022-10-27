@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 using Nefarius.Utilities.Bluetooth.Util;
 
@@ -84,6 +83,7 @@ public static class SdpPatcher
                 item.StopParsing = true;
             };
 
+            // kick off initial parser run
             parser.Parse(patchedHidReportDescriptor.ToArray());
 
             var patchedRecord = new List<byte>();
