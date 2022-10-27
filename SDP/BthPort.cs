@@ -3,8 +3,14 @@ using Microsoft.Win32;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
 
+/// <summary>
+///     Wrapper around BTHPORT.SYS
+/// </summary>
 public static class BthPort
 {
+    /// <summary>
+    ///     Gets a collection of paired HID devices.
+    /// </summary>
     public static IEnumerable<BthPortDevice> Devices
     {
         get

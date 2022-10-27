@@ -7,6 +7,9 @@ using Microsoft.Win32;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
 
+/// <summary>
+///     Represents a device entry of BTHPORT.SYS
+/// </summary>
 public sealed class BthPortDevice
 {
     private readonly RegistryKey _cachedServicesKey;
@@ -18,6 +21,9 @@ public sealed class BthPortDevice
         _cachedServicesKey = parent?.OpenSubKey("CachedServices", true);
     }
 
+    /// <summary>
+    ///     The remote device MAC address.
+    /// </summary>
     [UsedImplicitly]
     public PhysicalAddress RemoteAddress { get; }
 
@@ -34,6 +40,9 @@ public sealed class BthPortDevice
         }
     }
 
+    /// <summary>
+    ///     True if <see cref="CachedServices"/> has been altered, false otherwise.
+    /// </summary>
     [UsedImplicitly]
     public bool IsCachedServicesPatched
     {
@@ -59,6 +68,7 @@ public sealed class BthPortDevice
         }
     }
 
+    [UsedImplicitly]
     public void DeleteOriginalCachedServices()
     {
         if (!IsCachedServicesPatched)

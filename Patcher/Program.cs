@@ -1,21 +1,36 @@
 ﻿using Nefarius.Utilities.Bluetooth.SDP;
 
-var bthPortDevices = BthPort.Devices.ToList();
+List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
-foreach (var device in bthPortDevices)
-    if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out var patched))
+foreach (BthPortDevice? device in bthPortDevices)
+{
+    if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out byte[]? patched))
     {
-        Console.WriteLine($"Original record: {string.Join(", ", device.CachedServices.Select(b => $"0x{b:X2}"))}");
+        if (!device.IsCachedServicesPatched)
+        {
+            if (!UtilsConsole.Confirm($"Found device {device}, want me to patch its record?"))
+            {
+                continue;
+            }
 
-        Console.WriteLine($"Patched record: {string.Join(", ", patched.Select(b => $"0x{b:X2}"))}");
+            device.CachedServices = patched;
 
-        if (!UtilsConsole.Confirm($"Found device {device}, want me to patch its record?"))
-            continue;
-        
-        device.CachedServices = patched;
+            Console.WriteLine("Patch applied successfully");
+        }
+        else
+        {
+            if (!UtilsConsole.Confirm($"Found PATCHED device {device}, want me to undo the patch?"))
+            {
+                continue;
+            }
 
-        Console.WriteLine("Patch applied successfully");
+            device.CachedServices = device.OriginalCachedServices;
+            device.DeleteOriginalCachedServices();
+
+            Console.WriteLine("Patch reverted successfully");
+        }
     }
+}
 
 internal static class UtilsConsole
 {
@@ -26,7 +41,10 @@ internal static class UtilsConsole
         {
             Console.Write($"{title} [y/n] ");
             response = Console.ReadKey(false).Key;
-            if (response != ConsoleKey.Enter) Console.WriteLine();
+            if (response != ConsoleKey.Enter)
+            {
+                Console.WriteLine();
+            }
         } while (response != ConsoleKey.Y && response != ConsoleKey.N);
 
         return response == ConsoleKey.Y;
