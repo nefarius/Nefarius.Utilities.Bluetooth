@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 using Microsoft.Win32;
 
@@ -9,6 +10,8 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 /// </summary>
 public static class BthPort
 {
+    public static Guid DeviceInterface => Guid.Parse("{0850302a-b344-4fda-9be9-90576b8d46f0}");
+
     /// <summary>
     ///     Gets a collection of paired HID devices.
     /// </summary>
