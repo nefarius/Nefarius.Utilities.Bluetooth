@@ -1,4 +1,7 @@
-﻿using Nefarius.Utilities.Bluetooth.SDP;
+﻿using Nefarius.Utilities.Bluetooth;
+using Nefarius.Utilities.Bluetooth.SDP;
+
+using var radio = new HostRadio();
 
 List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
@@ -6,6 +9,11 @@ foreach (BthPortDevice? device in bthPortDevices)
 {
     if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out byte[]? patched))
     {
+        radio.GetServiceStateForDevice(device.RemoteAddress, HostRadio.HumanInterfaceDeviceServiceClassUuid,
+            out var serviceEnabled);
+
+        radio.SetServiceStateForDevice(device.RemoteAddress, HostRadio.HumanInterfaceDeviceServiceClassUuid, false);
+
         if (!device.IsCachedServicesPatched)
         {
             if (!UtilsConsole.Confirm($"Found device {device}, want me to patch its record?"))

@@ -1,5 +1,5 @@
+using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
-using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Tests;
 
@@ -13,6 +13,14 @@ public class Tests
     [Test]
     public void Test1()
     {
+        using HostRadio radio = new HostRadio();
+
+        foreach (BthPortDevice? device in BthPort.Devices.ToList())
+        {
+            radio.GetServiceStateForDevice(device.RemoteAddress, HostRadio.HumanInterfaceDeviceServiceClassUuid,
+                out bool state);
+        }
+
         /*
         var descriptor = new byte[]
         {
@@ -250,7 +258,7 @@ public class Tests
         parser.Parse(descriptor);
         */
 
-        var buffer = new byte[]
+        byte[]? buffer = new byte[]
         {
             0x36, 0x02, 0xBA, 0x09, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00, 0x01, 0x09, 0x00, 0x01, 0x35, 0x03, 0x19,
             0x11, 0x24, 0x09, 0x00, 0x04, 0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x00, 0x11, 0x35, 0x03,
@@ -296,7 +304,7 @@ public class Tests
             0x02, 0x0E, 0x28, 0x00
         };
 
-        var altered = new byte[]
+        byte[] altered = new byte[]
         {
             0x36, 0x02, 0xBB, 0x09, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00, 0x01, 0x09, 0x00, 0x01, 0x35, 0x03, 0x19,
             0x11, 0x24, 0x09, 0x00, 0x04, 0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x00, 0x11, 0x35, 0x03,
@@ -344,15 +352,8 @@ public class Tests
 
         SdpPatcher.AlterHidDeviceToVenderDefined(buffer, out buffer);
 
-        var hex = string.Join(", ", buffer.Select(b => $"0x{b:X2}"));
+        string hex = string.Join(", ", buffer.Select(b => $"0x{b:X2}"));
 
-        var d = BthPort.Devices.ToList();
-
-        foreach (var device in d)
-            if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out var patched))
-            {
-                var t = 01;
-            }
 
         Assert.Pass();
     }
