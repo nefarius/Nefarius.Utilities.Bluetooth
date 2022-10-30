@@ -18,6 +18,7 @@ namespace Nefarius.Utilities.Bluetooth;
 
 public class HostRadioException : Exception
 {
+    [UsedImplicitly]
     internal HostRadioException(string message) : base(message)
     {
     }
@@ -27,6 +28,7 @@ public class HostRadioException : Exception
         NativeErrorCode = errorCode;
     }
 
+    [UsedImplicitly]
     public uint NativeErrorCode { get; }
 }
 
@@ -89,12 +91,14 @@ public class HostRadio : IDisposable
         }
     }
 
+    [UsedImplicitly]
     public static Guid HumanInterfaceDeviceServiceClassUuid =>
         Guid.Parse("{0x1124,0x0000,0x1000,{0x80,0x00,0x00,0x80,0x5F,0x9B,0x34,0xFB}}");
 
     /// <summary>
     ///     Device Interface GUID.
     /// </summary>
+    [UsedImplicitly]
     public static Guid DeviceInterface => Guid.Parse("{92383b0e-f90e-4ac9-8d44-8c2d0d0ebda2}");
 
     public void Dispose()
