@@ -160,6 +160,12 @@ public class HostRadio : IDisposable
         }
     }
 
+    public void RestartRadio()
+    {
+        DisableRadio();
+        EnableRadio();
+    }
+
     [UsedImplicitly]
     public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, bool enabled)
     {

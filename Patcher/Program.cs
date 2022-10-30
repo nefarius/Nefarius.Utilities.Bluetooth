@@ -1,10 +1,6 @@
 ﻿using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
 
-using HostRadio radio = new HostRadio();
-
-radio.EnableRadio();
-
 List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
 foreach (BthPortDevice? device in bthPortDevices)
@@ -21,6 +17,9 @@ foreach (BthPortDevice? device in bthPortDevices)
             device.CachedServices = patched;
 
             Console.WriteLine("Patch applied successfully");
+
+            using var radio = new HostRadio();
+            radio.RestartRadio();
         }
         else
         {
@@ -33,6 +32,9 @@ foreach (BthPortDevice? device in bthPortDevices)
             device.DeleteOriginalCachedServices();
 
             Console.WriteLine("Patch reverted successfully");
+            
+            using var radio = new HostRadio();
+            radio.RestartRadio();
         }
     }
 }
