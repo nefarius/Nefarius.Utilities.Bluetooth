@@ -44,7 +44,9 @@ public sealed class HostRadioException : Exception
 /// </remarks>
 public sealed class HostRadio : IDisposable
 {
-    private const uint IoctlChangeRadioState = 0x411184;
+    private static readonly uint IoctlChangeRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
+        PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
+
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
@@ -113,6 +115,11 @@ public sealed class HostRadio : IDisposable
     public void Dispose()
     {
         _radioHandle.Dispose();
+    }
+
+    private static UInt32 CTL_CODE(uint deviceType, uint function, uint method, FILE_ACCESS_FLAGS access)
+    {
+        return (deviceType << 16) | ((uint)access << 14) | (function << 2) | method;
     }
 
     /// <summary>
