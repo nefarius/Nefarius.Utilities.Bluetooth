@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
+using JetBrains.Annotations;
+
 using Microsoft.Win32;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
@@ -8,6 +10,8 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 /// <summary>
 ///     Wrapper around BTHPORT.SYS
 /// </summary>
+/// <remarks>Use of this class requires elevated privileges.</remarks>
+[UsedImplicitly]
 public static class BthPort
 {
     public static Guid DeviceInterface => Guid.Parse("{0850302a-b344-4fda-9be9-90576b8d46f0}");

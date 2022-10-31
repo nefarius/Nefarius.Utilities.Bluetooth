@@ -16,7 +16,10 @@ using Nefarius.Utilities.DeviceManagement.PnP;
 
 namespace Nefarius.Utilities.Bluetooth;
 
-public class HostRadioException : Exception
+/// <summary>
+///     Exception potentially thrown by <see cref="HostRadio"/>.
+/// </summary>
+public sealed class HostRadioException : Exception
 {
     [UsedImplicitly]
     internal HostRadioException(string message) : base(message)
@@ -35,7 +38,11 @@ public class HostRadioException : Exception
 /// <summary>
 ///     Represents a Bluetooth Host Radio.
 /// </summary>
-public class HostRadio : IDisposable
+/// <remarks>
+///     Windows currently only supports one exclusive online Bluetooth host radio active at the same time. This class
+///     can be extended in the future, should this limit ever get lifted.
+/// </remarks>
+public sealed class HostRadio : IDisposable
 {
     private readonly SafeFileHandle _radioHandle;
 
@@ -76,6 +83,7 @@ public class HostRadio : IDisposable
                 null
             );
 
+            // should be accessible non-elevated without issues
             if (_radioHandle.IsInvalid)
             {
                 throw new HostRadioException("Bluetooth host radio found but handle access failed.",
@@ -174,6 +182,13 @@ public class HostRadio : IDisposable
         EnableRadio();
     }
 
+    /// <summary>
+    ///     Sets the state of a specified service to either enabled or disabled.
+    /// </summary>
+    /// <param name="address">The remote device address.</param>
+    /// <param name="serviceGuid">The service GUID.</param>
+    /// <param name="enabled">True to set to enabled, false to disable.</param>
+    /// <exception cref="HostRadioException"></exception>
     [UsedImplicitly]
     public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, bool enabled)
     {
@@ -194,6 +209,14 @@ public class HostRadio : IDisposable
         }
     }
 
+    /// <summary>
+    ///     Gets the state of a specified service.
+    /// </summary>
+    /// <param name="address">The remote device address.</param>
+    /// <param name="serviceGuid">The service GUID.</param>
+    /// <param name="enabled">True if the service is enabled, false otherwise.</param>
+    /// <returns>True if the supplied device was found, false otherwise.</returns>
+    /// <exception cref="HostRadioException"></exception>
     [UsedImplicitly]
     public unsafe bool GetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, out bool enabled)
     {
