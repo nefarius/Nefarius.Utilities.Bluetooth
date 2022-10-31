@@ -17,7 +17,7 @@ using Nefarius.Utilities.DeviceManagement.PnP;
 namespace Nefarius.Utilities.Bluetooth;
 
 /// <summary>
-///     Exception potentially thrown by <see cref="HostRadio"/>.
+///     Exception potentially thrown by <see cref="HostRadio" />.
 /// </summary>
 public sealed class HostRadioException : Exception
 {
@@ -44,6 +44,7 @@ public sealed class HostRadioException : Exception
 /// </remarks>
 public sealed class HostRadio : IDisposable
 {
+    private const uint IoctlChangeRadioState = 0x411184;
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
@@ -127,7 +128,7 @@ public sealed class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                0x411184,
+                IoctlChangeRadioState,
                 ptr,
                 4,
                 null,
@@ -156,7 +157,7 @@ public sealed class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                0x411184,
+                IoctlChangeRadioState,
                 ptr,
                 4,
                 null,
