@@ -1,10 +1,12 @@
-﻿using System;
+﻿#if NET6_0_OR_GREATER
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
+
 
 /// <summary>
 ///     Service Discovery Record Patching Utility.
@@ -138,3 +140,4 @@ public static class SdpPatcher
         }
     }
 }
+#endif
