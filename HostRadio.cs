@@ -167,6 +167,7 @@ public class HostRadio : IDisposable
     /// <summary>
     ///     Restarts the host radio.
     /// </summary>
+    [UsedImplicitly]
     public void RestartRadio()
     {
         DisableRadio();
