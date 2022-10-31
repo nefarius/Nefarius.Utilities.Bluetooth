@@ -164,6 +164,9 @@ public class HostRadio : IDisposable
         }
     }
 
+    /// <summary>
+    ///     Restarts the host radio.
+    /// </summary>
     public void RestartRadio()
     {
         DisableRadio();
