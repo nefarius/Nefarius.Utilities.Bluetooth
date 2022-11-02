@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -111,6 +112,174 @@ public sealed class HostRadio : IDisposable
     /// </summary>
     [UsedImplicitly]
     public static Guid DeviceInterface => Guid.Parse("{92383b0e-f90e-4ac9-8d44-8c2d0d0ebda2}");
+
+    [UsedImplicitly]
+    public IEnumerable<RemoteDevice> AllDevices =>
+        AuthenticatedDevices
+            .Concat(ConnectedDevices)
+            .Concat(RememberedDevices)
+            .Concat(UnknownDevices)
+            .Distinct();
+
+    [UsedImplicitly]
+    public IEnumerable<RemoteDevice> AuthenticatedDevices
+    {
+        get
+        {
+            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
+            {
+                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
+                fReturnAuthenticated = true,
+                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+            };
+
+            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
+                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
+
+            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
+
+
+            try
+            {
+                if (hFind != 0)
+                {
+                    do
+                    {
+                        yield return new RemoteDevice
+                        {
+                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
+                                .ToArray()),
+                            Name = deviceInfo.szName.ToString(),
+                        };
+                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
+                }
+            }
+            finally
+            {
+                PInvoke.BluetoothFindDeviceClose(hFind);
+            }
+        }
+    }
+
+    [UsedImplicitly]
+    public IEnumerable<RemoteDevice> ConnectedDevices
+    {
+        get
+        {
+            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
+            {
+                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
+                fReturnConnected = true,
+                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+            };
+
+            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
+                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
+
+            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
+
+
+            try
+            {
+                if (hFind != 0)
+                {
+                    do
+                    {
+                        yield return new RemoteDevice
+                        {
+                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
+                                .ToArray()),
+                            Name = deviceInfo.szName.ToString(),
+                        };
+                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
+                }
+            }
+            finally
+            {
+                PInvoke.BluetoothFindDeviceClose(hFind);
+            }
+        }
+    }
+
+    [UsedImplicitly]
+    public IEnumerable<RemoteDevice> RememberedDevices
+    {
+        get
+        {
+            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
+            {
+                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
+                fReturnRemembered = true,
+                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+            };
+
+            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
+                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
+
+            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
+
+
+            try
+            {
+                if (hFind != 0)
+                {
+                    do
+                    {
+                        yield return new RemoteDevice
+                        {
+                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
+                                .ToArray()),
+                            Name = deviceInfo.szName.ToString(),
+                        };
+                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
+                }
+            }
+            finally
+            {
+                PInvoke.BluetoothFindDeviceClose(hFind);
+            }
+        }
+    }
+
+    [UsedImplicitly]
+    public IEnumerable<RemoteDevice> UnknownDevices
+    {
+        get
+        {
+            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
+            {
+                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
+                fReturnUnknown = true,
+                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+            };
+
+            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
+                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
+
+            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
+
+
+            try
+            {
+                if (hFind != 0)
+                {
+                    do
+                    {
+                        yield return new RemoteDevice
+                        {
+                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
+                                .ToArray()),
+                            Name = deviceInfo.szName.ToString(),
+                        };
+                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
+                }
+            }
+            finally
+            {
+                PInvoke.BluetoothFindDeviceClose(hFind);
+            }
+        }
+    }
 
     public void Dispose()
     {

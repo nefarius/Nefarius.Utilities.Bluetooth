@@ -15,6 +15,8 @@ public class Tests
     {
         using HostRadio radio = new HostRadio();
 
+        var a = radio.AllDevices.ToList();
+
         foreach (BthPortDevice? device in BthPort.Devices.ToList())
         {
             radio.GetServiceStateForDevice(device.RemoteAddress, HostRadio.HumanInterfaceDeviceServiceClassUuid,
