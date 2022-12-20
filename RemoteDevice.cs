@@ -8,15 +8,21 @@ namespace Nefarius.Utilities.Bluetooth;
 /// </summary>
 public sealed class RemoteDevice : IEquatable<RemoteDevice>
 {
+    internal RemoteDevice(string name, PhysicalAddress address)
+    {
+        Name = name;
+        Address = address;
+    }
+
     /// <summary>
     ///     Gets the reported remote device name.
     /// </summary>
-    public string Name { get; internal set; }
+    public string Name { get; }
 
     /// <summary>
     ///     Gets the unique remote device address.
     /// </summary>
-    public PhysicalAddress Address { get; internal set; }
+    public PhysicalAddress Address { get; }
 
     /// <inheritdoc />
     public override string ToString()

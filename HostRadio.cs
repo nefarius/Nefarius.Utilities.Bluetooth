@@ -153,12 +153,9 @@ public sealed class HostRadio : IDisposable
                 {
                     do
                     {
-                        yield return new RemoteDevice
-                        {
-                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
-                                .ToArray()),
-                            Name = deviceInfo.szName.ToString()
-                        };
+                        yield return new RemoteDevice(deviceInfo.szName.ToString(), new PhysicalAddress(deviceInfo
+                            .Address.Anonymous.rgBytes.ToArray().Reverse()
+                            .ToArray()));
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
             }
@@ -195,12 +192,9 @@ public sealed class HostRadio : IDisposable
                 {
                     do
                     {
-                        yield return new RemoteDevice
-                        {
-                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
-                                .ToArray()),
-                            Name = deviceInfo.szName.ToString()
-                        };
+                        yield return new RemoteDevice(deviceInfo.szName.ToString(), new PhysicalAddress(deviceInfo
+                            .Address.Anonymous.rgBytes.ToArray().Reverse()
+                            .ToArray()));
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
             }
@@ -238,11 +232,8 @@ public sealed class HostRadio : IDisposable
                     do
                     {
                         yield return new RemoteDevice
-                        {
-                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
-                                .ToArray()),
-                            Name = deviceInfo.szName.ToString()
-                        };
+                        (deviceInfo.szName.ToString(),
+                            new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse().ToArray()));
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
             }
@@ -280,11 +271,8 @@ public sealed class HostRadio : IDisposable
                     do
                     {
                         yield return new RemoteDevice
-                        {
-                            Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
-                                .ToArray()),
-                            Name = deviceInfo.szName.ToString()
-                        };
+                        (deviceInfo.szName.ToString(),
+                            new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse().ToArray()));
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
             }
