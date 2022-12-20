@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
@@ -8,8 +9,6 @@ using Windows.Win32;
 using Windows.Win32.Devices.Bluetooth;
 using Windows.Win32.Foundation;
 using Windows.Win32.Storage.FileSystem;
-
-using JetBrains.Annotations;
 
 using Microsoft.Win32.SafeHandles;
 
@@ -20,9 +19,9 @@ namespace Nefarius.Utilities.Bluetooth;
 /// <summary>
 ///     Exception potentially thrown by <see cref="HostRadio" />.
 /// </summary>
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public sealed class HostRadioException : Exception
 {
-    [UsedImplicitly]
     internal HostRadioException(string message) : base(message)
     {
     }
@@ -32,7 +31,9 @@ public sealed class HostRadioException : Exception
         NativeErrorCode = errorCode;
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets the Win32 error code.
+    /// </summary>
     public uint NativeErrorCode { get; }
 }
 
@@ -43,6 +44,8 @@ public sealed class HostRadioException : Exception
 ///     Windows currently only supports one exclusive online Bluetooth host radio active at the same time. This class
 ///     can be extended in the future, should this limit ever get lifted.
 /// </remarks>
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public sealed class HostRadio : IDisposable
 {
     private static readonly uint IoctlChangeRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
@@ -103,17 +106,20 @@ public sealed class HostRadio : IDisposable
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     HID Service Class GUID.
+    /// </summary>
     public static Guid HumanInterfaceDeviceServiceClassUuid =>
         Guid.Parse("{0x1124,0x0000,0x1000,{0x80,0x00,0x00,0x80,0x5F,0x9B,0x34,0xFB}}");
 
     /// <summary>
     ///     Device Interface GUID.
     /// </summary>
-    [UsedImplicitly]
     public static Guid DeviceInterface => Guid.Parse("{92383b0e-f90e-4ac9-8d44-8c2d0d0ebda2}");
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets all remote devices.
+    /// </summary>
     public IEnumerable<RemoteDevice> AllDevices =>
         AuthenticatedDevices
             .Concat(ConnectedDevices)
@@ -121,7 +127,9 @@ public sealed class HostRadio : IDisposable
             .Concat(UnknownDevices)
             .Distinct();
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets all authenticated devices.
+    /// </summary>
     public IEnumerable<RemoteDevice> AuthenticatedDevices
     {
         get
@@ -149,7 +157,7 @@ public sealed class HostRadio : IDisposable
                         {
                             Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
                                 .ToArray()),
-                            Name = deviceInfo.szName.ToString(),
+                            Name = deviceInfo.szName.ToString()
                         };
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
@@ -161,7 +169,9 @@ public sealed class HostRadio : IDisposable
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets all connected devices.
+    /// </summary>
     public IEnumerable<RemoteDevice> ConnectedDevices
     {
         get
@@ -189,7 +199,7 @@ public sealed class HostRadio : IDisposable
                         {
                             Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
                                 .ToArray()),
-                            Name = deviceInfo.szName.ToString(),
+                            Name = deviceInfo.szName.ToString()
                         };
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
@@ -201,7 +211,9 @@ public sealed class HostRadio : IDisposable
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets all remembered devices.
+    /// </summary>
     public IEnumerable<RemoteDevice> RememberedDevices
     {
         get
@@ -229,7 +241,7 @@ public sealed class HostRadio : IDisposable
                         {
                             Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
                                 .ToArray()),
-                            Name = deviceInfo.szName.ToString(),
+                            Name = deviceInfo.szName.ToString()
                         };
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
@@ -241,7 +253,9 @@ public sealed class HostRadio : IDisposable
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets all unknown devices.
+    /// </summary>
     public IEnumerable<RemoteDevice> UnknownDevices
     {
         get
@@ -269,7 +283,7 @@ public sealed class HostRadio : IDisposable
                         {
                             Address = new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse()
                                 .ToArray()),
-                            Name = deviceInfo.szName.ToString(),
+                            Name = deviceInfo.szName.ToString()
                         };
                     } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
                 }
@@ -281,6 +295,7 @@ public sealed class HostRadio : IDisposable
         }
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
         _radioHandle.Dispose();
@@ -295,7 +310,6 @@ public sealed class HostRadio : IDisposable
     ///     Disables the host radio.
     /// </summary>
     /// <exception cref="HostRadioException"></exception>
-    [UsedImplicitly]
     public unsafe void DisableRadio()
     {
         byte[] payload = { 0x04, 0x00, 0x00, 0x00 };
@@ -324,7 +338,6 @@ public sealed class HostRadio : IDisposable
     ///     Enables the host radio.
     /// </summary>
     /// <exception cref="HostRadioException"></exception>
-    [UsedImplicitly]
     public unsafe void EnableRadio()
     {
         byte[] payload = { 0x02, 0x00, 0x00, 0x00 };
@@ -352,7 +365,6 @@ public sealed class HostRadio : IDisposable
     /// <summary>
     ///     Restarts the host radio.
     /// </summary>
-    [UsedImplicitly]
     public void RestartRadio()
     {
         DisableRadio();
@@ -366,7 +378,6 @@ public sealed class HostRadio : IDisposable
     /// <param name="serviceGuid">The service GUID.</param>
     /// <param name="enabled">True to set to enabled, false to disable.</param>
     /// <exception cref="HostRadioException"></exception>
-    [UsedImplicitly]
     public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, bool enabled)
     {
         bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo);
@@ -394,7 +405,6 @@ public sealed class HostRadio : IDisposable
     /// <param name="enabled">True if the service is enabled, false otherwise.</param>
     /// <returns>True if the supplied device was found, false otherwise.</returns>
     /// <exception cref="HostRadioException"></exception>
-    [UsedImplicitly]
     public unsafe bool GetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, out bool enabled)
     {
         enabled = false;

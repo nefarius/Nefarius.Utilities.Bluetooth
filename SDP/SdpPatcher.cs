@@ -1,6 +1,7 @@
 ﻿#if NET6_0_OR_GREATER
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using Nefarius.Utilities.Bluetooth.Util;
@@ -11,6 +12,7 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 /// <summary>
 ///     Service Discovery Record Patching Utility.
 /// </summary>
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class SdpPatcher
 {
     /// <summary>

@@ -1,6 +1,5 @@
 ﻿using System;
-
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Nefarius.Utilities.Bluetooth.Util;
 
@@ -8,6 +7,9 @@ namespace Nefarius.Utilities.Bluetooth.Util;
 ///     HID Report Descriptor parser.
 /// </summary>
 /// <remarks>Source: https://github.com/uint32tMnstr/USB-HID-Report-Parser</remarks>
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "EventNeverSubscribedTo.Global")]
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 public class HidReportDescriptorParser
 {
     private const int TAG_OFFSET = 4;
@@ -56,7 +58,6 @@ public class HidReportDescriptorParser
     /// </summary>
     /// <param name="descriptor">The raw descriptor buffer.</param>
     /// <returns>True if the full report could be parsed, false if it got interrupted by the user or by error.</returns>
-    [UsedImplicitly]
     public unsafe bool Parse(byte[] descriptor)
     {
         ushort index = 0;
@@ -116,22 +117,25 @@ public class HidReportDescriptorParser
     /// <summary>
     ///     Raised when a main item has been parsed.
     /// </summary>
-    [UsedImplicitly]
     public event Action<HidReportDescriptorItem> MainItemParsed;
 
     /// <summary>
     ///     Raised when a global item has been parsed.
     /// </summary>
-    [UsedImplicitly]
     public event Action<HidReportDescriptorItem> GlobalItemParsed;
 
     /// <summary>
     ///     Raised when a local item has been parsed.
     /// </summary>
-    [UsedImplicitly]
     public event Action<HidReportDescriptorItem> LocalItemParsed;
 }
 
+/// <summary>
+///     Represents the smallest possible entry in a HID report descriptor.
+/// </summary>
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Local")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed class HidReportDescriptorItem : EventArgs
 {
     private const int TagOffset = 4;
@@ -169,37 +173,31 @@ public sealed class HidReportDescriptorItem : EventArgs
     /// <summary>
     ///     The (zero-based) index of the location of this item in the descriptor buffer.
     /// </summary>
-    [UsedImplicitly]
     public int Index { get; }
 
     /// <summary>
     ///     The type of this item.
     /// </summary>
-    [UsedImplicitly]
     public byte ItemTag { get; }
 
     /// <summary>
     ///     The size in bytes of this item.
     /// </summary>
-    [UsedImplicitly]
     public byte ItemSize { get; }
 
     /// <summary>
     ///     The data/value component of this item.
     /// </summary>
-    [UsedImplicitly]
     public int ItemData { get; }
 
     /// <summary>
     ///     True if this item is a Usage Page, false otherwise.
     /// </summary>
-    [UsedImplicitly]
     public bool IsUsagePage => ItemTag == Usage_Page(0);
 
     /// <summary>
     ///     If set to true by the event handler, the parser will stop its work after the event handler has finished.
     /// </summary>
-    [UsedImplicitly]
     public bool StopParsing { get; set; }
 
     /* Main Item Tag

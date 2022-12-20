@@ -1,7 +1,6 @@
-﻿using System.IO;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using System.Net.NetworkInformation;
-
-using JetBrains.Annotations;
 
 using Microsoft.Win32;
 
@@ -10,6 +9,8 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 /// <summary>
 ///     Represents a device entry of BTHPORT.SYS
 /// </summary>
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed class BthPortDevice
 {
     private readonly RegistryKey _cachedServicesKey;
@@ -24,10 +25,11 @@ public sealed class BthPortDevice
     /// <summary>
     ///     The remote device MAC address.
     /// </summary>
-    [UsedImplicitly]
     public PhysicalAddress RemoteAddress { get; }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets the cached service records blob.
+    /// </summary>
     public byte[] CachedServices
     {
         get => (byte[])_cachedServicesKey?.GetValue("00010001");
@@ -41,9 +43,8 @@ public sealed class BthPortDevice
     }
 
     /// <summary>
-    ///     True if <see cref="CachedServices"/> has been altered, false otherwise.
+    ///     True if <see cref="CachedServices" /> has been altered, false otherwise.
     /// </summary>
-    [UsedImplicitly]
     public bool IsCachedServicesPatched
     {
         get
@@ -54,7 +55,9 @@ public sealed class BthPortDevice
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Gets the unmodified cached service records blob.
+    /// </summary>
     public byte[] OriginalCachedServices
     {
         get
@@ -68,7 +71,9 @@ public sealed class BthPortDevice
         }
     }
 
-    [UsedImplicitly]
+    /// <summary>
+    ///     Delete the backup record blob.
+    /// </summary>
     public void DeleteOriginalCachedServices()
     {
         if (!IsCachedServicesPatched)
@@ -79,6 +84,7 @@ public sealed class BthPortDevice
         _cachedServicesKey?.DeleteValue("Nefarius-00010001-Backup");
     }
 
+    /// <inheritdoc />
     public override string ToString()
     {
         return RemoteAddress.ToString();
