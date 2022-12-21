@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 using Microsoft.Win32;
 
@@ -13,6 +14,8 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class BthPort
 {
+    private static readonly List<string> ValidValueNames = new() { "00010000", "00010001" };
+
     /// <summary>
     ///     Device interface GUID.
     /// </summary>
@@ -42,13 +45,45 @@ public static class BthPort
                      */
                     RegistryKey cachedServices = device?.OpenSubKey("CachedServices");
 
+                    if (cachedServices is null)
+                    {
+                        continue;
+                    }
+
+                    string[] values = cachedServices.GetValueNames();
+
+                    if (values.Length == 0)
+                    {
+                        continue;
+                    }
+
+                    if (!values.Intersect(ValidValueNames).Any())
+                    {
+                        continue;
+                    }
+
+                    // Check if content is of interest
+                    string valueName =
+                        (
+                            from name in values
+                            let content = (byte[])cachedServices.GetValue(name)
+                            where content is not null && content.Any() && content[0] == 0x36
+                            select name
+                        )
+                        .FirstOrDefault();
+
+                    if (valueName is null)
+                    {
+                        continue;
+                    }
+
                     /*
                      * The SDP record(s) containing the attributes of interest are stored in this value.
                      * The format is exactly the same as it travels through the air (Wireshark observable).
                      * During operation the content is cached in kernel memory so if it's changed during
                      *   runtime, the driver need to unload and load again (radio restart, service restart etc.).
                      */
-                    byte[] value = (byte[])cachedServices?.GetValue("00010001");
+                    byte[] value = (byte[])cachedServices.GetValue(valueName);
 
                     if (value is null)
                     {
