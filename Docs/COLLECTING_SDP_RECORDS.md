@@ -1,5 +1,9 @@
 ﻿# Exporting SDP records
 
+## Why
+
+To test and improve the SDP parser and patcher, the authors need real-world samples to feed it into the parser. This little guide shows how to do it in two simple steps. Your contribution is apprechiated 🤩
+
 ## Find your Controllers MAC address
 
 Press `Win + X` and open **Device Manager**:
