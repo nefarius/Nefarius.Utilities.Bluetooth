@@ -1,5 +1,16 @@
 ﻿# Exporting SDP records
 
+## Target audience
+
+If you have one or more of the following listed game controllers **connected wireless via Bluetooth**:
+
+- Sony DualShock 4 (Rev1 or Rev2)
+- Sony DualSense
+- Nintendo JoyCons
+- Nintendo Pro Wireless Controller
+
+If you do and want to help this project, read on!
+
 ## Why
 
 To test and improve the SDP parser and patcher, the authors need real-world samples to feed it into the parser. This little guide shows how to do it in two simple steps. Your contribution is apprechiated 🤩
