@@ -15,6 +15,8 @@ If you do and want to help this project, read on!
 
 To test and improve the SDP parser and patcher, the authors need real-world samples to feed it into the parser. This little guide shows how to do it in two simple steps. Your contribution is apprechiated 🤩
 
+Especially **Nintendo controllers** are currently an enigma. They do not seem to carry a traditional HID Report Descriptor like expected yet still work. Trying to figure out the differences here 🤔
+
 ## Find your Controllers MAC address
 
 Press `Win + X` and open **Device Manager**:
