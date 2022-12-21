@@ -1,4 +1,6 @@
-﻿#if NET6_0_OR_GREATER
+﻿// ReSharper disable RedundantUsingDirective
+
+#if NET6_0_OR_GREATER
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -7,7 +9,6 @@ using System.Linq;
 using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth.SDP;
-
 
 /// <summary>
 ///     Service Discovery Record Patching Utility.
@@ -27,42 +28,42 @@ public static class SdpPatcher
         try
         {
             // find beginning of SDP_ATTRIB_HID_DESCRIPTOR_LIST
-            var descriptorListStartPattern = new byte[] { 0x09, 0x02, 0x06, 0x36 };
-            var descriptorListStartIndex = new BoyerMoore(descriptorListStartPattern).Search(input).First();
+            byte[] descriptorListStartPattern = new byte[] { 0x09, 0x02, 0x06, 0x36 };
+            int descriptorListStartIndex = new BoyerMoore(descriptorListStartPattern).Search(input).First();
 
             // skip to start of next element
-            var descriptorValueStartOffset = descriptorListStartPattern.Length + descriptorListStartIndex;
+            int descriptorValueStartOffset = descriptorListStartPattern.Length + descriptorListStartIndex;
 
             // find beginning of actual HID Report Descriptor buffer
-            var descriptorValueStartPattern = new byte[] { 0x08, 0x22, 0x26 };
-            var descriptorValueStartIndex = new BoyerMoore(descriptorValueStartPattern)
+            byte[] descriptorValueStartPattern = new byte[] { 0x08, 0x22, 0x26 };
+            int descriptorValueStartIndex = new BoyerMoore(descriptorValueStartPattern)
                 .Search(input.Skip(descriptorValueStartOffset).ToArray()).First();
 
             // find report size value offset
-            var dataElementSizeIndex = descriptorListStartPattern.Length +
+            int dataElementSizeIndex = descriptorListStartPattern.Length +
                                        descriptorListStartIndex +
                                        descriptorValueStartPattern.Length +
                                        descriptorValueStartIndex;
 
             // get buffer size in bytes
-            var dataElementSize = BitConverter.ToUInt16(input
+            ushort dataElementSize = BitConverter.ToUInt16(input
                 .Skip(dataElementSizeIndex)
                 .Take(2).Reverse().ToArray());
 
             // start offset of report descriptor buffer
-            var dataBufferValueIndex = dataElementSizeIndex + 2;
+            int dataBufferValueIndex = dataElementSizeIndex + 2;
             // extract HID Report Descriptor
-            var hidReportDescriptor = input.Skip(dataBufferValueIndex).Take(dataElementSize).ToArray();
+            byte[] hidReportDescriptor = input.Skip(dataBufferValueIndex).Take(dataElementSize).ToArray();
 
             // find all size fields before the descriptor element
-            var sizeFieldsOffsets = new BoyerMoore(new byte[] { 0x36 })
+            List<int> sizeFieldsOffsets = new BoyerMoore(new byte[] { 0x36 })
                 .Search(input.Take(dataElementSizeIndex).ToArray()).ToList();
-            
+
             // copy descriptor
-            var patchedHidReportDescriptor = hidReportDescriptor.ToList();
-            
+            List<byte> patchedHidReportDescriptor = hidReportDescriptor.ToList();
+
             // report parser
-            var parser = new HidReportDescriptorParser();
+            HidReportDescriptorParser parser = new HidReportDescriptorParser();
 
             byte usageIndex = 0x01;
 
@@ -90,27 +91,27 @@ public static class SdpPatcher
             // kick off initial parser run
             parser.Parse(patchedHidReportDescriptor.ToArray());
 
-            var patchedRecord = new List<byte>();
+            List<byte> patchedRecord = new List<byte>();
 
-            var lastOffset = 0;
+            int lastOffset = 0;
 
             // iterate through size segments to recalculate them
-            foreach (var offset in sizeFieldsOffsets)
+            foreach (int offset in sizeFieldsOffsets)
             {
                 // calculate size of the segment to take from original record
-                var previousSegmentLength = Math.Clamp(offset - lastOffset, 0, input.Length);
+                int previousSegmentLength = Math.Clamp(offset - lastOffset, 0, input.Length);
                 // get segment to splice in
-                var previousSegment = input.Skip(lastOffset).Take(previousSegmentLength);
+                IEnumerable<byte> previousSegment = input.Skip(lastOffset).Take(previousSegmentLength);
 
                 patchedRecord.AddRange(previousSegment);
 
                 // extract size content
-                var sizeFieldValue = BitConverter.ToUInt16(input
+                ushort sizeFieldValue = BitConverter.ToUInt16(input
                     .Skip(offset + 1 /* skip field type itself */)
                     .Take(2).Reverse().ToArray());
 
                 // adjust size depending on report size difference
-                var newSize = sizeFieldValue + (patchedHidReportDescriptor.Count - hidReportDescriptor.Length);
+                int newSize = sizeFieldValue + (patchedHidReportDescriptor.Count - hidReportDescriptor.Length);
 
                 // add new size segment
                 patchedRecord.Add(0x36);
@@ -121,7 +122,7 @@ public static class SdpPatcher
 
             // add start pattern
             patchedRecord.AddRange(descriptorValueStartPattern);
-            
+
             // add size of patched descriptor
             patchedRecord.AddRange(BitConverter.GetBytes((ushort)patchedHidReportDescriptor.Count()).Reverse());
 

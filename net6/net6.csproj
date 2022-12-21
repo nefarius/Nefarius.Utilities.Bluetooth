@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Nefarius.Utilities.Bluetooth</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\SDP\SdpPatcher.cs" Link="SDP\SdpPatcher.cs" />
+    <Compile Include="..\Util\BoyerMoore.cs" Link="Util\BoyerMoore.cs" />
+    <Compile Include="..\Util\HidReportDescriptorParser.cs" Link="Util\HidReportDescriptorParser.cs" />
+  </ItemGroup>
+
+</Project>
