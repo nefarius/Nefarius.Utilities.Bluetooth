@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Security.Cryptography;
 
 using Nefarius.Utilities.Bluetooth.Util;
 
@@ -146,15 +147,26 @@ public static class SdpPatcher
     {
         try
         {
-            var pattern = "35 ??";
-         
-            Pattern.FindAll(input, pattern, out var indexes);
+            // Find Service Attribute: (HID) Descriptor List (0x206), value = Report
+            byte[] descriptorListStartPattern = new byte[] { 0x09, 0x02, 0x06 };
+            int descriptorListStartIndex = new BoyerMoore(descriptorListStartPattern).Search(input).First();
+            var descriptorList = input.Skip(descriptorListStartIndex).ToArray();
 
-            var t = input[indexes.Last()];
+            // pattern to find uint8_t size elements
+            const string pattern = "35 ??";
+            // find all size element offsets
+            Pattern.FindAll(descriptorList, pattern, out var sizeElementsIndexes);
 
+            // map size element offset to current size value
+            Dictionary<int, byte> sizeElements = sizeElementsIndexes
+                .ToDictionary(sizeElementsIndex => descriptorListStartIndex + sizeElementsIndex + 1,
+                    sizeElementsIndex => descriptorList[sizeElementsIndex + 1]);
+
+            // Find HID Report Descriptor
             byte[] descriptorStartPattern = new byte[] { 0x05, 0x01, 0x09, 0x05 };
             int descriptorStartIndex = new BoyerMoore(descriptorStartPattern).Search(input).First();
 
+            // get descriptor length and blob
             var descriptorSizeIndex = descriptorStartIndex - 1;
             var descriptorSize = input[descriptorSizeIndex];
 
