@@ -38,22 +38,23 @@ internal static class Pattern
     public static void FindAll(ReadOnlySpan<byte> input, string pattern, out IEnumerable<int> indexes)
     {
         int bytes = pattern.Split(' ').Length;
-        byte[] iterator = input.ToArray();
         List<int> offsets = new();
-        int offset;
+        int offset, start = 0;
 
-        while ((offset = Scan(iterator, pattern)) != -1)
+        while ((offset = Scan(input.Slice(start), pattern)) != -1)
         {
-            if (offset == 0)
+            offsets.Add(start + offset);
+
+            /*if (offset == 0)
             {
                 offsets.Add(offsets.Any() ? offsets.Last() + bytes : bytes);
             }
             else
             {
                 offsets.Add(offsets.Any() ? offsets.Last() + offset : offset);
-            }
+            }*/
 
-            iterator = iterator.Skip(offset + bytes).ToArray();
+            start += (offset + bytes);
         }
 
         indexes = offsets;
