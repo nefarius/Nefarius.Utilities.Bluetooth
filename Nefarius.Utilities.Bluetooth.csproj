@@ -25,12 +25,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Dumps\**" />
     <Compile Remove="net6\**" />
     <Compile Remove="Patcher\**" />
     <Compile Remove="Tests\**" />
+    <EmbeddedResource Remove="Dumps\**" />
     <EmbeddedResource Remove="net6\**" />
     <EmbeddedResource Remove="Patcher\**" />
     <EmbeddedResource Remove="Tests\**" />
+    <None Remove="Dumps\**" />
     <None Remove="net6\**" />
     <None Remove="Patcher\**" />
     <None Remove="Tests\**" />
