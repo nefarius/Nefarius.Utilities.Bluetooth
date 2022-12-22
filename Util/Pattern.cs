@@ -8,9 +8,12 @@ using System.Globalization;
 
 namespace Nefarius.Utilities.Bluetooth.Util;
 
+/// <summary>
+///     Utility class to perform pattern matching/finding in byte arrays.
+/// </summary>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-internal static class Pattern
+public static class Pattern
 {
     private static bool CheckPattern(string pattern, ReadOnlySpan<byte> input)
     {
@@ -35,23 +38,36 @@ internal static class Pattern
         return true;
     }
 
+    /// <summary>
+    ///     Attempts to find all occurrences of the provided pattern.
+    /// </summary>
+    /// <param name="input">The array to search in.</param>
+    /// <param name="pattern">The pattern to search for. Use ? or ?? as placeholders for variable content.</param>
+    /// <param name="indexes">A list of offsets where the pattern is found in the provided input array.</param>
     public static void FindAll(ReadOnlySpan<byte> input, string pattern, out IEnumerable<int> indexes)
     {
-        int bytes = pattern.Split(' ').Length;
+        int elements = pattern.Split(' ').Length;
         List<int> offsets = new();
-        int offset, start = 0;
+        int position = 0;
 
-        while ((offset = Scan(input.Slice(start), pattern)) != -1)
+        while (Find(input.Slice(position), pattern, out int offset))
         {
-            offsets.Add(start + offset);
+            offsets.Add(position + offset);
 
-            start += offset + bytes;
+            position += offset + elements;
         }
 
         indexes = offsets;
     }
 
-    public static int Scan(ReadOnlySpan<byte> input, string pattern)
+    /// <summary>
+    ///     Attempts to find the first occurrence of the provided pattern.
+    /// </summary>
+    /// <param name="input">The array to search in.</param>
+    /// <param name="pattern">The pattern to search for. Use ? or ?? as placeholders for variable content.</param>
+    /// <param name="offset">The zero-based index, if found or -1 otherwise.</param>
+    /// <returns>True if the pattern was found, false otherwise.</returns>
+    public static bool Find(ReadOnlySpan<byte> input, string pattern, out int offset)
     {
         string[] pBytes = pattern.Split(' ');
 
@@ -71,13 +87,15 @@ internal static class Pattern
 
             if (CheckPattern(pattern, checkArray))
             {
-                return y;
+                offset = y;
+                return true;
             }
 
             y += pBytes.Length - (pBytes.Length / 2);
         }
 
-        return -1;
+        offset = -1;
+        return false;
     }
 }
 #endif
