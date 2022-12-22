@@ -1,5 +1,7 @@
 ﻿// ReSharper disable RedundantUsingDirective
 #if NET6_0_OR_GREATER
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
@@ -10,7 +12,7 @@ namespace Nefarius.Utilities.Bluetooth.Util;
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 internal static class Pattern
 {
-    private static bool CheckPattern(string pattern, IReadOnlyCollection<byte> input)
+    private static bool CheckPattern(string pattern, ReadOnlySpan<byte> input)
     {
         string[] strBytes = pattern.Split(' ');
         int x = 0;
@@ -33,7 +35,31 @@ internal static class Pattern
         return true;
     }
 
-    public static int Scan(byte[] input, string pattern)
+    public static void FindAll(ReadOnlySpan<byte> input, string pattern, out IEnumerable<int> indexes)
+    {
+        int bytes = pattern.Split(' ').Length;
+        byte[] iterator = input.ToArray();
+        List<int> offsets = new();
+        int offset;
+
+        while ((offset = Scan(iterator, pattern)) != -1)
+        {
+            if (offset == 0)
+            {
+                offsets.Add(offsets.Any() ? offsets.Last() + bytes : bytes);
+            }
+            else
+            {
+                offsets.Add(offsets.Any() ? offsets.Last() + offset : offset);
+            }
+
+            iterator = iterator.Skip(offset + bytes).ToArray();
+        }
+
+        indexes = offsets;
+    }
+
+    public static int Scan(ReadOnlySpan<byte> input, string pattern)
     {
         string[] pBytes = pattern.Split(' ');
 

@@ -146,16 +146,11 @@ public static class SdpPatcher
     {
         try
         {
-            var elementSizeIndexes = new List<int>();
-            int index = -1;
-            var iterator = input.ToArray();
             var pattern = "35 ??";
-            //var pattern = "05 01 09 05";
-            while ((index = Pattern.Scan(iterator, pattern)) != -1)
-            {
-                elementSizeIndexes.Add(index);
-                iterator = iterator.Skip(index + 4).ToArray();
-            }
+         
+            Pattern.FindAll(input, pattern, out var indexes);
+
+            var t = input[indexes.Last()];
 
             byte[] descriptorStartPattern = new byte[] { 0x05, 0x01, 0x09, 0x05 };
             int descriptorStartIndex = new BoyerMoore(descriptorStartPattern).Search(input).First();
