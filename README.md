@@ -43,3 +43,5 @@ radio.RestartRadio();
 - [Display Filter Reference: Bluetooth SDP Protocol](https://www.wireshark.org/docs/dfref/b/btsdp.html)
 - [C# Pattern Scan(Array Of Byte Scan) Class](https://zpackdev.blogspot.com/2016/10/c-pattern-scanarray-of-byte-scan-class.html)
 - [Simple C# Pattern Scan](https://guidedhacking.com/threads/simple-c-pattern-scan.13981/)
+- [USB-HID-Report-Parser](https://github.com/uint32tMnstr/USB-HID-Report-Parser)
+- [BoyerMoore](https://github.com/TheAlgorithms/C-Sharp/blob/master/Algorithms/Strings/BoyerMoore.cs)
