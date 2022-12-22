@@ -45,16 +45,7 @@ internal static class Pattern
         {
             offsets.Add(start + offset);
 
-            /*if (offset == 0)
-            {
-                offsets.Add(offsets.Any() ? offsets.Last() + bytes : bytes);
-            }
-            else
-            {
-                offsets.Add(offsets.Any() ? offsets.Last() + offset : offset);
-            }*/
-
-            start += (offset + bytes);
+            start += offset + bytes;
         }
 
         indexes = offsets;
