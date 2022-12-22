@@ -1,0 +1,888 @@
+[Reassembled Attribute List]
+    Attribute Lists [count =  3]
+        Data Element: Sequence uint16 640 bytes
+            0011 0... = Data Element Type: Sequence (6)
+            .... .110 = Data Element Size: uint16 (6)
+            Data Element Var Size: 640
+            Data Value
+                Attribute List [count =  9] (Service Discovery Server Service Class ID)
+                    Data Element: Sequence uint16 110 bytes
+                        0011 0... = Data Element Type: Sequence (6)
+                        .... .110 = Data Element Size: uint16 (6)
+                        Data Element Var Size: 110
+                        Data Value
+                            Service Attribute: Service Record Handle (0x0), value = 0x00000000 (0)
+                                Attribute ID: Service Record Handle
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Record Handle (0x0000)
+                                Value
+                                    Data Element: Unsigned Integer 4 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .010 = Data Element Size: 4 bytes (2)
+                                        Data Value
+                                            Service Record Handle: 0x00000000
+                            Service Attribute: Service Class ID List (0x1), value = Service Discovery Server Service Class ID
+                                Attribute ID: Service Class ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Class ID List (0x0001)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Data Element: UUID 2 bytes
+                                                0001 1... = Data Element Type: UUID (3)
+                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                Data Value
+                                                    Value: UUID: Service Discovery Server Service Class ID (0x1000)
+                            Service Attribute: Protocol Descriptor List (0x4), value = L2CAP:1 -> SDP
+                                Attribute ID: Protocol Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Protocol Descriptor List (0x0004)
+                                Value
+                                    Data Element: Sequence uint8 13 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 13
+                                        Data Value
+                                            Protocol #1: L2CAP, PSM: 1
+                                                Data Element: Sequence uint8 6 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 6
+                                                    Data Value
+                                                        Protocol Entry: L2CAP, PSM: 1
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: L2CAP (0x0100)
+                                                            Data Element: Unsigned Integer 2 bytes
+                                                                0000 1... = Data Element Type: Unsigned Integer (1)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    L2CAP PSM: SDP (1)
+                                            Protocol #2: SDP
+                                                Data Element: Sequence uint8 3 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 3
+                                                    Data Value
+                                                        Protocol Entry: SDP
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: SDP (0x0001)
+                            Service Attribute: Browse Group List (0x5), value = Public Browse Group
+                                Attribute ID: Browse Group List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Browse Group List (0x0005)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Data Element: UUID 2 bytes
+                                                0001 1... = Data Element Type: UUID (3)
+                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                Data Value
+                                                    Value: UUID: Public Browse Group (0x1002)
+                            Service Attribute: Language Base Attribute ID List (0x6), value = (Lang: en, Encoding: UTF-8, Attribute Base: 0x0100)
+                                Attribute ID: Language Base Attribute ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Language Base Attribute ID List (0x0006)
+                                Value
+                                    Data Element: Sequence uint8 9 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 9
+                                        Data Value
+                                            Language #1: Lang: en, Encoding: UTF-8, Attribute Base: 0x0100
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Code: en
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Encoding: UTF-8 (106)
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Attribute Base: 0x0100
+                            Service Attribute: Bluetooth Profile Descriptor List (0x9), value = L2CAP 1.0
+                                Attribute ID: Bluetooth Profile Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Bluetooth Profile Descriptor List (0x0009)
+                                Value
+                                    Data Element: Sequence uint8 8 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 8
+                                        Data Value
+                                            Data Element: Sequence uint8 6 bytes
+                                                0011 0... = Data Element Type: Sequence (6)
+                                                .... .101 = Data Element Size: uint8 (5)
+                                                Data Element Var Size: 6
+                                                Data Value
+                                                    Profile Descriptor List #1: L2CAP, Version 1.0
+                                                        Data Element: UUID 2 bytes
+                                                            0001 1... = Data Element Type: UUID (3)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Value: UUID: L2CAP (0x0100)
+                                                        Data Element: Unsigned Integer 2 bytes
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Protocol Version: 0x0100
+                            Service Attribute: Service Name (0x100), value = Wireless Gamepad
+                                Attribute ID: Service Name
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Name (0x0100)
+                                Value
+                                    Data Element: Text string uint8 16 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 16
+                                        Data Value
+                                            Service Name: Wireless Gamepad
+                            Service Attribute: Service Description (0x101), value = Gamepad
+                                Attribute ID: Service Description
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Description (0x0101)
+                                Value
+                                    Data Element: Text string uint8 7 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 7
+                                        Data Value
+                                            Service Description: Gamepad
+                            Service Attribute: Unknown (0x200), value = { 256  } 
+                                Attribute ID: Unknown
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Unknown (0x0200)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Value: Sequence
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Value: Unsigned Int: 256 (0x0000000000000100)
+                Attribute List [count = 22] (Human Interface Device Service)
+                    Data Element: Sequence uint16 381 bytes
+                        0011 0... = Data Element Type: Sequence (6)
+                        .... .110 = Data Element Size: uint16 (6)
+                        Data Element Var Size: 381
+                        Data Value
+                            Service Attribute: Service Record Handle (0x0), value = 0x00010000 (65536)
+                                Attribute ID: Service Record Handle
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Record Handle (0x0000)
+                                Value
+                                    Data Element: Unsigned Integer 4 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .010 = Data Element Size: 4 bytes (2)
+                                        Data Value
+                                            Service Record Handle: 0x00010000
+                            Service Attribute: Service Class ID List (0x1), value = Human Interface Device Service
+                                Attribute ID: Service Class ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Class ID List (0x0001)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Data Element: UUID 2 bytes
+                                                0001 1... = Data Element Type: UUID (3)
+                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                Data Value
+                                                    Value: UUID: Human Interface Device Service (0x1124)
+                            Service Attribute: Protocol Descriptor List (0x4), value = L2CAP:17 -> HIDP
+                                Attribute ID: Protocol Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Protocol Descriptor List (0x0004)
+                                Value
+                                    Data Element: Sequence uint8 13 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 13
+                                        Data Value
+                                            Protocol #1: L2CAP, PSM: 17
+                                                Data Element: Sequence uint8 6 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 6
+                                                    Data Value
+                                                        Protocol Entry: L2CAP, PSM: 17
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: L2CAP (0x0100)
+                                                            Data Element: Unsigned Integer 2 bytes
+                                                                0000 1... = Data Element Type: Unsigned Integer (1)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    L2CAP PSM: HID-Control (17)
+                                            Protocol #2: HIDP
+                                                Data Element: Sequence uint8 3 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 3
+                                                    Data Value
+                                                        Protocol Entry: HIDP
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: HIDP (0x0011)
+                            Service Attribute: Browse Group List (0x5), value = Public Browse Group
+                                Attribute ID: Browse Group List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Browse Group List (0x0005)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Data Element: UUID 2 bytes
+                                                0001 1... = Data Element Type: UUID (3)
+                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                Data Value
+                                                    Value: UUID: Public Browse Group (0x1002)
+                            Service Attribute: Language Base Attribute ID List (0x6), value = (Lang: en, Encoding: UTF-8, Attribute Base: 0x0100)
+                                Attribute ID: Language Base Attribute ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Language Base Attribute ID List (0x0006)
+                                Value
+                                    Data Element: Sequence uint8 9 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 9
+                                        Data Value
+                                            Language #1: Lang: en, Encoding: UTF-8, Attribute Base: 0x0100
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Code: en
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Encoding: UTF-8 (106)
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Attribute Base: 0x0100
+                            Service Attribute: Bluetooth Profile Descriptor List (0x9), value = Human Interface Device Service 1.1
+                                Attribute ID: Bluetooth Profile Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Bluetooth Profile Descriptor List (0x0009)
+                                Value
+                                    Data Element: Sequence uint8 8 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 8
+                                        Data Value
+                                            Data Element: Sequence uint8 6 bytes
+                                                0011 0... = Data Element Type: Sequence (6)
+                                                .... .101 = Data Element Size: uint8 (5)
+                                                Data Element Var Size: 6
+                                                Data Value
+                                                    Profile Descriptor List #1: Human Interface Device Service, Version 1.1
+                                                        Data Element: UUID 2 bytes
+                                                            0001 1... = Data Element Type: UUID (3)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Value: UUID: Human Interface Device Service (0x1124)
+                                                        Data Element: Unsigned Integer 2 bytes
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Protocol Version: 0x0101
+                            Service Attribute: Additional Protocol Descriptor Lists (0xd), value = [L2CAP:19 -> HIDP] 
+                                Attribute ID: Additional Protocol Descriptor Lists
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Additional Protocol Descriptor Lists (0x000d)
+                                Value
+                                    Data Element: Sequence uint8 15 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 15
+                                        Data Value
+                                            Data Element: Sequence uint8 13 bytes
+                                                0011 0... = Data Element Type: Sequence (6)
+                                                .... .101 = Data Element Size: uint8 (5)
+                                                Data Element Var Size: 13
+                                                Data Value
+                                                    Protocol Descriptor List #1
+                                                        Protocol #1: L2CAP, PSM: 19
+                                                            Data Element: Sequence uint8 6 bytes
+                                                                0011 0... = Data Element Type: Sequence (6)
+                                                                .... .101 = Data Element Size: uint8 (5)
+                                                                Data Element Var Size: 6
+                                                                Data Value
+                                                                    Protocol Entry: L2CAP, PSM: 19
+                                                                        Data Element: UUID 2 bytes
+                                                                            0001 1... = Data Element Type: UUID (3)
+                                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                                            Data Value
+                                                                                Value: UUID: L2CAP (0x0100)
+                                                                        Data Element: Unsigned Integer 2 bytes
+                                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                                            Data Value
+                                                                                L2CAP PSM: HID-Interrupt (19)
+                                                        Protocol #2: HIDP
+                                                            Data Element: Sequence uint8 3 bytes
+                                                                0011 0... = Data Element Type: Sequence (6)
+                                                                .... .101 = Data Element Size: uint8 (5)
+                                                                Data Element Var Size: 3
+                                                                Data Value
+                                                                    Protocol Entry: HIDP
+                                                                        Data Element: UUID 2 bytes
+                                                                            0001 1... = Data Element Type: UUID (3)
+                                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                                            Data Value
+                                                                                Value: UUID: HIDP (0x0011)
+                            Service Attribute: Service Name (0x100), value = Wireless Gamepad
+                                Attribute ID: Service Name
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Name (0x0100)
+                                Value
+                                    Data Element: Text string uint8 16 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 16
+                                        Data Value
+                                            Service Name: Wireless Gamepad
+                            Service Attribute: Service Description (0x101), value = Gamepad
+                                Attribute ID: Service Description
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Description (0x0101)
+                                Value
+                                    Data Element: Text string uint8 7 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 7
+                                        Data Value
+                                            Service Description: Gamepad
+                            Service Attribute: Provider Name (0x102), value = Nintendo
+                                Attribute ID: Provider Name
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Provider Name (0x0102)
+                                Value
+                                    Data Element: Text string uint8 8 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 8
+                                        Data Value
+                                            Provider Name: Nintendo
+                            Service Attribute: (HID) Parser Version (0x201), value = 1.1.1 (0x0111)
+                                Attribute ID: Parser Version
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Parser Version (0x0201)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Parser Version: 0x0111
+                            Service Attribute: (HID) Device Subclass (0x202), value = Not Keyboard / Not Pointing Device, Gamepad
+                                Attribute ID: Device Subclass
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Device Subclass (0x0202)
+                                Value
+                                    Data Element: Unsigned Integer 1 byte (0 bytes if Nil)
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            00.. .... = Device Subclass: Type: Not Keyboard / Not Pointing Device (0x0)
+                                            ..00 10.. = Device Subclass: SubType: Gamepad (0x2)
+                                            .... ..00 = Device Subclass: Reserved: 0x0
+                            Service Attribute: (HID) Country Code (0x203), value = US
+                                Attribute ID: Country Code
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Country Code (0x0203)
+                                Value
+                                    Data Element: Unsigned Integer 1 byte (0 bytes if Nil)
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Country Code: US (33)
+                            Service Attribute: (HID) Virtual Cable (0x204), value = true
+                                Attribute ID: Virtual Cable
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Virtual Cable (0x0204)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Virtual Cable: True
+                            Service Attribute: (HID) Reconnect Initiate (0x205), value = true
+                                Attribute ID: Reconnect Initiate
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Reconnect Initiate (0x0205)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Reconnect Initiate: True
+                            Service Attribute: (HID) Descriptor List (0x206), value = Report
+                                Attribute ID: Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Descriptor List (0x0206)
+                                Value
+                                    Data Element: Sequence uint8 176 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 176
+                                        Data Value
+                                            Descriptor #1: Report
+                                                Data Element: Sequence uint8 174 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 174
+                                                    Data Value
+                                                        Data Element: Unsigned Integer 1 byte (0 bytes if Nil)
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                                            Data Value
+                                                                Descriptor Type: Report (0x22)
+                                                        Data Element: Text string uint8 170 bytes
+                                                            0010 0... = Data Element Type: Text string (4)
+                                                            .... .101 = Data Element Size: uint8 (5)
+                                                            Data Element Var Size: 170
+                                                            Data Value
+                                                                Descriptor: 05010905a1010601ff852109217508953081028530093075089530810285310931750896…
+                            Service Attribute: (HID) LANG ID Base List (0x207), value = [Lang ID: English (United States), Attribute Base: 0x0100]
+                                Attribute ID: LANG ID Base List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: LANG ID Base List (0x0207)
+                                Value
+                                    Data Element: Sequence uint8 8 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 8
+                                        Data Value
+                                            Language #1: Lang ID: English (United States), Attribute Base: 0x0100
+                                                Data Element: Sequence uint8 6 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 6
+                                                    Data Value
+                                                        Data Element: Unsigned Integer 2 bytes
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Language ID: English (United States) (0x0409)
+                                                        Data Element: Unsigned Integer 2 bytes
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Attribute Base: 0x0100
+                            Service Attribute: (HID) Battery Power (0x209), value = true
+                                Attribute ID: Battery Power
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Battery Power (0x0209)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Battery Power: True
+                            Service Attribute: (HID) Remote Wake (0x20a), value = true
+                                Attribute ID: Remote Wake
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Remote Wake (0x020a)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Remote Wake: True
+                            Service Attribute: (HID) Supervision Timeout (0x20c), value = 3200
+                                Attribute ID: Supervision Timeout
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Supervision Timeout (0x020c)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Supervision Timeout: 3200
+                            Service Attribute: (HID) Normally Connectable (0x20d), value = false
+                                Attribute ID: Normally Connectable
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Normally Connectable (0x020d)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Normally Connectable: False
+                            Service Attribute: (HID) BootDevice (0x20e), value = false
+                                Attribute ID: BootDevice
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: BootDevice (0x020e)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Boot Device: False
+                Attribute List [count = 13] (PnP Information)
+                    Data Element: Sequence uint16 140 bytes
+                        0011 0... = Data Element Type: Sequence (6)
+                        .... .110 = Data Element Size: uint16 (6)
+                        Data Element Var Size: 140
+                        Data Value
+                            Service Attribute: Service Record Handle (0x0), value = 0x00010001 (65537)
+                                Attribute ID: Service Record Handle
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Record Handle (0x0000)
+                                Value
+                                    Data Element: Unsigned Integer 4 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .010 = Data Element Size: 4 bytes (2)
+                                        Data Value
+                                            Service Record Handle: 0x00010001
+                            Service Attribute: Service Class ID List (0x1), value = PnP Information
+                                Attribute ID: Service Class ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Class ID List (0x0001)
+                                Value
+                                    Data Element: Sequence uint8 3 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 3
+                                        Data Value
+                                            Data Element: UUID 2 bytes
+                                                0001 1... = Data Element Type: UUID (3)
+                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                Data Value
+                                                    Value: UUID: PnP Information (0x1200)
+                            Service Attribute: Protocol Descriptor List (0x4), value = L2CAP:1 -> SDP
+                                Attribute ID: Protocol Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Protocol Descriptor List (0x0004)
+                                Value
+                                    Data Element: Sequence uint8 13 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 13
+                                        Data Value
+                                            Protocol #1: L2CAP, PSM: 1
+                                                Data Element: Sequence uint8 6 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 6
+                                                    Data Value
+                                                        Protocol Entry: L2CAP, PSM: 1
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: L2CAP (0x0100)
+                                                            Data Element: Unsigned Integer 2 bytes
+                                                                0000 1... = Data Element Type: Unsigned Integer (1)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    L2CAP PSM: SDP (1)
+                                            Protocol #2: SDP
+                                                Data Element: Sequence uint8 3 bytes
+                                                    0011 0... = Data Element Type: Sequence (6)
+                                                    .... .101 = Data Element Size: uint8 (5)
+                                                    Data Element Var Size: 3
+                                                    Data Value
+                                                        Protocol Entry: SDP
+                                                            Data Element: UUID 2 bytes
+                                                                0001 1... = Data Element Type: UUID (3)
+                                                                .... .001 = Data Element Size: 2 bytes (1)
+                                                                Data Value
+                                                                    Value: UUID: SDP (0x0001)
+                            Service Attribute: Language Base Attribute ID List (0x6), value = (Lang: en, Encoding: UTF-8, Attribute Base: 0x0100)
+                                Attribute ID: Language Base Attribute ID List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Language Base Attribute ID List (0x0006)
+                                Value
+                                    Data Element: Sequence uint8 9 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 9
+                                        Data Value
+                                            Language #1: Lang: en, Encoding: UTF-8, Attribute Base: 0x0100
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Code: en
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Language Encoding: UTF-8 (106)
+                                                Data Element: Unsigned Integer 2 bytes
+                                                    0000 1... = Data Element Type: Unsigned Integer (1)
+                                                    .... .001 = Data Element Size: 2 bytes (1)
+                                                    Data Value
+                                                        Attribute Base: 0x0100
+                            Service Attribute: Bluetooth Profile Descriptor List (0x9), value = PnP Information 1.0
+                                Attribute ID: Bluetooth Profile Descriptor List
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Bluetooth Profile Descriptor List (0x0009)
+                                Value
+                                    Data Element: Sequence uint8 8 bytes
+                                        0011 0... = Data Element Type: Sequence (6)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 8
+                                        Data Value
+                                            Data Element: Sequence uint8 6 bytes
+                                                0011 0... = Data Element Type: Sequence (6)
+                                                .... .101 = Data Element Size: uint8 (5)
+                                                Data Element Var Size: 6
+                                                Data Value
+                                                    Profile Descriptor List #1: PnP Information, Version 1.0
+                                                        Data Element: UUID 2 bytes
+                                                            0001 1... = Data Element Type: UUID (3)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Value: UUID: PnP Information (0x1200)
+                                                        Data Element: Unsigned Integer 2 bytes
+                                                            0000 1... = Data Element Type: Unsigned Integer (1)
+                                                            .... .001 = Data Element Size: 2 bytes (1)
+                                                            Data Value
+                                                                Protocol Version: 0x0100
+                            Service Attribute: Service Name (0x100), value = Wireless Gamepad PnP Server
+                                Attribute ID: Service Name
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Name (0x0100)
+                                Value
+                                    Data Element: Text string uint8 27 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 27
+                                        Data Value
+                                            Service Name: Wireless Gamepad PnP Server
+                            Service Attribute: Service Description (0x101), value = Gamepad
+                                Attribute ID: Service Description
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Service Description (0x0101)
+                                Value
+                                    Data Element: Text string uint8 7 bytes
+                                        0010 0... = Data Element Type: Text string (4)
+                                        .... .101 = Data Element Size: uint8 (5)
+                                        Data Element Var Size: 7
+                                        Data Value
+                                            Service Description: Gamepad
+                            Service Attribute: (DID) Specification ID (0x200), value = 1.03 (0x0103)
+                                Attribute ID: Specification ID
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Specification ID (0x0200)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Specification ID: 0x0103
+                            Service Attribute: (DID) Vendor ID (0x201), value = Nintendo Co., Ltd (0x057e)
+                                Attribute ID: Vendor ID
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Vendor ID (0x0201)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Vendor ID: Nintendo Co., Ltd (0x057e)
+                            Service Attribute: (DID) Product ID (0x202), value = Switch Pro Controller (0x2009)
+                                Attribute ID: Product ID
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Product ID (0x0202)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Product ID: 0x2009 (Switch Pro Controller)
+                            Service Attribute: (DID) Version (0x203), value = 0.0.1 (0x0001)
+                                Attribute ID: Version
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Version (0x0203)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Version: 0x0001
+                            Service Attribute: (DID) Primary Record (0x204), value = true
+                                Attribute ID: Primary Record
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Primary Record (0x0204)
+                                Value
+                                    Data Element: Boolean 1 byte (0 bytes if Nil)
+                                        0010 1... = Data Element Type: Boolean (5)
+                                        .... .000 = Data Element Size: 1 byte (0 bytes if Nil) (0)
+                                        Data Value
+                                            Primary Record: True
+                            Service Attribute: (DID) Vendor ID Source (0x205), value = USB Implementer's Forum (0x0002)
+                                Attribute ID: Vendor ID Source
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Attribute ID: Vendor ID Source (0x0205)
+                                Value
+                                    Data Element: Unsigned Integer 2 bytes
+                                        0000 1... = Data Element Type: Unsigned Integer (1)
+                                        .... .001 = Data Element Size: 2 bytes (1)
+                                        Data Value
+                                            Vendor ID Source: USB Implementer's Forum (0x0002)
