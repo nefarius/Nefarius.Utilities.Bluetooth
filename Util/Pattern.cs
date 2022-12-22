@@ -69,18 +69,18 @@ public static class Pattern
     /// <returns>True if the pattern was found, false otherwise.</returns>
     public static bool Find(ReadOnlySpan<byte> input, string pattern, out int offset)
     {
-        string[] pBytes = pattern.Split(' ');
+        string[] elements = pattern.Split(' ');
 
         for (int y = 0; y < input.Length; y++)
         {
-            if (input[y] != byte.Parse(pBytes[0], NumberStyles.HexNumber))
+            if (input[y] != byte.Parse(elements[0], NumberStyles.HexNumber))
             {
                 continue;
             }
 
-            byte[] checkArray = new byte[pBytes.Length];
+            byte[] checkArray = new byte[elements.Length];
 
-            for (int x = 0; x < pBytes.Length; x++)
+            for (int x = 0; x < elements.Length; x++)
             {
                 checkArray[x] = input[y + x];
             }
@@ -91,7 +91,7 @@ public static class Pattern
                 return true;
             }
 
-            y += pBytes.Length - (pBytes.Length / 2);
+            y += elements.Length - (elements.Length / 2);
         }
 
         offset = -1;
