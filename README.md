@@ -36,3 +36,10 @@ Restart/reload:
 using var radio = new HostRadio();
 radio.RestartRadio();
 ```
+
+## 3rd party credits
+
+- [USB Descriptor and Request Parser](http://eleccelerator.com/usbdescreqparser/)
+- [Display Filter Reference: Bluetooth SDP Protocol](https://www.wireshark.org/docs/dfref/b/btsdp.html)
+- [C# Pattern Scan(Array Of Byte Scan) Class](https://zpackdev.blogspot.com/2016/10/c-pattern-scanarray-of-byte-scan-class.html)
+- [Simple C# Pattern Scan](https://guidedhacking.com/threads/simple-c-pattern-scan.13981/)
