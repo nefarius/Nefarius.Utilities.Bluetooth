@@ -45,3 +45,4 @@ radio.RestartRadio();
 - [Simple C# Pattern Scan](https://guidedhacking.com/threads/simple-c-pattern-scan.13981/)
 - [USB-HID-Report-Parser](https://github.com/uint32tMnstr/USB-HID-Report-Parser)
 - [BoyerMoore](https://github.com/TheAlgorithms/C-Sharp/blob/master/Algorithms/Strings/BoyerMoore.cs)
+- [Generic Boyer–Moore–Horspool algorithm in C# .NET](https://swimburger.net/blog/dotnet/generic-boyer-moore-horspool-algorithm-in-csharp-dotnet)
