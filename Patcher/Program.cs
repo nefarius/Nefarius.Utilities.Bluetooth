@@ -5,9 +5,11 @@ using Nefarius.Utilities.Bluetooth.SDP;
 
 List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
+#if TEST
 var d = bthPortDevices.First(dev => Equals(dev.RemoteAddress, PhysicalAddress.Parse("748469da44d6")));
 
 var t = SdpPatcher.AlterHidDeviceToVenderDefined(d.CachedServices.ToArray(), out byte[]? p);
+#endif
 
 foreach (BthPortDevice? device in bthPortDevices)
 {
