@@ -1,4 +1,5 @@
-﻿using System;
+﻿// ReSharper disable RedundantUsingDirective
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Nefarius.Utilities.Bluetooth.Util;
@@ -10,6 +11,7 @@ namespace Nefarius.Utilities.Bluetooth.Util;
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "EventNeverSubscribedTo.Global")]
 [SuppressMessage("ReSharper", "InconsistentNaming")]
+[SuppressMessage("ReSharper", "UnusedMethodReturnValue.Global")]
 public class HidReportDescriptorParser
 {
     private const int TAG_OFFSET = 4;

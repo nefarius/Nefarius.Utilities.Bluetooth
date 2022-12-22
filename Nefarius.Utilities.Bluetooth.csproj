@@ -16,6 +16,12 @@
     <RepositoryUrl>https://github.com/nefarius/Nefarius.Drivers.HidHide</RepositoryUrl>
     <PackageProjectUrl>https://github.com/nefarius/Nefarius.Drivers.HidHide</PackageProjectUrl>
     <Description>Utility library for unconventional Bluetooth tasks on Windows.</Description>
+    <PackageId>Nefarius.Utilities.Bluetooth</PackageId>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <ItemGroup>
