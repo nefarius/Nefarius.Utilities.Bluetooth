@@ -13,6 +13,7 @@
     <Compile Include="..\SDP\SdpPatcher.cs" Link="SDP\SdpPatcher.cs" />
     <Compile Include="..\Util\BoyerMoore.cs" Link="Util\BoyerMoore.cs" />
     <Compile Include="..\Util\HidReportDescriptorParser.cs" Link="Util\HidReportDescriptorParser.cs" />
+    <Compile Include="..\Util\Pattern.cs" Link="Util\Pattern.cs" />
   </ItemGroup>
 
 </Project>

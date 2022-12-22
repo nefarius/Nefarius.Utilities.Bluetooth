@@ -32,13 +32,15 @@ public sealed class BthPortDevice
     /// </summary>
     public byte[] CachedServices
     {
-        get => (byte[])_cachedServicesKey?.GetValue("00010001");
+        get => (byte[])_cachedServicesKey?.GetValue(BthPort.FindValueNameContainingRecords(_cachedServicesKey));
         set
         {
+            string valueName = BthPort.FindValueNameContainingRecords(_cachedServicesKey);
+
             // make backup copy
-            _cachedServicesKey.SetValue("Nefarius-00010001-Backup", CachedServices, RegistryValueKind.Binary);
+            _cachedServicesKey.SetValue($"Nefarius-{valueName}-Backup", CachedServices, RegistryValueKind.Binary);
             // update original value
-            _cachedServicesKey.SetValue("00010001", value, RegistryValueKind.Binary);
+            _cachedServicesKey.SetValue(valueName, value, RegistryValueKind.Binary);
         }
     }
 
@@ -49,7 +51,9 @@ public sealed class BthPortDevice
     {
         get
         {
-            byte[] content = (byte[])_cachedServicesKey?.GetValue("Nefarius-00010001-Backup");
+            string valueName = BthPort.FindValueNameContainingRecords(_cachedServicesKey);
+
+            byte[] content = (byte[])_cachedServicesKey?.GetValue($"Nefarius-{valueName}-Backup");
 
             return content is not null;
         }
@@ -67,7 +71,9 @@ public sealed class BthPortDevice
                 return CachedServices;
             }
 
-            return (byte[])_cachedServicesKey?.GetValue("Nefarius-00010001-Backup");
+            string valueName = BthPort.FindValueNameContainingRecords(_cachedServicesKey);
+
+            return (byte[])_cachedServicesKey?.GetValue($"Nefarius-{valueName}-Backup");
         }
     }
 
@@ -81,7 +87,9 @@ public sealed class BthPortDevice
             return;
         }
 
-        _cachedServicesKey?.DeleteValue("Nefarius-00010001-Backup");
+        string valueName = BthPort.FindValueNameContainingRecords(_cachedServicesKey);
+
+        _cachedServicesKey?.DeleteValue($"Nefarius-{valueName}-Backup");
     }
 
     /// <inheritdoc />

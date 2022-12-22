@@ -50,27 +50,8 @@ public static class BthPort
                         continue;
                     }
 
-                    string[] values = cachedServices.GetValueNames();
-
-                    if (values.Length == 0)
-                    {
-                        continue;
-                    }
-
-                    if (!values.Intersect(ValidValueNames).Any())
-                    {
-                        continue;
-                    }
-
                     // Check if content is of interest
-                    string valueName =
-                        (
-                            from name in values
-                            let content = (byte[])cachedServices.GetValue(name)
-                            where content is not null && content.Any() && content[0] == 0x36
-                            select name
-                        )
-                        .FirstOrDefault();
+                    string valueName = FindValueNameContainingRecords(cachedServices);
 
                     if (valueName is null)
                     {
@@ -94,5 +75,31 @@ public static class BthPort
                 }
             }
         }
+    }
+
+    internal static string FindValueNameContainingRecords(RegistryKey cachedServices)
+    {
+        string[] values = cachedServices.GetValueNames();
+
+        if (values.Length == 0)
+        {
+            return null;
+        }
+
+        if (!values.Intersect(ValidValueNames).Any())
+        {
+            return null;
+        }
+
+        string valueName =
+            (
+                from name in values
+                let content = (byte[])cachedServices.GetValue(name)
+                where content is not null && content.Any() && content[0] == 0x36
+                select name
+            )
+            .FirstOrDefault();
+
+        return valueName;
     }
 }

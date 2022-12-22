@@ -138,9 +138,43 @@ public static class SdpPatcher
         }
         catch (InvalidOperationException)
         {
+            return TrySkipToReportDescriptorStart(input, out output);
+        }
+    }
+
+    private static bool TrySkipToReportDescriptorStart(byte[] input, out byte[] output)
+    {
+        try
+        {
+            var elementSizeIndexes = new List<int>();
+            int index = -1;
+            var iterator = input.ToArray();
+            var pattern = "35 ??";
+            //var pattern = "05 01 09 05";
+            while ((index = Pattern.Scan(iterator, pattern)) != -1)
+            {
+                elementSizeIndexes.Add(index);
+                iterator = iterator.Skip(index + 4).ToArray();
+            }
+
+            byte[] descriptorStartPattern = new byte[] { 0x05, 0x01, 0x09, 0x05 };
+            int descriptorStartIndex = new BoyerMoore(descriptorStartPattern).Search(input).First();
+
+            var descriptorSizeIndex = descriptorStartIndex - 1;
+            var descriptorSize = input[descriptorSizeIndex];
+
+            var descriptor = input.Skip(descriptorStartIndex).Take(descriptorSize).ToList();
+
+            //var hex = string.Join(" ", descriptor.Select(b => $"{b:X2} "));
+        }
+        catch (InvalidOperationException)
+        {
             output = null;
             return false;
         }
+
+        output = null;
+        return false;
     }
 }
 #endif
