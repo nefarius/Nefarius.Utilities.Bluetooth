@@ -13,6 +13,23 @@ List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
 foreach (BthPortDevice? device in bthPortDevices)
 {
+    if (device.IsCachedServicesPatched)
+    {
+        if (!UtilsConsole.Confirm($"Found PATCHED device {device}, want me to undo the patch?"))
+        {
+            continue;
+        }
+
+        device.CachedServices = device.OriginalCachedServices;
+        device.DeleteOriginalCachedServices();
+
+        Console.WriteLine("Patch reverted successfully");
+            
+        using var radio = new HostRadio();
+        radio.RestartRadio();
+        continue;
+    }
+
     if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices, out byte[]? patched))
     {
         if (!device.IsCachedServicesPatched)
@@ -26,21 +43,6 @@ foreach (BthPortDevice? device in bthPortDevices)
 
             Console.WriteLine("Patch applied successfully");
 
-            using var radio = new HostRadio();
-            radio.RestartRadio();
-        }
-        else
-        {
-            if (!UtilsConsole.Confirm($"Found PATCHED device {device}, want me to undo the patch?"))
-            {
-                continue;
-            }
-
-            device.CachedServices = device.OriginalCachedServices;
-            device.DeleteOriginalCachedServices();
-
-            Console.WriteLine("Patch reverted successfully");
-            
             using var radio = new HostRadio();
             radio.RestartRadio();
         }
