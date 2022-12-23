@@ -1,11 +1,19 @@
-﻿using Nefarius.Utilities.Bluetooth;
+﻿/*
+ * Demo application to test SdpPatcher class.
+ *
+ * Enumerates all BthPort.Devices, tests if their found records are patchable
+ * and asks the user to patch the record from gamepad to vendor device or to
+ * undo the patch if it detects a device with a backed up original record.
+ */
+
+using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
 
 List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
 foreach (BthPortDevice? device in bthPortDevices)
 {
-    if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices.ToArray(), out byte[]? patched))
+    if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices, out byte[]? patched))
     {
         if (!device.IsCachedServicesPatched)
         {
@@ -39,6 +47,9 @@ foreach (BthPortDevice? device in bthPortDevices)
     }
 }
 
+/// <summary>
+///     Utility class to create a user prompt at the console.
+/// </summary>
 internal static class UtilsConsole
 {
     public static bool Confirm(string title)
