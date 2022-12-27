@@ -25,6 +25,15 @@ public class Tests
             RegFile file = new(testFile);
 
             KeyValuePair<string, Dictionary<string, RegValue>> cachedEntries = file.RegValues.First();
+
+            Dictionary<string, RegValueBinary> binValues = cachedEntries.Value
+                .Where(v => v.Value.Type == RegValueType.Binary)
+                .ToDictionary(pair => pair.Key, pair => (RegValueBinary)pair.Value);
+
+            KeyValuePair<string, RegValueBinary> recordEntry =
+                binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
+
+            byte[] recordBlob = recordEntry.Value.Value.ToArray();
         }
     }
 
