@@ -1,5 +1,6 @@
 using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
+using Nefarius.Utilities.Registry;
 
 namespace Tests;
 
@@ -11,11 +12,28 @@ public class Tests
     }
 
     [Test]
+    public void Test2()
+    {
+        string[] testFiles = Directory.GetFiles(
+            @"D:\Development\GitHub\Nefarius.Utilities.Bluetooth\Dumps",
+            "*.reg",
+            SearchOption.AllDirectories
+        );
+
+        foreach (string testFile in testFiles)
+        {
+            RegFile file = new(testFile);
+
+            KeyValuePair<string, Dictionary<string, RegValue>> cachedEntries = file.RegValues.First();
+        }
+    }
+
+    //[Test]
     public void Test1()
     {
-        using HostRadio radio = new HostRadio();
+        using HostRadio radio = new();
 
-        var a = radio.AllDevices.ToList();
+        List<RemoteDevice> a = radio.AllDevices.ToList();
 
         foreach (BthPortDevice? device in BthPort.Devices.ToList())
         {
@@ -260,7 +278,7 @@ public class Tests
         parser.Parse(descriptor);
         */
 
-        byte[]? buffer = new byte[]
+        byte[]? buffer =
         {
             0x36, 0x02, 0xBA, 0x09, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00, 0x01, 0x09, 0x00, 0x01, 0x35, 0x03, 0x19,
             0x11, 0x24, 0x09, 0x00, 0x04, 0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x00, 0x11, 0x35, 0x03,
@@ -306,7 +324,7 @@ public class Tests
             0x02, 0x0E, 0x28, 0x00
         };
 
-        byte[] altered = new byte[]
+        byte[] altered =
         {
             0x36, 0x02, 0xBB, 0x09, 0x00, 0x00, 0x0A, 0x00, 0x01, 0x00, 0x01, 0x09, 0x00, 0x01, 0x35, 0x03, 0x19,
             0x11, 0x24, 0x09, 0x00, 0x04, 0x35, 0x0D, 0x35, 0x06, 0x19, 0x01, 0x00, 0x09, 0x00, 0x11, 0x35, 0x03,
