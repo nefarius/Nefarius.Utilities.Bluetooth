@@ -30,9 +30,11 @@ public class Tests
                 .Where(v => v.Value.Type == RegValueType.Binary)
                 .ToDictionary(pair => pair.Key, pair => (RegValueBinary)pair.Value);
 
+            CollectionAssert.IsNotEmpty(binValues);
+
             KeyValuePair<string, RegValueBinary> recordEntry =
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
-
+            
             byte[] recordBlob = recordEntry.Value.Value.ToArray();
         }
     }

@@ -20,6 +20,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "net6", "net6\net6.csproj", "{6123F5D6-16AE-4A0C-8598-271755EF9FF3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{26538875-182E-400D-8E23-0E151BBD531E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,7 +47,9 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{3B8CADDA-0BF7-41A6-B621-8A53D7FD4F0E} = {26538875-182E-400D-8E23-0E151BBD531E}
 		{FAFF5A37-19EF-4458-9857-D7AE2CFF29F1} = {6884D606-BC02-4474-BFC3-753B07F5EC3E}
+		{6123F5D6-16AE-4A0C-8598-271755EF9FF3} = {26538875-182E-400D-8E23-0E151BBD531E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7FAAC21B-569F-43D0-A2C5-1744D85B545C}
