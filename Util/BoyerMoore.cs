@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Nefarius.Utilities.Bluetooth.Util;
 
+[SuppressMessage("ReSharper", "InconsistentNaming")]
 internal sealed class BoyerMoore
 {
     private readonly int[] _charTable;
@@ -41,7 +43,9 @@ internal sealed class BoyerMoore
 
     private static int[] MakeByteTable(byte[] needle)
     {
+#pragma warning disable IDE1006
         const int ALPHABET_SIZE = 256;
+#pragma warning restore IDE1006
         var table = new int[ALPHABET_SIZE];
 
         for (var i = 0; i < table.Length; ++i)
