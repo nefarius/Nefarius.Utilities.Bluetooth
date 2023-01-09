@@ -2,11 +2,11 @@
 
 ## BthPort
 
-Convenience wrapper around `SYSTEM\\CurrentControlSet\\Services\\BTHPORT\\Parameters\\Devices` and other `BTHPORT.SYS`-related actions and properties.
+Convenience wrapper around `SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Devices` and other `BTHPORT.SYS`-related actions and properties.
 
 ## BthPortDevice
 
-Convenience wrapper around a single entity within `SYSTEM\\CurrentControlSet\\Services\\BTHPORT\\Parameters\\Devices` which represent paired remote devices and some of their more interesting properties.
+Convenience wrapper around a single entity within `SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Devices` which represent paired remote devices and some of their more interesting properties.
 
 ## SdpPatcher
 
