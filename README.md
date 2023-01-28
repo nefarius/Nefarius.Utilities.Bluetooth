@@ -37,6 +37,13 @@ using var radio = new HostRadio();
 radio.RestartRadio();
 ```
 
+### Disconnect a remote device
+
+```csharp
+using var radio = new HostRadio();
+radio.DisconnectRemoteDevice(PhysicalAddress.Parse("MAC address");
+```
+
 ## 3rd party credits
 
 - [USB Descriptor and Request Parser](http://eleccelerator.com/usbdescreqparser/)
