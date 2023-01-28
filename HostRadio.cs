@@ -304,12 +304,9 @@ public sealed class HostRadio : IDisposable
     public unsafe void DisconnectRemoteDevice(PhysicalAddress device)
     {
         int payloadSize = Marshal.SizeOf<ulong>();
-        IntPtr payload = Marshal.AllocHGlobal(payloadSize);
         byte[] raw = new byte[] { 0x00, 0x00 }.Concat(device.GetAddressBytes()).Reverse().ToArray();
         long value = (long)BitConverter.ToUInt64(raw, 0);
 
-        Marshal.WriteInt64(payload, value);
-        
         BOOL ret = PInvoke.DeviceIoControl(
             _radioHandle,
             IoctlBthDisconnectDevice,
@@ -323,7 +320,7 @@ public sealed class HostRadio : IDisposable
 
         if (!ret)
         {
-            throw new HostRadioException("Failed to disable host radio.", (uint)Marshal.GetLastWin32Error());
+            throw new HostRadioException("Failed to disconnect remote device.", (uint)Marshal.GetLastWin32Error());
         }
     }
 
