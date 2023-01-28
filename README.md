@@ -53,3 +53,4 @@ radio.DisconnectRemoteDevice(PhysicalAddress.Parse("MAC address");
 - [USB-HID-Report-Parser](https://github.com/uint32tMnstr/USB-HID-Report-Parser)
 - [BoyerMoore](https://github.com/TheAlgorithms/C-Sharp/blob/master/Algorithms/Strings/BoyerMoore.cs)
 - [Generic Boyer–Moore–Horspool algorithm in C# .NET](https://swimburger.net/blog/dotnet/generic-boyer-moore-horspool-algorithm-in-csharp-dotnet)
+- [BluetoothHelper.cs](https://github.com/ViGEm/DsHidMini/blob/37f46a65a9fa12637aff9ca658c7eb8543f28883/DSHMC/Util/BluetoothHelper.cs)
