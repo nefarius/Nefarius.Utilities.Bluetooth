@@ -300,6 +300,15 @@ public sealed class HostRadio : IDisposable
     /// <summary>
     ///     Instruct host radio to disconnect a given remote device.
     /// </summary>
+    /// <param name="device">The <see cref="RemoteDevice" /> to disconnect.</param>
+    public void DisconnectRemoteDevice(RemoteDevice device)
+    {
+        DisconnectRemoteDevice(device.Address);
+    }
+
+    /// <summary>
+    ///     Instruct host radio to disconnect a given remote device.
+    /// </summary>
     /// <param name="device">The MAC address of the remote device.</param>
     public unsafe void DisconnectRemoteDevice(PhysicalAddress device)
     {
@@ -471,7 +480,7 @@ public sealed class HostRadio : IDisposable
 
         return false;
     }
-    
+
     private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo)
     {
         BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
