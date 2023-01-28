@@ -1,5 +1,11 @@
 ﻿# Exporting SDP records
 
+---
+
+🔥 **Community efforts have been a great success, no more contributions required for now!** 🔥
+
+---
+
 ## Target audience
 
 If you have one or more of the following listed game controllers **connected wireless via Bluetooth**:
