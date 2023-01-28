@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Net.NetworkInformation;
 
 namespace Nefarius.Utilities.Bluetooth;
@@ -6,6 +7,7 @@ namespace Nefarius.Utilities.Bluetooth;
 /// <summary>
 ///     Describes a remote wireless device.
 /// </summary>
+[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 public sealed class RemoteDevice : IEquatable<RemoteDevice>
 {
     internal RemoteDevice(string name, PhysicalAddress address)

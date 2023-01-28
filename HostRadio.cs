@@ -51,6 +51,9 @@ public sealed class HostRadio : IDisposable
     private static readonly uint IoctlChangeRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
         PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
 
+    private static readonly uint IoctlBthDisconnectDevice = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x03,
+        PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
+
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
@@ -295,6 +298,36 @@ public sealed class HostRadio : IDisposable
     }
 
     /// <summary>
+    ///     Instruct host radio to disconnect a given remote device.
+    /// </summary>
+    /// <param name="device">The MAC address of the remote device.</param>
+    public unsafe void DisconnectRemoteDevice(PhysicalAddress device)
+    {
+        int payloadSize = Marshal.SizeOf<ulong>();
+        IntPtr payload = Marshal.AllocHGlobal(payloadSize);
+        byte[] raw = new byte[] { 0x00, 0x00 }.Concat(device.GetAddressBytes()).Reverse().ToArray();
+        long value = (long)BitConverter.ToUInt64(raw, 0);
+
+        Marshal.WriteInt64(payload, value);
+        
+        BOOL ret = PInvoke.DeviceIoControl(
+            _radioHandle,
+            IoctlBthDisconnectDevice,
+            &value,
+            (uint)payloadSize,
+            null,
+            0,
+            null,
+            null
+        );
+
+        if (!ret)
+        {
+            throw new HostRadioException("Failed to disable host radio.", (uint)Marshal.GetLastWin32Error());
+        }
+    }
+
+    /// <summary>
     ///     Disables the host radio.
     /// </summary>
     /// <exception cref="HostRadioException"></exception>
@@ -441,7 +474,7 @@ public sealed class HostRadio : IDisposable
 
         return false;
     }
-
+    
     private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo)
     {
         BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
