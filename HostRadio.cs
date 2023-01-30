@@ -20,6 +20,7 @@ namespace Nefarius.Utilities.Bluetooth;
 ///     Exception potentially thrown by <see cref="HostRadio" />.
 /// </summary>
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
 public sealed class HostRadioException : Exception
 {
     internal HostRadioException(string message) : base(message)
@@ -295,6 +296,20 @@ public sealed class HostRadio : IDisposable
     private static UInt32 CTL_CODE(uint deviceType, uint function, uint method, FILE_ACCESS_FLAGS access)
     {
         return (deviceType << 16) | ((uint)access << 14) | (function << 2) | method;
+    }
+
+    /// <summary>
+    ///     Instruct host radio to disconnect a given remote device.
+    /// </summary>
+    /// <param name="address">A parseable MAC address string.</param>
+    /// <remarks>
+    ///     See
+    ///     https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.physicaladdress.equals?view=net-7.0 for
+    ///     valid string formats.
+    /// </remarks>
+    public void DisconnectRemoteDevice(string address)
+    {
+        DisconnectRemoteDevice(PhysicalAddress.Parse(address));
     }
 
     /// <summary>
