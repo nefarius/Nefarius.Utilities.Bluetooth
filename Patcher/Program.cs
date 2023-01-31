@@ -44,7 +44,11 @@ foreach (BthPortDevice? device in bthPortDevices)
             Console.WriteLine("Patch applied successfully");
 
             using var radio = new HostRadio();
-            radio.RestartRadio();
+            //radio.RestartRadio();
+            //radio.DisconnectRemoteDevice(device.RemoteAddress);
+            radio.SdpConnect(device.RemoteAddress, out var handle);
+            //radio.SdpDisconnect(handle);
+            radio.DisconnectRemoteDevice(device.RemoteAddress);
         }
     }
 }
