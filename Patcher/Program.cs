@@ -8,6 +8,7 @@
 
 using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
+using Nefarius.Utilities.DeviceManagement.PnP;
 
 List<BthPortDevice> bthPortDevices = BthPort.Devices.ToList();
 
@@ -48,6 +49,18 @@ foreach (BthPortDevice? device in bthPortDevices)
             //radio.DisconnectRemoteDevice(device.RemoteAddress);
             radio.SdpConnect(device.RemoteAddress, out var handle);
             //radio.SdpDisconnect(handle);
+
+            //if (Devcon.FindInDeviceClassByHardwareId(
+            //        Guid.Parse("{e0cbf06c-cd8b-4647-bb8a-263b43f0f974}"),
+            //        @$"BTHENUM\Dev_{device.RemoteAddress}", 
+            //        out IEnumerable<string> genInstances)
+            //   )
+            //{
+            //    PnPDevice genericBthDevice = PnPDevice.GetDeviceByInstanceId(genInstances.First());
+            //
+            //    genericBthDevice.Restart();
+            //}
+
             radio.DisconnectRemoteDevice(device.RemoteAddress);
         }
     }

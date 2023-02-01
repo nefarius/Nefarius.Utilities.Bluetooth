@@ -197,7 +197,7 @@ public sealed partial class HostRadio : IDisposable
         BTH_SDP_CONNECT sdpConnect;
         sdpConnect.bthAddress = BitConverter.ToUInt64(raw, 0);
         sdpConnect.requestTimeout = (byte)PInvoke.SDP_REQUEST_TO_DEFAULT;
-        //sdpConnect.fSdpConnect = PInvoke.SDP_CONNECT_CACHE;
+        sdpConnect.fSdpConnect = PInvoke.SDP_CONNECT_CACHE;
 
         BOOL ret = PInvoke.DeviceIoControl(
             _radioHandle,
