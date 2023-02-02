@@ -41,7 +41,7 @@ radio.RestartRadio();
 
 ```csharp
 using var radio = new HostRadio();
-radio.DisconnectRemoteDevice(PhysicalAddress.Parse("MAC address");
+radio.DisconnectRemoteDevice("MAC address");
 ```
 
 ## 3rd party credits
