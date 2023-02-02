@@ -189,7 +189,8 @@ public sealed partial class HostRadio : IDisposable
         }
     }
 
-    public unsafe void SdpConnect(PhysicalAddress device, out UInt64 handle)
+    // TODO: finish testing and make public
+    private unsafe void SdpConnect(PhysicalAddress device, out UInt64 handle)
     {
         byte[] raw = new byte[] { 0x00, 0x00 }.Concat(device.GetAddressBytes()).Reverse().ToArray();
 
@@ -218,7 +219,8 @@ public sealed partial class HostRadio : IDisposable
         handle = sdpConnect.hConnection;
     }
 
-    public unsafe void SdpDisconnect(UInt64 handle)
+    // TODO: finish testing and make public
+    private unsafe void SdpDisconnect(UInt64 handle)
     {
         int payloadSize = Marshal.SizeOf<UInt64>();
 
