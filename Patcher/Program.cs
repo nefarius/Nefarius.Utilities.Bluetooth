@@ -24,8 +24,8 @@ foreach (BthPortDevice? device in bthPortDevices)
         device.DeleteOriginalCachedServices();
 
         Console.WriteLine("Patch reverted successfully");
-            
-        using var radio = new HostRadio();
+
+        using HostRadio radio = new HostRadio();
         radio.RestartRadio();
         continue;
     }
@@ -43,7 +43,7 @@ foreach (BthPortDevice? device in bthPortDevices)
 
             Console.WriteLine("Patch applied successfully");
 
-            using var radio = new HostRadio();
+            using HostRadio radio = new HostRadio();
             radio.RestartRadio();
         }
     }

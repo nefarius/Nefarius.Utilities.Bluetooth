@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.NetworkInformation;
@@ -12,6 +11,7 @@ using Windows.Win32.Storage.FileSystem;
 
 using Microsoft.Win32.SafeHandles;
 
+using Nefarius.Utilities.Bluetooth.Types;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
 namespace Nefarius.Utilities.Bluetooth;
@@ -47,9 +47,10 @@ public sealed class HostRadioException : Exception
 /// </remarks>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-public sealed class HostRadio : IDisposable
+[SuppressMessage("ReSharper", "InconsistentNaming")]
+public sealed partial class HostRadio : IDisposable
 {
-    private static readonly uint IoctlChangeRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
+    private static readonly uint IoctlSetRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
         PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
 
     private static readonly uint IoctlBthDisconnectDevice = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x03,
@@ -127,172 +128,6 @@ public sealed class HostRadio : IDisposable
     /// </summary>
     public static Guid DeviceInterface => Guid.Parse("{92383b0e-f90e-4ac9-8d44-8c2d0d0ebda2}");
 
-    /// <summary>
-    ///     Gets all remote devices.
-    /// </summary>
-    public IEnumerable<RemoteDevice> AllDevices =>
-        AuthenticatedDevices
-            .Concat(ConnectedDevices)
-            .Concat(RememberedDevices)
-            .Concat(UnknownDevices)
-            .Distinct();
-
-    /// <summary>
-    ///     Gets all authenticated devices.
-    /// </summary>
-    public IEnumerable<RemoteDevice> AuthenticatedDevices
-    {
-        get
-        {
-            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
-            {
-                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
-                fReturnAuthenticated = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
-            };
-
-            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
-                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
-
-            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
-
-
-            try
-            {
-                if (hFind != 0)
-                {
-                    do
-                    {
-                        yield return new RemoteDevice(deviceInfo.szName.ToString(), new PhysicalAddress(deviceInfo
-                            .Address.Anonymous.rgBytes.ToArray().Reverse()
-                            .ToArray()));
-                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-                }
-            }
-            finally
-            {
-                PInvoke.BluetoothFindDeviceClose(hFind);
-            }
-        }
-    }
-
-    /// <summary>
-    ///     Gets all connected devices.
-    /// </summary>
-    public IEnumerable<RemoteDevice> ConnectedDevices
-    {
-        get
-        {
-            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
-            {
-                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
-                fReturnConnected = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
-            };
-
-            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
-                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
-
-            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
-
-
-            try
-            {
-                if (hFind != 0)
-                {
-                    do
-                    {
-                        yield return new RemoteDevice(deviceInfo.szName.ToString(), new PhysicalAddress(deviceInfo
-                            .Address.Anonymous.rgBytes.ToArray().Reverse()
-                            .ToArray()));
-                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-                }
-            }
-            finally
-            {
-                PInvoke.BluetoothFindDeviceClose(hFind);
-            }
-        }
-    }
-
-    /// <summary>
-    ///     Gets all remembered devices.
-    /// </summary>
-    public IEnumerable<RemoteDevice> RememberedDevices
-    {
-        get
-        {
-            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
-            {
-                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
-                fReturnRemembered = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
-            };
-
-            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
-                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
-
-            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
-
-
-            try
-            {
-                if (hFind != 0)
-                {
-                    do
-                    {
-                        yield return new RemoteDevice
-                        (deviceInfo.szName.ToString(),
-                            new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse().ToArray()));
-                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-                }
-            }
-            finally
-            {
-                PInvoke.BluetoothFindDeviceClose(hFind);
-            }
-        }
-    }
-
-    /// <summary>
-    ///     Gets all unknown devices.
-    /// </summary>
-    public IEnumerable<RemoteDevice> UnknownDevices
-    {
-        get
-        {
-            BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
-            {
-                dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
-                fReturnUnknown = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
-            };
-
-            BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo =
-                new() { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
-
-            nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
-
-
-            try
-            {
-                if (hFind != 0)
-                {
-                    do
-                    {
-                        yield return new RemoteDevice
-                        (deviceInfo.szName.ToString(),
-                            new PhysicalAddress(deviceInfo.Address.Anonymous.rgBytes.ToArray().Reverse().ToArray()));
-                    } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-                }
-            }
-            finally
-            {
-                PInvoke.BluetoothFindDeviceClose(hFind);
-            }
-        }
-    }
-
     /// <inheritdoc />
     public void Dispose()
     {
@@ -354,6 +189,61 @@ public sealed class HostRadio : IDisposable
         }
     }
 
+    // TODO: finish testing and make public
+    private unsafe void SdpConnect(PhysicalAddress device, out UInt64 handle)
+    {
+        byte[] raw = new byte[] { 0x00, 0x00 }.Concat(device.GetAddressBytes()).Reverse().ToArray();
+
+        int payloadSize = Marshal.SizeOf<BTH_SDP_CONNECT>();
+        BTH_SDP_CONNECT sdpConnect;
+        sdpConnect.bthAddress = BitConverter.ToUInt64(raw, 0);
+        sdpConnect.requestTimeout = (byte)PInvoke.SDP_REQUEST_TO_DEFAULT;
+        sdpConnect.fSdpConnect = PInvoke.SDP_CONNECT_CACHE;
+
+        BOOL ret = PInvoke.DeviceIoControl(
+            _radioHandle,
+            IoctlBthSdpConnect,
+            &sdpConnect,
+            (uint)payloadSize,
+            &sdpConnect,
+            (uint)payloadSize,
+            null,
+            null
+        );
+
+        if (!ret)
+        {
+            throw new HostRadioException("Failed to disconnect remote device.", (uint)Marshal.GetLastWin32Error());
+        }
+
+        handle = sdpConnect.hConnection;
+    }
+
+    // TODO: finish testing and make public
+    private unsafe void SdpDisconnect(UInt64 handle)
+    {
+        int payloadSize = Marshal.SizeOf<UInt64>();
+
+        BTH_SDP_DISCONNECT sdpDisconnect;
+        sdpDisconnect.hConnection = handle;
+
+        BOOL ret = PInvoke.DeviceIoControl(
+            _radioHandle,
+            IoctlBthSdpDisconnect,
+            &sdpDisconnect,
+            (uint)payloadSize,
+            null,
+            0,
+            null,
+            null
+        );
+
+        if (!ret)
+        {
+            throw new HostRadioException("Failed to disconnect remote device.", (uint)Marshal.GetLastWin32Error());
+        }
+    }
+
     /// <summary>
     ///     Disables the host radio.
     /// </summary>
@@ -366,7 +256,7 @@ public sealed class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                IoctlChangeRadioState,
+                IoctlSetRadioState,
                 ptr,
                 4,
                 null,
@@ -394,7 +284,7 @@ public sealed class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                IoctlChangeRadioState,
+                IoctlSetRadioState,
                 ptr,
                 4,
                 null,
