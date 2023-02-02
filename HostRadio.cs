@@ -50,7 +50,7 @@ public sealed class HostRadioException : Exception
 [SuppressMessage("ReSharper", "InconsistentNaming")]
 public sealed partial class HostRadio : IDisposable
 {
-    private static readonly uint IoctlChangeRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
+    private static readonly uint IoctlSetRadioState = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x461,
         PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
 
     private static readonly uint IoctlBthDisconnectDevice = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x03,
@@ -254,7 +254,7 @@ public sealed partial class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                IoctlChangeRadioState,
+                IoctlSetRadioState,
                 ptr,
                 4,
                 null,
@@ -282,7 +282,7 @@ public sealed partial class HostRadio : IDisposable
         {
             BOOL ret = PInvoke.DeviceIoControl(
                 _radioHandle,
-                IoctlChangeRadioState,
+                IoctlSetRadioState,
                 ptr,
                 4,
                 null,
