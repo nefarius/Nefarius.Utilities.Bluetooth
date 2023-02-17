@@ -62,6 +62,9 @@ public sealed partial class HostRadio : IDisposable
     private static readonly uint IoctlBthSdpDisconnect = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x81,
         PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
 
+    private static readonly uint IoctlHciCxn_ReadConnectedRssi = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x486,
+        PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
+
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
