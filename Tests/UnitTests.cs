@@ -19,6 +19,7 @@ public class Tests
         var serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
         var serviceName = "BthPS3Service";
         
+        radio.DisableService(serviceGuid, serviceName);
         radio.EnableService(serviceGuid, serviceName);
     }
 

@@ -116,11 +116,6 @@ public sealed partial class HostRadio : IDisposable
         _radioHandle.Dispose();
     }
 
-    private static UInt32 CTL_CODE(uint deviceType, uint function, uint method, FILE_ACCESS_FLAGS access)
-    {
-        return (deviceType << 16) | ((uint)access << 14) | (function << 2) | method;
-    }
-
     /// <summary>
     ///     Instruct host radio to disconnect a given remote device.
     /// </summary>
@@ -377,21 +372,27 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Enables advertising a specified service.
     /// </summary>
+    /// <remarks>This method requires administrative privileges.</remarks>
     /// <param name="serviceGuid">The GUID of the service to expose. This should match the GUID in the server-side INF file.</param>
     /// <param name="serviceName">The service name.</param>
     /// <exception cref="BluetoothServiceException"></exception>
+    /// <exception cref="AdjustProcessPrivilegesException"></exception>
     public void EnableService(Guid serviceGuid, string serviceName)
     {
+        AdjustProcessPrivileges();
+
         BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = true };
 
-        uint status = PInvoke.BluetoothSetLocalServiceInfo(
+        _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
             serviceGuid,
             0,
             svcInfo
         );
 
-        if (status != 0)
+        WIN32_ERROR error = (WIN32_ERROR)Marshal.GetLastWin32Error();
+
+        if (error != WIN32_ERROR.ERROR_SUCCESS)
         {
             throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
         }
@@ -400,62 +401,29 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Disables advertising a specified service.
     /// </summary>
+    /// <remarks>This method requires administrative privileges.</remarks>
     /// <param name="serviceGuid">The GUID of the service to expose. This should match the GUID in the server-side INF file.</param>
     /// <param name="serviceName">The service name.</param>
     /// <exception cref="BluetoothServiceException"></exception>
+    /// <exception cref="AdjustProcessPrivilegesException"></exception>
     public void DisableService(Guid serviceGuid, string serviceName)
     {
+        AdjustProcessPrivileges();
+
         BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = false };
 
-        uint status = PInvoke.BluetoothSetLocalServiceInfo(
+        _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
             serviceGuid,
             0,
             svcInfo
         );
 
-        if (status != 0)
+        WIN32_ERROR error = (WIN32_ERROR)Marshal.GetLastWin32Error();
+
+        if (error != WIN32_ERROR.ERROR_SUCCESS)
         {
             throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
         }
-    }
-    
-    private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo)
-    {
-        BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
-        {
-            dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
-            fReturnAuthenticated = true,
-            fReturnConnected = true,
-            fReturnRemembered = true,
-            fReturnUnknown = true,
-            hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
-        };
-
-        deviceInfo = new BLUETOOTH_DEVICE_INFO_STRUCT { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
-
-        nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
-
-        if (hFind == 0)
-        {
-            return false;
-        }
-
-        try
-        {
-            do
-            {
-                if (deviceInfo.Address.Anonymous.rgBytes.Equals(address.GetAddressBytes().Reverse().ToArray().AsSpan()))
-                {
-                    return true;
-                }
-            } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-        }
-        finally
-        {
-            PInvoke.BluetoothFindDeviceClose(hFind);
-        }
-
-        return false;
     }
 }
