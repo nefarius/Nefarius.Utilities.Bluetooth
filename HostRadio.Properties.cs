@@ -11,6 +11,7 @@ using Windows.Win32.Foundation;
 namespace Nefarius.Utilities.Bluetooth;
 
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+[SuppressMessage("ReSharper", "UnusedMember.Global")]
 public sealed partial class HostRadio
 {
     /// <summary>

@@ -1,4 +1,5 @@
 ﻿BluetoothFindFirstRadio
+BluetoothSetLocalServiceInfo
 BluetoothSetServiceState
 BluetoothFindRadioClose
 BluetoothEnumerateInstalledServices
@@ -19,3 +20,4 @@ SDP_REQUEST_TO_MIN
 SDP_REQUEST_TO_MAX
 SDP_CONNECT_ALLOW_PIN
 SDP_CONNECT_CACHE
+BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT
