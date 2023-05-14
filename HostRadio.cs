@@ -374,6 +374,52 @@ public sealed partial class HostRadio : IDisposable
         return false;
     }
 
+    /// <summary>
+    ///     Enables advertising a specified service.
+    /// </summary>
+    /// <param name="serviceGuid">The GUID of the service to expose. This should match the GUID in the server-side INF file.</param>
+    /// <param name="serviceName">The service name.</param>
+    /// <exception cref="BluetoothServiceException"></exception>
+    public void EnableService(Guid serviceGuid, string serviceName)
+    {
+        BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = true };
+
+        uint status = PInvoke.BluetoothSetLocalServiceInfo(
+            _radioHandle,
+            serviceGuid,
+            0,
+            svcInfo
+        );
+
+        if (status != 0)
+        {
+            throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
+        }
+    }
+
+    /// <summary>
+    ///     Disables advertising a specified service.
+    /// </summary>
+    /// <param name="serviceGuid">The GUID of the service to expose. This should match the GUID in the server-side INF file.</param>
+    /// <param name="serviceName">The service name.</param>
+    /// <exception cref="BluetoothServiceException"></exception>
+    public void DisableService(Guid serviceGuid, string serviceName)
+    {
+        BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = false };
+
+        uint status = PInvoke.BluetoothSetLocalServiceInfo(
+            _radioHandle,
+            serviceGuid,
+            0,
+            svcInfo
+        );
+
+        if (status != 0)
+        {
+            throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
+        }
+    }
+    
     private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo)
     {
         BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
