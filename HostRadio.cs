@@ -11,32 +11,11 @@ using Windows.Win32.Storage.FileSystem;
 
 using Microsoft.Win32.SafeHandles;
 
+using Nefarius.Utilities.Bluetooth.Exceptions;
 using Nefarius.Utilities.Bluetooth.Types;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
 namespace Nefarius.Utilities.Bluetooth;
-
-/// <summary>
-///     Exception potentially thrown by <see cref="HostRadio" />.
-/// </summary>
-[SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-[SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-public sealed class HostRadioException : Exception
-{
-    internal HostRadioException(string message) : base(message)
-    {
-    }
-
-    internal HostRadioException(string message, uint errorCode) : this(message)
-    {
-        NativeErrorCode = errorCode;
-    }
-
-    /// <summary>
-    ///     Gets the Win32 error code.
-    /// </summary>
-    public uint NativeErrorCode { get; }
-}
 
 /// <summary>
 ///     Represents a Bluetooth Host Radio.
