@@ -23,7 +23,7 @@ jobs:
         run: dotnet build -c Release
 
       - name: Make Nuget Packages
-        run: dotnet pack -c Release
+        run: dotnet pack -c Release -o ./bin/
 
       - name: Publish To Nuget
         run: dotnet nuget push bin/*.nupkg -k $NUGET_AUTH_TOKEN -s https://nuget.nefarius.at/v3/index.json
