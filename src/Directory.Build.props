@@ -1,7 +1,7 @@
 <Project>
 
     <PropertyGroup>
-        <SolutionDir Condition="'$(SolutionDir)'=='' ">..\</SolutionDir>
+        <SolutionDir Condition="'$(SolutionDir)'=='' ">$(MSBuildThisFileDirectory)..\</SolutionDir>
 
         <!-- Copyright information -->
         <Authors>Benjamin Höglinger-Stelzer</Authors>
