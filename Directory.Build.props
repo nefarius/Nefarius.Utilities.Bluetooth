@@ -13,7 +13,7 @@
     <!-- Common solution settings -->
     <OutDir>$(SolutionDir)bin\</OutDir>
     <LangVersion>latest</LangVersion>
-    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
 
     <!-- Docs and symbols generation -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
