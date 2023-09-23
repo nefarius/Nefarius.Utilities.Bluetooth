@@ -56,47 +56,45 @@ public sealed partial class HostRadio : IDisposable
         BLUETOOTH_FIND_RADIO_PARAMS radioParams;
         radioParams.dwSize = (uint)Marshal.SizeOf<BLUETOOTH_FIND_RADIO_PARAMS>();
 
-        nint hFind = PInvoke.BluetoothFindFirstRadio(radioParams, out _radioHandle);
+        using BluetoothFindRadioCloseSafeHandle hFind = PInvoke.BluetoothFindFirstRadio(radioParams, out _radioHandle);
 
-        if (hFind == 0)
+        if (!hFind.IsInvalid)
         {
-            // radio might be disabled, check if interface is exposed to get device handle
-            if (!Devcon.FindByInterfaceGuid(DeviceInterface, out string path, out _))
-            {
-                throw new HostRadioException("Bluetooth host radio not found.", (uint)Marshal.GetLastWin32Error());
-            }
-
-            if (!autoEnable)
-            {
-                throw new HostRadioException("Bluetooth host radio found but disabled.",
-                    (uint)Marshal.GetLastWin32Error());
-            }
-
-            // open handle the old-fashioned way
-            _radioHandle = PInvoke.CreateFile(
-                path,
-                FILE_ACCESS_FLAGS.FILE_GENERIC_READ | FILE_ACCESS_FLAGS.FILE_GENERIC_WRITE,
-                FILE_SHARE_MODE.FILE_SHARE_READ | FILE_SHARE_MODE.FILE_SHARE_WRITE,
-                null,
-                FILE_CREATION_DISPOSITION.OPEN_EXISTING,
-                FILE_FLAGS_AND_ATTRIBUTES.FILE_ATTRIBUTE_NORMAL,
-                null
-            );
-
-            // should be accessible non-elevated without issues
-            if (_radioHandle.IsInvalid)
-            {
-                throw new HostRadioException("Bluetooth host radio found but handle access failed.",
-                    (uint)Marshal.GetLastWin32Error());
-            }
-
-            // send packet that enables all device functions
-            EnableRadio();
+            return;
         }
-        else
+
+        // radio might be disabled, check if interface is exposed to get device handle
+        if (!Devcon.FindByInterfaceGuid(DeviceInterface, out string path, out _))
         {
-            PInvoke.BluetoothFindRadioClose(hFind);
+            throw new HostRadioException("Bluetooth host radio not found.", (uint)Marshal.GetLastWin32Error());
         }
+
+        if (!autoEnable)
+        {
+            throw new HostRadioException("Bluetooth host radio found but disabled.",
+                (uint)Marshal.GetLastWin32Error());
+        }
+
+        // open handle the old-fashioned way
+        _radioHandle = PInvoke.CreateFile(
+            path,
+            (uint)(FILE_ACCESS_RIGHTS.FILE_GENERIC_READ | FILE_ACCESS_RIGHTS.FILE_GENERIC_WRITE),
+            FILE_SHARE_MODE.FILE_SHARE_READ | FILE_SHARE_MODE.FILE_SHARE_WRITE,
+            null,
+            FILE_CREATION_DISPOSITION.OPEN_EXISTING,
+            FILE_FLAGS_AND_ATTRIBUTES.FILE_ATTRIBUTE_NORMAL,
+            null
+        );
+
+        // should be accessible non-elevated without issues
+        if (_radioHandle.IsInvalid)
+        {
+            throw new HostRadioException("Bluetooth host radio found but handle access failed.",
+                (uint)Marshal.GetLastWin32Error());
+        }
+
+        // send packet that enables all device functions
+        EnableRadio();
     }
 
     /// <summary>
@@ -113,7 +111,7 @@ public sealed partial class HostRadio : IDisposable
     /// <inheritdoc />
     public void Dispose()
     {
-        _radioHandle.Dispose();
+        _radioHandle?.Dispose();
     }
 
     /// <summary>
@@ -295,7 +293,7 @@ public sealed partial class HostRadio : IDisposable
     /// <exception cref="HostRadioException"></exception>
     public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, bool enabled)
     {
-        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo);
+        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO deviceInfo);
 
         if (!found)
         {
@@ -324,7 +322,7 @@ public sealed partial class HostRadio : IDisposable
     {
         enabled = false;
 
-        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo);
+        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO deviceInfo);
 
         if (!found)
         {
@@ -381,7 +379,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = true };
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { szName = serviceName, Enabled = true };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
@@ -410,7 +408,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO_STRUCT svcInfo = new() { szName = serviceName, Enabled = false };
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { szName = serviceName, Enabled = false };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,

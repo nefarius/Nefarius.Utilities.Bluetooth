@@ -15,12 +15,12 @@ namespace Nefarius.Utilities.Bluetooth;
 
 public sealed partial class HostRadio
 {
-    private static UInt32 CTL_CODE(uint deviceType, uint function, uint method, FILE_ACCESS_FLAGS access)
+    private static UInt32 CTL_CODE(uint deviceType, uint function, uint method, FILE_ACCESS_RIGHTS access)
     {
         return (deviceType << 16) | ((uint)access << 14) | (function << 2) | method;
     }
-    
-    private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO_STRUCT deviceInfo)
+
+    private bool FindDeviceByAddress(PhysicalAddress address, out BLUETOOTH_DEVICE_INFO deviceInfo)
     {
         BLUETOOTH_DEVICE_SEARCH_PARAMS searchParams = new()
         {
@@ -32,33 +32,26 @@ public sealed partial class HostRadio
             hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
         };
 
-        deviceInfo = new BLUETOOTH_DEVICE_INFO_STRUCT { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO_STRUCT>() };
+        deviceInfo = new BLUETOOTH_DEVICE_INFO { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO>() };
 
-        nint hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
+        using BluetoothFindDeviceCloseSafeHandle hFind = PInvoke.BluetoothFindFirstDevice(searchParams, ref deviceInfo);
 
-        if (hFind == 0)
+        if (hFind.IsInvalid)
         {
             return false;
         }
 
-        try
+        do
         {
-            do
+            if (deviceInfo.Address.Anonymous.rgBytes.Equals(address.GetAddressBytes().Reverse().ToArray().AsSpan()))
             {
-                if (deviceInfo.Address.Anonymous.rgBytes.Equals(address.GetAddressBytes().Reverse().ToArray().AsSpan()))
-                {
-                    return true;
-                }
-            } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
-        }
-        finally
-        {
-            PInvoke.BluetoothFindDeviceClose(hFind);
-        }
+                return true;
+            }
+        } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
 
         return false;
     }
-    
+
     private unsafe void AdjustProcessPrivileges()
     {
         HANDLE processToken = HANDLE.Null;
