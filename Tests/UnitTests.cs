@@ -11,21 +11,28 @@ public class Tests
     {
     }
 
+    /// <summary>
+    ///     For this test to succeed make sure the radio is enabled.
+    /// </summary>
     [Test]
-    public void Test4()
+    public void TestAvailabilityIfOn()
     {
-        var isAvailable = HostRadio.IsAvailable;
-        var isEnabled = HostRadio.IsEnabled;
+        Assert.Multiple(() =>
+        {
+            Assert.That(HostRadio.IsAvailable, Is.True);
+            Assert.That(HostRadio.IsEnabled, Is.True);
+            Assert.That(HostRadio.IsOperable, Is.True);
+        });
     }
 
     //[Test]
     public void Test3()
     {
-        using var radio = new HostRadio();
+        using HostRadio radio = new HostRadio();
 
-        var serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
-        var serviceName = "BthPS3Service";
-        
+        Guid serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
+        string serviceName = "BthPS3Service";
+
         radio.DisableService(serviceGuid, serviceName);
         radio.EnableService(serviceGuid, serviceName);
     }
@@ -53,7 +60,7 @@ public class Tests
 
             KeyValuePair<string, RegValueBinary> recordEntry =
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
-            
+
             byte[] recordBlob = recordEntry.Value.Value.ToArray();
         }
     }
