@@ -30,7 +30,7 @@ foreach (BthPortDevice? device in bthPortDevices)
         continue;
     }
 
-    if (SdpPatcher.AlterHidDeviceToVenderDefined(device.CachedServices, out byte[]? patched))
+    if (SdpPatcher.AlterHidDeviceToVendorDefined(device.CachedServices, out byte[]? patched))
     {
         if (!device.IsCachedServicesPatched)
         {

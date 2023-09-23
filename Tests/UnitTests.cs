@@ -407,7 +407,7 @@ public class Tests
             0x09, 0x02, 0x0E, 0x28, 0x00
         };
 
-        SdpPatcher.AlterHidDeviceToVenderDefined(buffer, out buffer);
+        SdpPatcher.AlterHidDeviceToVendorDefined(buffer, out buffer);
 
         string hex = string.Join(", ", buffer.Select(b => $"0x{b:X2}"));
 

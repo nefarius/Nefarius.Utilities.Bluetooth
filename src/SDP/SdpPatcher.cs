@@ -24,7 +24,7 @@ public static class SdpPatcher
     /// <param name="input">The original record array.</param>
     /// <param name="output">The patched record array.</param>
     /// <returns>True if detection and patching was successful, false otherwise.</returns>
-    public static bool AlterHidDeviceToVenderDefined(byte[] input, out byte[] output)
+    public static bool AlterHidDeviceToVendorDefined(byte[] input, out byte[] output)
     {
         try
         {
