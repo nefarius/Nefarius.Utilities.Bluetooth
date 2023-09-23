@@ -47,6 +47,32 @@ public sealed partial class HostRadio : IDisposable
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
+    ///     Gets whether a host radio is available (and can be enabled).
+    /// </summary>
+    public static bool IsAvailable => Devcon.FindByInterfaceGuid(DeviceInterface, out _, out _);
+
+    /// <summary>
+    ///     Gets whether a host radio is enabled.
+    /// </summary>
+    public static bool IsEnabled
+    {
+        get
+        {
+            BLUETOOTH_FIND_RADIO_PARAMS radioParams;
+            radioParams.dwSize = (uint)Marshal.SizeOf<BLUETOOTH_FIND_RADIO_PARAMS>();
+
+            using BluetoothFindRadioCloseSafeHandle hFind = PInvoke.BluetoothFindFirstRadio(radioParams, out _);
+
+            return !hFind.IsInvalid;
+        }
+    }
+
+    /// <summary>
+    ///     Gets whether a host radio is available and enabled.
+    /// </summary>
+    public static bool IsOperable => IsAvailable && IsEnabled;
+    
+    /// <summary>
     ///     Creates a new instance.
     /// </summary>
     /// <param name="autoEnable">True to automatically enable the radio if currently disabled, false will throw an exception.</param>

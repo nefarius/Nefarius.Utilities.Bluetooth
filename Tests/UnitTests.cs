@@ -12,6 +12,13 @@ public class Tests
     }
 
     [Test]
+    public void Test4()
+    {
+        var isAvailable = HostRadio.IsAvailable;
+        var isEnabled = HostRadio.IsEnabled;
+    }
+
+    //[Test]
     public void Test3()
     {
         using var radio = new HostRadio();
