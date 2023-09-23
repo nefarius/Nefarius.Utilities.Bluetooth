@@ -26,27 +26,28 @@
 
   <ItemGroup>
     <Compile Remove="Dumps\**" />
-    <Compile Remove="net6\**" />
     <Compile Remove="Patcher\**" />
     <Compile Remove="Tests\**" />
     <EmbeddedResource Remove="Dumps\**" />
-    <EmbeddedResource Remove="net6\**" />
     <EmbeddedResource Remove="Patcher\**" />
     <EmbeddedResource Remove="Tests\**" />
     <None Remove="Dumps\**" />
-    <None Remove="net6\**" />
     <None Remove="Patcher\**" />
     <None Remove="Tests\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="assets\NSS-128x128.png">
+    <None Include="$(SolutionDir)assets\NSS-128x128.png">
       <Pack>True</Pack>
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="GitVersion.MsBuild" Version="5.12.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

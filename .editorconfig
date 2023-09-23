@@ -388,3 +388,5 @@ dotnet_style_allow_multiple_blank_lines_experimental = true:silent
 
 # Unnecessary usings
 dotnet_diagnostic.IDE0005.severity = warning
+
+resharper_csharp_place_attribute_on_same_line = false
