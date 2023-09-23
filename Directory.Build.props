@@ -11,9 +11,9 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <!-- Common solution settings -->
-    <OutDir>$(SolutionDir)bin\</OutDir>
+    <OutputPath>$(SolutionDir)bin\</OutputPath>
+    <PackageOutputDir>$(SolutionDir)bin\</PackageOutputDir>
     <LangVersion>latest</LangVersion>
-    <AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
 
     <!-- Docs and symbols generation -->
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
