@@ -14,6 +14,17 @@ This is a collection of utility classes using undocumented Windows APIs to achie
 
 ## Examples
 
+### Check for radio availability
+
+```csharp
+// gives you 'true' if a radio is available (enabled or disabled) 
+bool isVailable = HostRadio.IsAvailable;
+// gives you 'true' if a radio is enabled (and therefore implicitly available)
+bool isEnabled = HostRadio.IsEnabled;
+// gives you 'true' if a radio is available and enabled
+bool isOperable = HostRadio.IsOperable;
+```
+
 ### Turn Bluetooth On, Off or Restart it
 
 Turn on:
