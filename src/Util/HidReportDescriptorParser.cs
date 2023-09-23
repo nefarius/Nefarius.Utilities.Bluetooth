@@ -138,6 +138,7 @@ public class HidReportDescriptorParser
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Local")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
+[SuppressMessage("ReSharper", "ShiftExpressionZeroLeftOperand")]
 public sealed class HidReportDescriptorItem : EventArgs
 {
     private const int TagOffset = 4;
@@ -153,10 +154,10 @@ public sealed class HidReportDescriptorItem : EventArgs
 
     /* Short Item Size
     */
-    private const int Size_0B = 0;
-    private const int Size_1B = 1;
-    private const int Size_2B = 2;
-    private const int Size_4B = 3;
+    private const int Size0B = 0;
+    private const int Size1B = 1;
+    private const int Size2B = 2;
+    private const int Size4B = 3;
 
     /* Short Item Type
     */
