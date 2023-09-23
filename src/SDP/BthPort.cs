@@ -29,7 +29,7 @@ public static class BthPort
         get
         {
             using RegistryKey devicesKey =
-                Registry.LocalMachine.OpenSubKey("SYSTEM\\CurrentControlSet\\Services\\BTHPORT\\Parameters\\Devices");
+                Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Services\BTHPORT\Parameters\Devices");
 
             if (devicesKey is not null)
             {
