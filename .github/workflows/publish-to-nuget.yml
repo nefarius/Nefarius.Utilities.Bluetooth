@@ -14,7 +14,7 @@ jobs:
           fetch-depth: 0
 
       - name: Setup .Net SDK
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.x
           include-prerelease: false
@@ -23,7 +23,7 @@ jobs:
         run: dotnet build -c Release
 
       - name: Make Nuget Packages
-        run: dotnet pack -c Release -o ./bin/
+        run: dotnet pack -c Release
 
       - name: Publish To Nuget
         run: dotnet nuget push bin/*.nupkg -k $NUGET_AUTH_TOKEN -s https://nuget.nefarius.at/v3/index.json
