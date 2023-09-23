@@ -1,8 +1,6 @@
 <Project>
 
     <PropertyGroup>
-        <SolutionDir Condition="'$(SolutionDir)'=='' ">$(MSBuildThisFileDirectory)..\</SolutionDir>
-
         <!-- Copyright information -->
         <Authors>Benjamin Höglinger-Stelzer</Authors>
         <Copyright>Copyright © Benjamin Höglinger-Stelzer 2022-2023</Copyright>
@@ -13,7 +11,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
 
         <!-- Common solution settings -->
-        <OutputPath>$(SolutionDir)bin\</OutputPath>
+        <OutputPath>..\bin\</OutputPath>
         <LangVersion>latest</LangVersion>
 
         <!-- Docs and symbols generation -->
