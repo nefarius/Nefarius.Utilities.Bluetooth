@@ -2,6 +2,8 @@ using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
 using Nefarius.Utilities.Registry;
 
+using NUnit.Framework.Legacy;
+
 namespace Tests;
 
 public class Tests
