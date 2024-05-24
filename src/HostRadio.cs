@@ -146,7 +146,7 @@ public sealed partial class HostRadio : IDisposable
     /// <param name="address">A parseable MAC address string.</param>
     /// <remarks>
     ///     See
-    ///     https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.physicaladdress.parse?view=net-7.0 for
+    ///     https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.physicaladdress.parse for
     ///     valid string formats.
     /// </remarks>
     public void DisconnectRemoteDevice(string address)
