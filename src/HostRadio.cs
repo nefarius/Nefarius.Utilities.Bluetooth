@@ -214,7 +214,7 @@ public sealed partial class HostRadio : IDisposable
 
         if (!ret)
         {
-            throw new HostRadioException("Failed to disconnect remote device.", (uint)Marshal.GetLastWin32Error());
+            throw new HostRadioException("Failed to connect remote device.", (uint)Marshal.GetLastWin32Error());
         }
 
         handle = sdpConnect.hConnection;
