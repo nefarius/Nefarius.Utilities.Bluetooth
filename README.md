@@ -12,6 +12,18 @@ Work in progress, use with care 🔥
 
 This is a collection of utility classes using undocumented Windows APIs to achieve wireless greatness! Ever needed a simple method of enabling or disabling Bluetooth without all that UWP and Store App nonsense? Wanna dive into modifying SDP records on your machine? This ever growing library will provide without any bloated dependencies! Enjoy and use responsibly! 😃
 
+## Documentation
+
+[Link to API docs](docs/index.md).
+
+### Generating documentation
+
+```PowerShell
+dotnet build -c:Release
+dotnet tool install --global Nefarius.Tools.XMLDoc2Markdown
+xmldoc2md .\bin\netstandard2.0\Nefarius.Utilities.Bluetooth.dll .\docs\
+```
+
 ## Examples
 
 ### Check for radio availability
