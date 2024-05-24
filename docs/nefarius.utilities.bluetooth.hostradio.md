@@ -214,7 +214,7 @@ A parseable MAC address string.
 **Remarks:**
 
 See
- https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.physicaladdress.parse?view=net-7.0 for
+ https://learn.microsoft.com/en-us/dotnet/api/system.net.networkinformation.physicaladdress.parse for
  valid string formats.
 
 ### <a id="methods-disconnectremotedevice"/>**DisconnectRemoteDevice(RemoteDevice)**
