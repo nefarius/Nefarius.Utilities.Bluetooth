@@ -10,6 +10,7 @@ using Windows.Win32.Security;
 using Windows.Win32.Storage.FileSystem;
 
 using Nefarius.Utilities.Bluetooth.Exceptions;
+using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth;
 
@@ -29,7 +30,7 @@ public sealed partial class HostRadio
             fReturnConnected = true,
             fReturnRemembered = true,
             fReturnUnknown = true,
-            hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+            hRadio = _radioHandle.ToHandle()
         };
 
         deviceInfo = new BLUETOOTH_DEVICE_INFO { dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_INFO>() };
