@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Text;
 
+using Windows.Win32;
 using Windows.Win32.Foundation;
 
 namespace Nefarius.Utilities.Bluetooth.Util;
 
-using winmdroot = Windows.Win32;
-
 internal static class StringInterop
 {
-    public static unsafe void AssignFromString(this winmdroot.__char_256 array, string value)
+    public static unsafe void AssignFromString(this __char_256 array, string value)
     {
-        Int32 iNewDataLen = winmdroot.PInvoke.WideCharToMultiByte(
+        Int32 iNewDataLen = PInvoke.WideCharToMultiByte(
             Convert.ToUInt32(Encoding.UTF8.CodePage),
             0, value,
             value.Length,
@@ -27,7 +26,7 @@ internal static class StringInterop
         }
 
         byte* buffer = stackalloc byte[iNewDataLen];
-        winmdroot.PInvoke.WideCharToMultiByte(
+        PInvoke.WideCharToMultiByte(
             Convert.ToUInt32(Encoding.UTF8.CodePage),
             0,
             value, -1,
