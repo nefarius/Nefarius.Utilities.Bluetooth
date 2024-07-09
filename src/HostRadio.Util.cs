@@ -80,8 +80,8 @@ public sealed partial class HostRadio
             }
 
             TOKEN_PRIVILEGES tp = new() { PrivilegeCount = 1 };
-            tp.Privileges._0.Luid = luid;
-            tp.Privileges._0.Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED;
+            tp.Privileges[0].Luid = luid;
+            tp.Privileges[0].Attributes = TOKEN_PRIVILEGES_ATTRIBUTES.SE_PRIVILEGE_ENABLED;
 
             PInvoke.AdjustTokenPrivileges(
                 processToken,
