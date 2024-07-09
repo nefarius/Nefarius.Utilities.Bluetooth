@@ -26,7 +26,6 @@ internal static class StringInterop
             return;
         }
 
-        StringBuilder utf8String = new(iNewDataLen);
         byte* buffer = stackalloc byte[iNewDataLen];
         winmdroot.PInvoke.WideCharToMultiByte(
             Convert.ToUInt32(Encoding.UTF8.CodePage),
@@ -34,6 +33,6 @@ internal static class StringInterop
             value, -1,
             new PSTR(buffer), iNewDataLen, string.Empty, null);
 
-        Buffer.MemoryCopy(buffer, &array, 256, iNewDataLen);
+        Buffer.MemoryCopy(buffer, &array, array.Length, iNewDataLen);
     }
 }
