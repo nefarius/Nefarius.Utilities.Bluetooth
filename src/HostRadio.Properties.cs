@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 
 using Windows.Win32;
 using Windows.Win32.Devices.Bluetooth;
-using Windows.Win32.Foundation;
+
+using Nefarius.Utilities.Bluetooth.Util;
 
 namespace Nefarius.Utilities.Bluetooth;
 
@@ -35,7 +36,7 @@ public sealed partial class HostRadio
             {
                 dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
                 fReturnAuthenticated = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+                hRadio = _radioHandle.ToHandle()
             };
 
             BLUETOOTH_DEVICE_INFO deviceInfo =
@@ -71,7 +72,7 @@ public sealed partial class HostRadio
             {
                 dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
                 fReturnConnected = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+                hRadio = _radioHandle.ToHandle()
             };
 
             BLUETOOTH_DEVICE_INFO deviceInfo =
@@ -107,7 +108,7 @@ public sealed partial class HostRadio
             {
                 dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
                 fReturnRemembered = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+                hRadio = _radioHandle.ToHandle()
             };
 
             BLUETOOTH_DEVICE_INFO deviceInfo =
@@ -146,7 +147,7 @@ public sealed partial class HostRadio
             {
                 dwSize = (uint)Marshal.SizeOf<BLUETOOTH_DEVICE_SEARCH_PARAMS>(),
                 fReturnUnknown = true,
-                hRadio = new HANDLE(_radioHandle.DangerousGetHandle())
+                hRadio = _radioHandle.ToHandle()
             };
 
             BLUETOOTH_DEVICE_INFO deviceInfo =
