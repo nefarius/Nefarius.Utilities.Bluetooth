@@ -11,10 +11,26 @@ public class Tests
     {
     }
 
+    [Test, Order(1)]
+    public void TestTurnOff()
+    {
+        using HostRadio radio = new();
+        
+        radio.DisableRadio();
+    }
+    
+    [Test, Order(2)]
+    public void TestTurnOn()
+    {
+        using HostRadio radio = new();
+        
+        radio.EnableRadio();
+    }
+
     /// <summary>
     ///     For this test to succeed make sure the radio is enabled.
     /// </summary>
-    [Test]
+    [Test, Order(3)]
     public void TestAvailabilityIfOn()
     {
         Assert.Multiple(() =>
@@ -25,7 +41,7 @@ public class Tests
         });
     }
     
-    [Test]
+    [Test, Order(4)]
     public void TestEnableService()
     {
         using HostRadio radio = new();
@@ -36,7 +52,7 @@ public class Tests
         radio.EnableService(serviceGuid, serviceName);
     }
 
-    [Test]
+    [Test, Order(5)]
     public void TestDisableService()
     {
         using HostRadio radio = new();
