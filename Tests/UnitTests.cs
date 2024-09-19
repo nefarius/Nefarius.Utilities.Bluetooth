@@ -86,10 +86,12 @@ public class Tests
 
             Assert.That(binValues, Is.Not.Empty);
 
-            KeyValuePair<string, RegValueBinary> recordEntry =
+            KeyValuePair<string, RegValueBinary>? recordEntry =
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
 
-            byte[] recordBlob = recordEntry.Value.Value.ToArray();
+            Assert.That(recordEntry, Is.Not.Null);
+            
+            byte[] recordBlob = recordEntry.Value.Value.Value.ToArray();
 
             Assert.That(recordBlob, Is.Not.Empty);
         }
