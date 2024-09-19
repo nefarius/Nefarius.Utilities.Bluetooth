@@ -1,6 +1,10 @@
 # <img src="assets/NSS-128x128.png" align="left" />Nefarius.Utilities.Bluetooth
 
-[![.NET](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml/badge.svg)](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml) ![Requirements](https://img.shields.io/badge/Requires-.NET%206-blue.svg) ![Requirements](https://img.shields.io/badge/Requires-.NET%20Standard%202.0-blue.svg) [![Nuget](https://img.shields.io/nuget/v/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/) [![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/)
+[![.NET](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml/badge.svg)](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml)
+![Requirements](https://img.shields.io/badge/Requires-.NET%206-blue.svg)
+![Requirements](https://img.shields.io/badge/Requires-.NET%20Standard%202.0-blue.svg)
+[![Nuget](https://img.shields.io/nuget/v/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/)
+[![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/)
 
 Utility library for unconventional Bluetooth tasks on Windows.
 
