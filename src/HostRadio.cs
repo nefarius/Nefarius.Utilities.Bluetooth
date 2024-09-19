@@ -251,6 +251,11 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Disables the host radio.
     /// </summary>
+    /// <remarks>
+    ///     This causes the FDO of the radio bus driver to report all its child devices as absent (basically tearing down
+    ///     the entire stack, excluding itself). This has the same effect as a user switching off Bluetooth from the Windows
+    ///     UI.
+    /// </remarks>
     /// <exception cref="HostRadioException"></exception>
     public unsafe void DisableRadio()
     {
@@ -279,6 +284,10 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Enables the host radio.
     /// </summary>
+    /// <remarks>
+    ///     This causes the FDO of the radio bus driver to enumerate all its child devices and mark them as present. This has
+    ///     the same effect as a user switching on Bluetooth from the Windows UI.
+    /// </remarks>
     /// <exception cref="HostRadioException"></exception>
     public unsafe void EnableRadio()
     {
