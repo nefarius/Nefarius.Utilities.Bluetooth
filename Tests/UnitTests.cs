@@ -2,8 +2,6 @@ using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
 using Nefarius.Utilities.Registry;
 
-using NUnit.Framework.Legacy;
-
 namespace Tests;
 
 public class Tests
@@ -13,10 +11,26 @@ public class Tests
     {
     }
 
+    [Test, Order(1)]
+    public void TestTurnOff()
+    {
+        using HostRadio radio = new();
+        
+        radio.DisableRadio();
+    }
+    
+    [Test, Order(2)]
+    public void TestTurnOn()
+    {
+        using HostRadio radio = new();
+        
+        radio.EnableRadio();
+    }
+
     /// <summary>
     ///     For this test to succeed make sure the radio is enabled.
     /// </summary>
-    [Test]
+    [Test, Order(3)]
     public void TestAvailabilityIfOn()
     {
         Assert.Multiple(() =>
@@ -26,28 +40,40 @@ public class Tests
             Assert.That(HostRadio.IsOperable, Is.True);
         });
     }
-
-    //[Test]
-    public void Test3()
+    
+    [Test, Order(4)]
+    public void TestEnableService()
     {
-        using HostRadio radio = new HostRadio();
+        using HostRadio radio = new();
+
+        Guid serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
+        string serviceName = "BthPS3Service";
+        
+        radio.EnableService(serviceGuid, serviceName);
+    }
+
+    [Test, Order(5)]
+    public void TestDisableService()
+    {
+        using HostRadio radio = new();
 
         Guid serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
         string serviceName = "BthPS3Service";
 
         radio.DisableService(serviceGuid, serviceName);
-        radio.EnableService(serviceGuid, serviceName);
     }
 
-    //[Test]
-    public void Test2()
+    [Test]
+    public void TestParsingRegFiles()
     {
         string[] testFiles = Directory.GetFiles(
-            @"D:\Development\GitHub\Nefarius.Utilities.Bluetooth\Dumps",
+            Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\Dumps"),
             "*.reg",
             SearchOption.AllDirectories
         );
 
+        Assert.That(testFiles, Is.Not.Empty);
+        
         foreach (string testFile in testFiles)
         {
             RegFile file = new(testFile);
@@ -58,12 +84,16 @@ public class Tests
                 .Where(v => v.Value.Type == RegValueType.Binary)
                 .ToDictionary(pair => pair.Key, pair => (RegValueBinary)pair.Value);
 
-            CollectionAssert.IsNotEmpty(binValues);
+            Assert.That(binValues, Is.Not.Empty);
 
-            KeyValuePair<string, RegValueBinary> recordEntry =
+            KeyValuePair<string, RegValueBinary>? recordEntry =
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
 
-            byte[] recordBlob = recordEntry.Value.Value.ToArray();
+            Assert.That(recordEntry, Is.Not.Null);
+            
+            byte[] recordBlob = recordEntry.Value.Value.Value.ToArray();
+
+            Assert.That(recordBlob, Is.Not.Empty);
         }
     }
 

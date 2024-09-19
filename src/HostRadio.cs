@@ -47,9 +47,12 @@ public sealed partial class HostRadio : IDisposable
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
-    ///     Creates a new instance.
+    ///     Creates a new instance of <see cref="HostRadio" />.
     /// </summary>
-    /// <param name="autoEnable">True to automatically enable the radio if currently disabled, false will throw an exception.</param>
+    /// <param name="autoEnable">
+    ///     True to automatically enable the radio if currently disabled, false will throw an exception.
+    ///     You can also use <see cref="IsAvailable" /> to avoid this exception.
+    /// </param>
     /// <exception cref="HostRadioException">Radio handle access has failed.</exception>
     public HostRadio(bool autoEnable = true)
     {
@@ -248,10 +251,15 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Disables the host radio.
     /// </summary>
+    /// <remarks>
+    ///     This causes the FDO of the radio bus driver to report all its child devices as absent (basically tearing down
+    ///     the entire stack, excluding itself). This has the same effect as a user switching off Bluetooth from the Windows
+    ///     UI.
+    /// </remarks>
     /// <exception cref="HostRadioException"></exception>
     public unsafe void DisableRadio()
     {
-        byte[] payload = { 0x04, 0x00, 0x00, 0x00 };
+        byte[] payload = [0x04, 0x00, 0x00, 0x00];
 
         fixed (byte* ptr = payload)
         {
@@ -276,10 +284,14 @@ public sealed partial class HostRadio : IDisposable
     /// <summary>
     ///     Enables the host radio.
     /// </summary>
+    /// <remarks>
+    ///     This causes the FDO of the radio bus driver to enumerate all its child devices and mark them as present. This has
+    ///     the same effect as a user switching on Bluetooth from the Windows UI.
+    /// </remarks>
     /// <exception cref="HostRadioException"></exception>
     public unsafe void EnableRadio()
     {
-        byte[] payload = { 0x02, 0x00, 0x00, 0x00 };
+        byte[] payload = [0x02, 0x00, 0x00, 0x00];
 
         fixed (byte* ptr = payload)
         {
@@ -405,7 +417,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { szName = serviceName, Enabled = true };
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = true, szName = serviceName };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
@@ -434,7 +446,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { szName = serviceName, Enabled = false };
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = false, szName = serviceName };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
