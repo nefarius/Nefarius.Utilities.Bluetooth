@@ -2,8 +2,6 @@ using Nefarius.Utilities.Bluetooth;
 using Nefarius.Utilities.Bluetooth.SDP;
 using Nefarius.Utilities.Registry;
 
-using NUnit.Framework.Legacy;
-
 namespace Tests;
 
 public class Tests
@@ -30,7 +28,7 @@ public class Tests
     //[Test]
     public void Test3()
     {
-        using HostRadio radio = new HostRadio();
+        using HostRadio radio = new();
 
         Guid serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
         string serviceName = "BthPS3Service";
@@ -58,7 +56,7 @@ public class Tests
                 .Where(v => v.Value.Type == RegValueType.Binary)
                 .ToDictionary(pair => pair.Key, pair => (RegValueBinary)pair.Value);
 
-            CollectionAssert.IsNotEmpty(binValues);
+            Assert.That(binValues, Is.Not.Empty);
 
             KeyValuePair<string, RegValueBinary> recordEntry =
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
