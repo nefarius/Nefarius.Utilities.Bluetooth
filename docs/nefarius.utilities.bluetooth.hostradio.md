@@ -142,7 +142,7 @@ public IEnumerable<RemoteDevice> UnknownDevices { get; }
 
 ### <a id="constructors-.ctor"/>**HostRadio(Boolean)**
 
-Creates a new instance.
+Creates a new instance of [HostRadio](./nefarius.utilities.bluetooth.hostradio.md).
 
 ```csharp
 public HostRadio(bool autoEnable)
@@ -152,6 +152,7 @@ public HostRadio(bool autoEnable)
 
 `autoEnable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 True to automatically enable the radio if currently disabled, false will throw an exception.
+ You can also use [HostRadio.IsAvailable](./nefarius.utilities.bluetooth.hostradio.md#isavailable) to avoid this exception.
 
 #### Exceptions
 
@@ -171,6 +172,12 @@ public void DisableRadio()
 #### Exceptions
 
 [HostRadioException](./nefarius.utilities.bluetooth.exceptions.hostradioexception.md)<br>
+
+**Remarks:**
+
+This causes the FDO of the radio bus driver to report all its child devices as absent (basically tearing down
+ the entire stack, excluding itself). This has the same effect as a user switching off Bluetooth from the Windows
+ UI.
 
 ### <a id="methods-disableservice"/>**DisableService(Guid, String)**
 
@@ -260,6 +267,11 @@ public void EnableRadio()
 #### Exceptions
 
 [HostRadioException](./nefarius.utilities.bluetooth.exceptions.hostradioexception.md)<br>
+
+**Remarks:**
+
+This causes the FDO of the radio bus driver to enumerate all its child devices and mark them as present. This has
+ the same effect as a user switching on Bluetooth from the Windows UI.
 
 ### <a id="methods-enableservice"/>**EnableService(Guid, String)**
 
