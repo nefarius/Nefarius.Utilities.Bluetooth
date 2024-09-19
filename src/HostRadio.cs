@@ -15,8 +15,6 @@ using Nefarius.Utilities.Bluetooth.Exceptions;
 using Nefarius.Utilities.Bluetooth.Types;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
-using Nefarius.Utilities.Bluetooth.Util;
-
 namespace Nefarius.Utilities.Bluetooth;
 
 /// <summary>
@@ -407,8 +405,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = true };
-        svcInfo.szName.AssignFromString(serviceName);
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = true, szName = serviceName };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
@@ -437,8 +434,7 @@ public sealed partial class HostRadio : IDisposable
     {
         AdjustProcessPrivileges();
 
-        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = false };
-        svcInfo.szName.AssignFromString(serviceName);
+        BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = false, szName = serviceName };
 
         _ = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,

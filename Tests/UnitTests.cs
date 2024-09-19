@@ -24,9 +24,20 @@ public class Tests
             Assert.That(HostRadio.IsOperable, Is.True);
         });
     }
+    
+    [Test]
+    public void TestEnableService()
+    {
+        using HostRadio radio = new();
 
-    //[Test]
-    public void Test3()
+        Guid serviceGuid = Guid.Parse("{1cb831ea-79cd-4508-b0fc-85f7c85ae8e0}");
+        string serviceName = "BthPS3Service";
+        
+        radio.EnableService(serviceGuid, serviceName);
+    }
+
+    [Test]
+    public void TestDisableService()
     {
         using HostRadio radio = new();
 
@@ -34,7 +45,6 @@ public class Tests
         string serviceName = "BthPS3Service";
 
         radio.DisableService(serviceGuid, serviceName);
-        radio.EnableService(serviceGuid, serviceName);
     }
 
     //[Test]
