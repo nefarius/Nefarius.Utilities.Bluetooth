@@ -63,15 +63,17 @@ public class Tests
         radio.DisableService(serviceGuid, serviceName);
     }
 
-    //[Test]
-    public void Test2()
+    [Test]
+    public void TestParsingRegFiles()
     {
         string[] testFiles = Directory.GetFiles(
-            @"D:\Development\GitHub\Nefarius.Utilities.Bluetooth\Dumps",
+            Path.Combine(TestContext.CurrentContext.TestDirectory, @"..\..\Dumps"),
             "*.reg",
             SearchOption.AllDirectories
         );
 
+        Assert.That(testFiles, Is.Not.Empty);
+        
         foreach (string testFile in testFiles)
         {
             RegFile file = new(testFile);
@@ -88,6 +90,8 @@ public class Tests
                 binValues.FirstOrDefault(pair => pair.Value.Value.First() == 0x36);
 
             byte[] recordBlob = recordEntry.Value.Value.ToArray();
+
+            Assert.That(recordBlob, Is.Not.Empty);
         }
     }
 
