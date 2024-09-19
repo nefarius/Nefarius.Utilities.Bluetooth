@@ -8,7 +8,10 @@ Work in progress, use with care 🔥
 
 ## About
 
-This is a collection of utility classes using undocumented Windows APIs to achieve wireless greatness! Ever needed a simple method of enabling or disabling Bluetooth without all that UWP and Store App nonsense? Wanna dive into modifying SDP records on your machine? This ever growing library will provide without any bloated dependencies! Enjoy and use responsibly! 😃
+This is a collection of utility classes using undocumented Windows APIs to achieve wireless greatness! Ever needed a
+simple method of enabling or disabling Bluetooth without all that UWP and Store App nonsense? Wanna dive into modifying
+SDP records on your machine? This ever growing library will provide without any bloated dependencies! Enjoy and use
+responsibly! 😃
 
 ## Documentation
 
@@ -16,17 +19,15 @@ This is a collection of utility classes using undocumented Windows APIs to achie
 
 ### Generating documentation
 
-```PowerShell
-dotnet build -c:Release
-dotnet tool install --global Nefarius.Tools.XMLDoc2Markdown
-xmldoc2md .\bin\netstandard2.0\Nefarius.Utilities.Bluetooth.dll .\docs\
-```
+- `dotnet build -c:Release`
+- `dotnet tool install --global Nefarius.Tools.XMLDoc2Markdown`
+- `xmldoc2md .\bin\netstandard2.0\Nefarius.Utilities.Bluetooth.dll .\docs\`
 
 ## Examples
 
 ### Check for radio availability
 
-```csharp
+```cs
 // gives you 'true' if a radio is available (enabled or disabled) 
 bool isVailable = HostRadio.IsAvailable;
 // gives you 'true' if a radio is enabled (and therefore implicitly available)
@@ -39,28 +40,28 @@ bool isOperable = HostRadio.IsOperable;
 
 Turn on:
 
-```csharp
+```cs
 using var radio = new HostRadio();
 radio.EnableRadio();
 ```
 
 Turn off:
 
-```csharp
+```cs
 using var radio = new HostRadio();
 radio.DisableRadio();
 ```
 
 Restart/reload:
 
-```csharp
+```cs
 using var radio = new HostRadio();
 radio.RestartRadio();
 ```
 
 ### Disconnect a remote device
 
-```csharp
+```cs
 using var radio = new HostRadio();
 radio.DisconnectRemoteDevice("MAC address");
 ```
