@@ -47,9 +47,12 @@ public sealed partial class HostRadio : IDisposable
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
-    ///     Creates a new instance.
+    ///     Creates a new instance of <see cref="HostRadio" />.
     /// </summary>
-    /// <param name="autoEnable">True to automatically enable the radio if currently disabled, false will throw an exception.</param>
+    /// <param name="autoEnable">
+    ///     True to automatically enable the radio if currently disabled, false will throw an exception.
+    ///     You can also use <see cref="IsAvailable" /> to avoid this exception.
+    /// </param>
     /// <exception cref="HostRadioException">Radio handle access has failed.</exception>
     public HostRadio(bool autoEnable = true)
     {
@@ -251,7 +254,7 @@ public sealed partial class HostRadio : IDisposable
     /// <exception cref="HostRadioException"></exception>
     public unsafe void DisableRadio()
     {
-        byte[] payload = { 0x04, 0x00, 0x00, 0x00 };
+        byte[] payload = [0x04, 0x00, 0x00, 0x00];
 
         fixed (byte* ptr = payload)
         {
@@ -279,7 +282,7 @@ public sealed partial class HostRadio : IDisposable
     /// <exception cref="HostRadioException"></exception>
     public unsafe void EnableRadio()
     {
-        byte[] payload = { 0x02, 0x00, 0x00, 0x00 };
+        byte[] payload = [0x02, 0x00, 0x00, 0x00];
 
         fixed (byte* ptr = payload)
         {
