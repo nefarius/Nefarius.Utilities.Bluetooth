@@ -1,39 +1,40 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>netstandard2.0;net6-windows;net7-windows;net8-windows</TargetFrameworks>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Version>1.0.0</Version>
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net6-windows;net7-windows;net8-windows</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.0.0</Version>
 
-        <RepositoryUrl>https://github.com/nefarius/Nefarius.Utilities.Bluetooth</RepositoryUrl>
-        <PackageProjectUrl>https://github.com/nefarius/Nefarius.Utilities.Bluetooth</PackageProjectUrl>
-        <Description>Utility library for unconventional Bluetooth tasks on Windows.</Description>
-        <PackageId>Nefarius.Utilities.Bluetooth</PackageId>
-    </PropertyGroup>
+    <RepositoryUrl>https://github.com/nefarius/Nefarius.Utilities.Bluetooth</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/nefarius/Nefarius.Utilities.Bluetooth</PackageProjectUrl>
+    <Description>Utility library for unconventional Bluetooth tasks on Windows.</Description>
+    <PackageId>Nefarius.Utilities.Bluetooth</PackageId>
+  </PropertyGroup>
 
-    <PropertyGroup>
-        <MinVerTagPrefix>v</MinVerTagPrefix>
-    </PropertyGroup>
+  <PropertyGroup>
+    <MinVerTagPrefix>v</MinVerTagPrefix>
+  </PropertyGroup>
 
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Microsoft.Windows.SDK.Win32Metadata" Version="61.0.15-preview">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.23.0" />
-        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.123">
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <PackageReference Include="MinVer" Version="6.0.0">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>        
-    </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0"/>
+  </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-        <PackageReference Include="System.Memory" Version="4.5.5" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.SDK.Win32Metadata" Version="61.0.15-preview">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Nefarius.Utilities.DeviceManagement" Version="3.23.0" />
+    <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.123">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="MinVer" Version="6.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Memory" Version="4.5.5" />
+  </ItemGroup>
 </Project>
