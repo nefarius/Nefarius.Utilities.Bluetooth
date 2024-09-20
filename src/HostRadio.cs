@@ -13,6 +13,8 @@ using Microsoft.Win32.SafeHandles;
 
 using Nefarius.Utilities.Bluetooth.Exceptions;
 using Nefarius.Utilities.Bluetooth.Types;
+using Nefarius.Utilities.DeviceManagement.Exceptions;
+using Nefarius.Utilities.DeviceManagement.Extensions;
 using Nefarius.Utilities.DeviceManagement.PnP;
 
 namespace Nefarius.Utilities.Bluetooth;
@@ -135,6 +137,23 @@ public sealed partial class HostRadio : IDisposable
     public void Dispose()
     {
         _radioHandle?.Dispose();
+    }
+
+    /// <summary>
+    ///     Restarts the radio bus device. For USB devices this is achieved by requesting a port cycle from the attached hub.
+    /// </summary>
+    /// <remarks>Requires administrative privileges. Currently only USB devices are supported.</remarks>
+    /// <exception cref="HostRadioException"></exception>
+    /// <exception cref="UsbPnPDeviceConversionException"></exception>
+    public static void RestartRadioDevice()
+    {
+        if (!Devcon.FindByInterfaceGuid(DeviceInterface, out PnPDevice device))
+        {
+            throw new HostRadioException("Bluetooth host radio not found.", (uint)Marshal.GetLastWin32Error());
+        }
+
+        UsbPnPDevice usbDevice = device.ToUsbPnPDevice();
+        usbDevice.CyclePort();
     }
 
     /// <summary>

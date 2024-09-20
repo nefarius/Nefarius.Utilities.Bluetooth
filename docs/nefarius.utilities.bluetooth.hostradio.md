@@ -334,6 +334,24 @@ Restarts the host radio.
 public void RestartRadio()
 ```
 
+### <a id="methods-restartradiodevice"/>**RestartRadioDevice()**
+
+Restarts the radio bus device. For USB devices this is achieved by requesting a port cycle from the attached hub.
+
+```csharp
+public static void RestartRadioDevice()
+```
+
+#### Exceptions
+
+[HostRadioException](./nefarius.utilities.bluetooth.exceptions.hostradioexception.md)<br>
+
+T:Nefarius.Utilities.DeviceManagement.Exceptions.UsbPnPDeviceConversionException<br>
+
+**Remarks:**
+
+Requires administrative privileges. Currently only USB devices are supported.
+
 ### <a id="methods-setservicestatefordevice"/>**SetServiceStateForDevice(PhysicalAddress, Guid, Boolean)**
 
 Sets the state of a specified service to either enabled or disabled.
