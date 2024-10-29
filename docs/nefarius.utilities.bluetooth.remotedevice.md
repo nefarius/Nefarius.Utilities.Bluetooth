@@ -5,7 +5,7 @@ Namespace: Nefarius.Utilities.Bluetooth
 Describes a remote wireless device.
 
 ```csharp
-public sealed class RemoteDevice : System.IEquatable`1[[Nefarius.Utilities.Bluetooth.RemoteDevice, Nefarius.Utilities.Bluetooth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public sealed class RemoteDevice : System.IEquatable`1[[Nefarius.Utilities.Bluetooth.RemoteDevice, Nefarius.Utilities.Bluetooth, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
 Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)<br>
