@@ -2,7 +2,7 @@
 
 Namespace: Nefarius.Utilities.Bluetooth.SDP
 
-Wrapper around BTHPORT.SYS
+Wrapper around BTHPORT.SYS registry structure.
 
 ```csharp
 public static class BthPort
