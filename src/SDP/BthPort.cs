@@ -8,13 +8,13 @@ using Microsoft.Win32;
 namespace Nefarius.Utilities.Bluetooth.SDP;
 
 /// <summary>
-///     Wrapper around BTHPORT.SYS
+///     Wrapper around BTHPORT.SYS registry structure.
 /// </summary>
 /// <remarks>Use of this class requires elevated privileges.</remarks>
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 public static class BthPort
 {
-    private static readonly List<string> ValidValueNames = new() { "00010000", "00010001" };
+    private static readonly List<string> ValidValueNames = ["00010000", "00010001"];
 
     /// <summary>
     ///     Device interface GUID.
