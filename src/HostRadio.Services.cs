@@ -43,7 +43,7 @@ public sealed partial class HostRadio
 
         if (error != WIN32_ERROR.ERROR_SUCCESS)
         {
-            throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
+            throw new BluetoothServiceException("Failed to enable service.", (uint)error);
         }
     }
 
@@ -72,7 +72,7 @@ public sealed partial class HostRadio
 
         if (error != WIN32_ERROR.ERROR_SUCCESS)
         {
-            throw new BluetoothServiceException("Failed to enable service.", (uint)Marshal.GetLastWin32Error());
+            throw new BluetoothServiceException("Failed to enable service.", (uint)error);
         }
     }
 

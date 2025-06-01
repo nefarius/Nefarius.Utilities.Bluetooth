@@ -68,7 +68,7 @@ public sealed partial class HostRadio : IDisposable
             return;
         }
 
-        // radio might be disabled, check if interface is exposed to get device handle
+        // radio might be disabled, check if interface is exposed to get the device handle
         if (!Devcon.FindByInterfaceGuid(DeviceInterface, out string path, out _))
         {
             throw new HostRadioException("Bluetooth host radio not found.", (uint)Marshal.GetLastWin32Error());

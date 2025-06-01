@@ -53,7 +53,7 @@ public sealed partial class HostRadio
         return false;
     }
 
-    private unsafe void AdjustProcessPrivileges()
+    private static unsafe void AdjustProcessPrivileges()
     {
         HANDLE processToken = HANDLE.Null;
 
@@ -98,13 +98,13 @@ public sealed partial class HostRadio
             {
                 throw new AdjustProcessPrivilegesException(
                     "AdjustTokenPrivileges failed. Make sure to run the current process with elevated privileges.",
-                    (uint)Marshal.GetLastWin32Error());
+                    (uint)error);
             }
 
             if (error != WIN32_ERROR.ERROR_SUCCESS)
             {
                 throw new AdjustProcessPrivilegesException("AdjustTokenPrivileges failed.",
-                    (uint)Marshal.GetLastWin32Error());
+                    (uint)error);
             }
         }
         finally
