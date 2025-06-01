@@ -8,7 +8,8 @@
 
 Utility library for unconventional Bluetooth tasks on Windows.
 
-Work in progress, use with care 🔥
+> [!IMPORTANT]
+> This project is still evolving, so API-breaking changes might occur each update!
 
 ## About
 
