@@ -40,7 +40,7 @@ public static class BthPort
                     RegistryKey device = devicesKey.OpenSubKey(keyName);
 
                     /*
-                     * "DynamicCachedServices" exists as well but it appears that the
+                     * "DynamicCachedServices" exists as well, but it appears that the
                      * content in "CachedServices" takes priority when values are modified.
                      */
                     RegistryKey cachedServices = device?.OpenSubKey("CachedServices");
@@ -61,8 +61,9 @@ public static class BthPort
                     /*
                      * The SDP record(s) containing the attributes of interest are stored in this value.
                      * The format is exactly the same as it travels through the air (Wireshark observable).
-                     * During operation the content is cached in kernel memory so if it's changed during
-                     *   runtime, the driver need to unload and load again (radio restart, service restart etc.).
+                     * During operation, the content is cached in kernel memory, so if it's changed during
+                     * runtime, the driver needs to unload and load again
+                     * (radio restart, service restart etc.).
                      */
                     byte[] value = (byte[])cachedServices.GetValue(valueName);
 
@@ -95,7 +96,7 @@ public static class BthPort
             (
                 from name in values
                 let content = (byte[])cachedServices.GetValue(name)
-                where content is not null && content.Any() && content[0] == 0x36
+                where content is not null && content.Length > 0 && content[0] == 0x36
                 select name
             )
             .FirstOrDefault();
