@@ -14,4 +14,4 @@ represent paired remote devices and some of their more interesting properties.
 
 Currently only holds one primary method `AlterHidDeviceToVenderDefined` with the purpose of parsing a
 `SDP_ATTRIB_HID_DESCRIPTOR_LIST` binary blob and modify the embedded HID Report Descriptor from Gamepad or Joystick to
-vendor Defined device usages. 
+Vendor Defined Device usages. 
