@@ -18,25 +18,25 @@ namespace Nefarius.Utilities.Bluetooth.SDP;
 public static class SdpPatcher
 {
     /// <summary>
-    ///     Attempts to find a SDP_ATTRIB_HID_DESCRIPTOR_LIST attribute and patches the HID Report Descriptor to a Vendor
+    ///     Attempts to find an SDP_ATTRIB_HID_DESCRIPTOR_LIST attribute and patches the HID Report Descriptor to a Vendor
     ///     Defined device on success.
     /// </summary>
     /// <param name="input">The original record array.</param>
     /// <param name="output">The patched record array.</param>
-    /// <returns>True if detection and patching was successful, false otherwise.</returns>
+    /// <returns>True if detection and patching were successful, false otherwise.</returns>
     public static bool AlterHidDeviceToVendorDefined(byte[] input, out byte[] output)
     {
         try
         {
             // find beginning of SDP_ATTRIB_HID_DESCRIPTOR_LIST
-            byte[] descriptorListStartPattern = { 0x09, 0x02, 0x06, 0x36 };
+            byte[] descriptorListStartPattern = [0x09, 0x02, 0x06, 0x36];
             int descriptorListStartIndex = new BoyerMoore(descriptorListStartPattern).Search(input).First();
 
             // skip to start of next element
             int descriptorValueStartOffset = descriptorListStartPattern.Length + descriptorListStartIndex;
 
             // find beginning of actual HID Report Descriptor buffer
-            byte[] descriptorValueStartPattern = { 0x08, 0x22, 0x26 };
+            byte[] descriptorValueStartPattern = [0x08, 0x22, 0x26];
             int descriptorValueStartIndex = new BoyerMoore(descriptorValueStartPattern)
                 .Search(input.Skip(descriptorValueStartOffset).ToArray()).First();
 
@@ -57,7 +57,7 @@ public static class SdpPatcher
             byte[] hidReportDescriptor = input.Skip(dataBufferValueIndex).Take(dataElementSize).ToArray();
 
             // find all size fields before the descriptor element
-            List<int> sizeFieldsOffsets = new BoyerMoore(new byte[] { 0x36 })
+            List<int> sizeFieldsOffsets = new BoyerMoore([0x36])
                 .Search(input.Take(dataElementSizeIndex).ToArray()).ToList();
 
             // copy descriptor
@@ -80,7 +80,7 @@ public static class SdpPatcher
                 // remove existing
                 patchedHidReportDescriptor.RemoveRange(item.Index, item.ItemSize + 1);
                 // splice in replacement
-                patchedHidReportDescriptor.InsertRange(item.Index, new Byte[] { 0x06, usageIndex++, 0xFF });
+                patchedHidReportDescriptor.InsertRange(item.Index, [0x06, usageIndex++, 0xFF]);
 
                 // recursively parse until no more original pages are left
                 parser.Parse(patchedHidReportDescriptor.ToArray());
@@ -92,7 +92,7 @@ public static class SdpPatcher
             // kick off initial parser run
             parser.Parse(patchedHidReportDescriptor.ToArray());
 
-            List<byte> patchedRecord = new();
+            List<byte> patchedRecord = [];
 
             int lastOffset = 0;
 
@@ -125,7 +125,7 @@ public static class SdpPatcher
             patchedRecord.AddRange(descriptorValueStartPattern);
 
             // add size of patched descriptor
-            patchedRecord.AddRange(BitConverter.GetBytes((ushort)patchedHidReportDescriptor.Count()).Reverse());
+            patchedRecord.AddRange(BitConverter.GetBytes((ushort)patchedHidReportDescriptor.Count).Reverse());
 
             // add patched descriptor
             patchedRecord.AddRange(patchedHidReportDescriptor);
@@ -151,7 +151,7 @@ public static class SdpPatcher
         try
         {
             // Find Service Attribute: (HID) Descriptor List (0x206), value = Report
-            byte[] descriptorListStartPattern = { 0x09, 0x02, 0x06 };
+            byte[] descriptorListStartPattern = [0x09, 0x02, 0x06];
             int descriptorListStartIndex = new BoyerMoore(descriptorListStartPattern).Search(input).First();
             byte[] descriptorList = input.Skip(descriptorListStartIndex).ToArray();
 
@@ -167,7 +167,7 @@ public static class SdpPatcher
                     sizeElementsIndex => descriptorList[sizeElementsIndex + 1]);
 
             // Find HID Report Descriptor
-            byte[] descriptorStartPattern = { 0x05, 0x01, 0x09, 0x05 };
+            byte[] descriptorStartPattern = [0x05, 0x01, 0x09, 0x05];
             int descriptorStartIndex = new BoyerMoore(descriptorStartPattern).Search(input).First();
 
             // get descriptor length
@@ -198,7 +198,7 @@ public static class SdpPatcher
                 // remove existing
                 patchedHidReportDescriptor.RemoveRange(item.Index, item.ItemSize + 1);
                 // splice in replacement
-                patchedHidReportDescriptor.InsertRange(item.Index, new Byte[] { 0x06, usageIndex++, 0xFF });
+                patchedHidReportDescriptor.InsertRange(item.Index, [0x06, usageIndex++, 0xFF]);
 
                 // recursively parse until no more original pages are left
                 parser.Parse(patchedHidReportDescriptor.ToArray());
@@ -217,7 +217,7 @@ public static class SdpPatcher
             int sizeDifference = patchedDescriptorSize - descriptorSize;
 
             // prepare new records
-            List<byte> patchedRecord = new();
+            List<byte> patchedRecord = [];
 
             // take everything before original descriptor blob
             patchedRecord.AddRange(input.Take(descriptorStartIndex));
