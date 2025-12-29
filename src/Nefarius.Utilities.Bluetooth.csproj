@@ -24,7 +24,7 @@
         <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.3.209">
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="MinVer" Version="6.0.0">
+        <PackageReference Include="MinVer" Version="6.1.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
