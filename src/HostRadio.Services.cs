@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
-
 using Windows.Win32;
 using Windows.Win32.Devices.Bluetooth;
 using Windows.Win32.Foundation;
-
 using Nefarius.Utilities.Bluetooth.Exceptions;
 
 namespace Nefarius.Utilities.Bluetooth;
@@ -39,12 +37,10 @@ public sealed partial class HostRadio
             svcInfo
         );
 
-        WIN32_ERROR error = (WIN32_ERROR)Marshal.GetLastWin32Error();
+        var error = (WIN32_ERROR)Marshal.GetLastWin32Error();
 
         if (error != WIN32_ERROR.ERROR_SUCCESS)
-        {
             throw new BluetoothServiceException("Failed to enable service.", (uint)error);
-        }
     }
 
     /// <summary>
@@ -68,12 +64,10 @@ public sealed partial class HostRadio
             svcInfo
         );
 
-        WIN32_ERROR error = (WIN32_ERROR)Marshal.GetLastWin32Error();
+        var error = (WIN32_ERROR)Marshal.GetLastWin32Error();
 
         if (error != WIN32_ERROR.ERROR_SUCCESS)
-        {
             throw new BluetoothServiceException("Failed to enable service.", (uint)error);
-        }
     }
 
     /// <summary>
@@ -85,21 +79,16 @@ public sealed partial class HostRadio
     /// <exception cref="HostRadioException"></exception>
     public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, bool enabled)
     {
-        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO deviceInfo);
+        var found = FindDeviceByAddress(address, out var deviceInfo);
 
-        if (!found)
-        {
-            return;
-        }
+        if (!found) return;
 
-        uint flags = enabled ? PInvoke.BLUETOOTH_SERVICE_ENABLE : PInvoke.BLUETOOTH_SERVICE_DISABLE;
+        var flags = enabled ? PInvoke.BLUETOOTH_SERVICE_ENABLE : PInvoke.BLUETOOTH_SERVICE_DISABLE;
 
-        uint error = PInvoke.BluetoothSetServiceState(_radioHandle, deviceInfo, serviceGuid, flags);
+        var error = PInvoke.BluetoothSetServiceState(_radioHandle, deviceInfo, serviceGuid, flags);
 
         if (error != (uint)WIN32_ERROR.ERROR_SUCCESS)
-        {
             throw new HostRadioException("Failed to set service state.", error);
-        }
     }
 
     /// <summary>
@@ -114,15 +103,12 @@ public sealed partial class HostRadio
     {
         enabled = false;
 
-        bool found = FindDeviceByAddress(address, out BLUETOOTH_DEVICE_INFO deviceInfo);
+        var found = FindDeviceByAddress(address, out var deviceInfo);
 
-        if (!found)
-        {
-            return false;
-        }
+        if (!found) return false;
 
         uint numServices = 0;
-        uint error = PInvoke.BluetoothEnumerateInstalledServices(_radioHandle, deviceInfo, ref numServices, null);
+        var error = PInvoke.BluetoothEnumerateInstalledServices(_radioHandle, deviceInfo, ref numServices, null);
 
         if (error == (uint)WIN32_ERROR.ERROR_SUCCESS && numServices == 0)
         {
@@ -131,26 +117,19 @@ public sealed partial class HostRadio
         }
 
         if (error != (uint)WIN32_ERROR.ERROR_SUCCESS && error != (uint)WIN32_ERROR.ERROR_MORE_DATA)
-        {
             throw new HostRadioException("Failed to enumerate services.", error);
-        }
 
-        Guid* services = stackalloc Guid[(int)numServices];
+        Span<Guid> services = stackalloc Guid[(int)numServices];
         error = PInvoke.BluetoothEnumerateInstalledServices(_radioHandle, deviceInfo, ref numServices, services);
 
         if (error != (uint)WIN32_ERROR.ERROR_SUCCESS)
-        {
             throw new HostRadioException("Failed to enumerate services.", error);
-        }
 
-        for (int i = 0; i < numServices; i++)
+        for (var i = 0; i < numServices; i++)
         {
-            Guid uuid = services[i];
+            var uuid = services[i];
 
-            if (uuid != serviceGuid)
-            {
-                continue;
-            }
+            if (uuid != serviceGuid) continue;
 
             enabled = true;
             return true;

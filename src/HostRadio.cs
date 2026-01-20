@@ -190,7 +190,7 @@ public sealed partial class HostRadio : IDisposable
         long value = (long)BitConverter.ToUInt64(raw, 0);
 
         BOOL ret = PInvoke.DeviceIoControl(
-            _radioHandle,
+            (HANDLE)_radioHandle.DangerousGetHandle(),
             IoctlBthDisconnectDevice,
             &value,
             (uint)payloadSize,
@@ -218,7 +218,7 @@ public sealed partial class HostRadio : IDisposable
         sdpConnect.fSdpConnect = PInvoke.SDP_CONNECT_CACHE;
 
         BOOL ret = PInvoke.DeviceIoControl(
-            _radioHandle,
+            (HANDLE)_radioHandle.DangerousGetHandle(),
             IoctlBthSdpConnect,
             &sdpConnect,
             (uint)payloadSize,
@@ -245,7 +245,7 @@ public sealed partial class HostRadio : IDisposable
         sdpDisconnect.hConnection = handle;
 
         BOOL ret = PInvoke.DeviceIoControl(
-            _radioHandle,
+            (HANDLE)_radioHandle.DangerousGetHandle(),
             IoctlBthSdpDisconnect,
             &sdpDisconnect,
             (uint)payloadSize,
@@ -277,7 +277,7 @@ public sealed partial class HostRadio : IDisposable
         fixed (byte* ptr = payload)
         {
             BOOL ret = PInvoke.DeviceIoControl(
-                _radioHandle,
+                (HANDLE)_radioHandle.DangerousGetHandle(),
                 IoctlSetRadioState,
                 ptr,
                 4,
@@ -309,7 +309,7 @@ public sealed partial class HostRadio : IDisposable
         fixed (byte* ptr = payload)
         {
             BOOL ret = PInvoke.DeviceIoControl(
-                _radioHandle,
+                (HANDLE)_radioHandle.DangerousGetHandle(),
                 IoctlSetRadioState,
                 ptr,
                 4,
