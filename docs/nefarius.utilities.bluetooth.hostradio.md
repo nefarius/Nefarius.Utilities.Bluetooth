@@ -8,8 +8,8 @@ Represents a Bluetooth Host Radio.
 public sealed class HostRadio : System.IDisposable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [HostRadio](./nefarius.utilities.bluetooth.hostradio.md)<br>
-Implements [IDisposable](https://docs.microsoft.com/en-us/dotnet/api/system.idisposable)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [HostRadio](./nefarius.utilities.bluetooth.hostradio.md)<br>
+Implements [IDisposable](https://learn.microsoft.com/dotnet/api/system.idisposable)
 
 **Remarks:**
 
@@ -28,7 +28,7 @@ public IEnumerable<RemoteDevice> AllDevices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)><br>
 
 ### <a id="properties-authenticateddevices"/>**AuthenticatedDevices**
 
@@ -40,7 +40,7 @@ public IEnumerable<RemoteDevice> AuthenticatedDevices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)><br>
 
 ### <a id="properties-connecteddevices"/>**ConnectedDevices**
 
@@ -52,7 +52,7 @@ public IEnumerable<RemoteDevice> ConnectedDevices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)><br>
 
 ### <a id="properties-deviceinterface"/>**DeviceInterface**
 
@@ -64,7 +64,7 @@ public static Guid DeviceInterface { get; }
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+[Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 
 ### <a id="properties-humaninterfacedeviceserviceclassuuid"/>**HumanInterfaceDeviceServiceClassUuid**
 
@@ -76,7 +76,7 @@ public static Guid HumanInterfaceDeviceServiceClassUuid { get; }
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+[Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 
 ### <a id="properties-isavailable"/>**IsAvailable**
 
@@ -88,7 +88,7 @@ public static bool IsAvailable { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-isenabled"/>**IsEnabled**
 
@@ -100,7 +100,7 @@ public static bool IsEnabled { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-isoperable"/>**IsOperable**
 
@@ -112,7 +112,7 @@ public static bool IsOperable { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-remembereddevices"/>**RememberedDevices**
 
@@ -124,7 +124,7 @@ public IEnumerable<RemoteDevice> RememberedDevices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)><br>
 
 ### <a id="properties-unknowndevices"/>**UnknownDevices**
 
@@ -136,7 +136,7 @@ public IEnumerable<RemoteDevice> UnknownDevices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)><br>
 
 ## Constructors
 
@@ -150,7 +150,7 @@ public HostRadio(bool autoEnable)
 
 #### Parameters
 
-`autoEnable` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`autoEnable` [Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 True to automatically enable the radio if currently disabled, false will throw an exception.
  You can also use [HostRadio.IsAvailable](./nefarius.utilities.bluetooth.hostradio.md#isavailable) to avoid this exception.
 
@@ -189,10 +189,10 @@ public void DisableService(Guid serviceGuid, string serviceName)
 
 #### Parameters
 
-`serviceGuid` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+`serviceGuid` [Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 The GUID of the service to expose. This should match the GUID in the server-side INF file.
 
-`serviceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`serviceName` [String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 The service name.
 
 #### Exceptions
@@ -215,7 +215,7 @@ public void DisconnectRemoteDevice(string address)
 
 #### Parameters
 
-`address` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`address` [String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 A parseable MAC address string.
 
 **Remarks:**
@@ -247,7 +247,7 @@ public void DisconnectRemoteDevice(PhysicalAddress device)
 
 #### Parameters
 
-`device` PhysicalAddress<br>
+`device` [PhysicalAddress](https://learn.microsoft.com/dotnet/api/system.net.networkinformation.physicaladdress)<br>
 The MAC address of the remote device.
 
 ### <a id="methods-dispose"/>**Dispose()**
@@ -283,10 +283,10 @@ public void EnableService(Guid serviceGuid, string serviceName)
 
 #### Parameters
 
-`serviceGuid` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+`serviceGuid` [Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 The GUID of the service to expose. This should match the GUID in the server-side INF file.
 
-`serviceName` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+`serviceName` [String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 The service name.
 
 #### Exceptions
@@ -309,13 +309,13 @@ public bool GetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, 
 
 #### Parameters
 
-`address` PhysicalAddress<br>
+`address` [PhysicalAddress](https://learn.microsoft.com/dotnet/api/system.net.networkinformation.physicaladdress)<br>
 The remote device address.
 
-`serviceGuid` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+`serviceGuid` [Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 The service GUID.
 
-`enabled` [Boolean&](https://docs.microsoft.com/en-us/dotnet/api/system.boolean&)<br>
+`enabled` [Boolean&](https://learn.microsoft.com/dotnet/api/system.boolean&)<br>
 True if the service is enabled, false otherwise.
 
 #### Returns
@@ -346,7 +346,7 @@ public static void RestartRadioDevice()
 
 [HostRadioException](./nefarius.utilities.bluetooth.exceptions.hostradioexception.md)<br>
 
-T:Nefarius.Utilities.DeviceManagement.Exceptions.UsbPnPDeviceConversionException<br>
+UsbPnPDeviceConversionException<br>
 
 **Remarks:**
 
@@ -362,13 +362,13 @@ public void SetServiceStateForDevice(PhysicalAddress address, Guid serviceGuid, 
 
 #### Parameters
 
-`address` PhysicalAddress<br>
+`address` [PhysicalAddress](https://learn.microsoft.com/dotnet/api/system.net.networkinformation.physicaladdress)<br>
 The remote device address.
 
-`serviceGuid` [Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+`serviceGuid` [Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 The service GUID.
 
-`enabled` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+`enabled` [Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 True to set to enabled, false to disable.
 
 #### Exceptions

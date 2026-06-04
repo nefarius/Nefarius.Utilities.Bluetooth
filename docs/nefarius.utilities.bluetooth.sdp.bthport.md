@@ -8,7 +8,7 @@ Wrapper around BTHPORT.SYS registry structure.
 public static class BthPort
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BthPort](./nefarius.utilities.bluetooth.sdp.bthport.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [BthPort](./nefarius.utilities.bluetooth.sdp.bthport.md)
 
 **Remarks:**
 
@@ -26,7 +26,7 @@ public static Guid DeviceInterface { get; }
 
 #### Property Value
 
-[Guid](https://docs.microsoft.com/en-us/dotnet/api/system.guid)<br>
+[Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
 
 ### <a id="properties-devices"/>**Devices**
 
@@ -38,7 +38,7 @@ public static IEnumerable<BthPortDevice> Devices { get; }
 
 #### Property Value
 
-[IEnumerable&lt;BthPortDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
+[IEnumerable](https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1)<[BthPortDevice](./nefarius.utilities.bluetooth.sdp.bthportdevice.md)><br>
 
 ## Methods
 
@@ -50,8 +50,8 @@ internal static string FindValueNameContainingRecords(RegistryKey cachedServices
 
 #### Parameters
 
-`cachedServices` RegistryKey<br>
+`cachedServices` [RegistryKey](https://learn.microsoft.com/dotnet/api/microsoft.win32.registrykey)<br>
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
+[String](https://learn.microsoft.com/dotnet/api/system.string)

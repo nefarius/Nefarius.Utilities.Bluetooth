@@ -8,7 +8,7 @@ Represents a device entry of BTHPORT.SYS
 public sealed class BthPortDevice
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [BthPortDevice](./nefarius.utilities.bluetooth.sdp.bthportdevice.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [BthPortDevice](./nefarius.utilities.bluetooth.sdp.bthportdevice.md)
 
 ## Properties
 
@@ -22,7 +22,7 @@ public Byte[] CachedServices { get; set; }
 
 #### Property Value
 
-[Byte[]](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+[Byte[]](https://learn.microsoft.com/dotnet/api/system.byte[])<br>
 
 ### <a id="properties-iscachedservicespatched"/>**IsCachedServicesPatched**
 
@@ -34,7 +34,7 @@ public bool IsCachedServicesPatched { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-originalcachedservices"/>**OriginalCachedServices**
 
@@ -46,7 +46,7 @@ public Byte[] OriginalCachedServices { get; }
 
 #### Property Value
 
-[Byte[]](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+[Byte[]](https://learn.microsoft.com/dotnet/api/system.byte[])<br>
 
 ### <a id="properties-remoteaddress"/>**RemoteAddress**
 
@@ -58,7 +58,7 @@ public PhysicalAddress RemoteAddress { get; }
 
 #### Property Value
 
-PhysicalAddress<br>
+[PhysicalAddress](https://learn.microsoft.com/dotnet/api/system.net.networkinformation.physicaladdress)<br>
 
 ## Methods
 
@@ -78,4 +78,4 @@ public string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
+[String](https://learn.microsoft.com/dotnet/api/system.string)

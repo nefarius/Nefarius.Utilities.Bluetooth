@@ -8,7 +8,7 @@ HID Report Descriptor parser.
 public class HidReportDescriptorParser
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [HidReportDescriptorParser](./nefarius.utilities.bluetooth.util.hidreportdescriptorparser.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [HidReportDescriptorParser](./nefarius.utilities.bluetooth.util.hidreportdescriptorparser.md)
 
 **Remarks:**
 
@@ -34,7 +34,7 @@ public bool Parse(Byte[] descriptor)
 
 #### Parameters
 
-`descriptor` [Byte[]](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+`descriptor` [Byte[]](https://learn.microsoft.com/dotnet/api/system.byte[])<br>
 The raw descriptor buffer.
 
 #### Returns

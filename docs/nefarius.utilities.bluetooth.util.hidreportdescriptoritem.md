@@ -8,7 +8,7 @@ Represents the smallest possible entry in a HID report descriptor.
 public sealed class HidReportDescriptorItem : System.EventArgs
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [EventArgs](https://docs.microsoft.com/en-us/dotnet/api/system.eventargs) → [HidReportDescriptorItem](./nefarius.utilities.bluetooth.util.hidreportdescriptoritem.md)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [EventArgs](https://learn.microsoft.com/dotnet/api/system.eventargs) → [HidReportDescriptorItem](./nefarius.utilities.bluetooth.util.hidreportdescriptoritem.md)
 
 ## Properties
 
@@ -22,7 +22,7 @@ public int Index { get; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://learn.microsoft.com/dotnet/api/system.int32)<br>
 
 ### <a id="properties-isusagepage"/>**IsUsagePage**
 
@@ -34,7 +34,7 @@ public bool IsUsagePage { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 
 ### <a id="properties-itemdata"/>**ItemData**
 
@@ -46,7 +46,7 @@ public int ItemData { get; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
+[Int32](https://learn.microsoft.com/dotnet/api/system.int32)<br>
 
 ### <a id="properties-itemsize"/>**ItemSize**
 
@@ -58,7 +58,7 @@ public byte ItemSize { get; }
 
 #### Property Value
 
-[Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+[Byte](https://learn.microsoft.com/dotnet/api/system.byte)<br>
 
 ### <a id="properties-itemtag"/>**ItemTag**
 
@@ -70,7 +70,7 @@ public byte ItemTag { get; }
 
 #### Property Value
 
-[Byte](https://docs.microsoft.com/en-us/dotnet/api/system.byte)<br>
+[Byte](https://learn.microsoft.com/dotnet/api/system.byte)<br>
 
 ### <a id="properties-stopparsing"/>**StopParsing**
 
@@ -82,4 +82,4 @@ public bool StopParsing { get; set; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>

@@ -5,11 +5,11 @@ Namespace: Nefarius.Utilities.Bluetooth
 Describes a remote wireless device.
 
 ```csharp
-public sealed class RemoteDevice : System.IEquatable`1[[Nefarius.Utilities.Bluetooth.RemoteDevice, Nefarius.Utilities.Bluetooth, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]]
+public sealed class RemoteDevice : System.IEquatable<Nefarius.Utilities.Bluetooth.RemoteDevice>
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)<br>
-Implements [IEquatable&lt;RemoteDevice&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1)
+Inheritance [Object](https://learn.microsoft.com/dotnet/api/system.object) → [RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)<br>
+Implements [IEquatable](https://learn.microsoft.com/dotnet/api/system.iequatable-1)<[RemoteDevice](./nefarius.utilities.bluetooth.remotedevice.md)>
 
 ## Properties
 
@@ -23,7 +23,7 @@ public PhysicalAddress Address { get; }
 
 #### Property Value
 
-PhysicalAddress<br>
+[PhysicalAddress](https://learn.microsoft.com/dotnet/api/system.net.networkinformation.physicaladdress)<br>
 
 ### <a id="properties-name"/>**Name**
 
@@ -35,7 +35,7 @@ public string Name { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
+[String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 
 ## Methods
 
@@ -51,7 +51,7 @@ public bool Equals(RemoteDevice other)
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)
 
 ### <a id="methods-equals"/>**Equals(Object)**
 
@@ -61,11 +61,11 @@ public bool Equals(object obj)
 
 #### Parameters
 
-`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
+`obj` [Object](https://learn.microsoft.com/dotnet/api/system.object)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)
+[Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)
 
 ### <a id="methods-gethashcode"/>**GetHashCode()**
 
@@ -75,7 +75,7 @@ public int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)
+[Int32](https://learn.microsoft.com/dotnet/api/system.int32)
 
 ### <a id="methods-tostring"/>**ToString()**
 
@@ -85,4 +85,4 @@ public string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)
+[String](https://learn.microsoft.com/dotnet/api/system.string)
