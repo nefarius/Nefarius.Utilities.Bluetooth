@@ -113,7 +113,7 @@ public class HidReportDescriptorParser
             index += (ushort)(itemSize + 1);
         }
 
-        return index < descriptor.Length;
+        return index == descriptor.Length;
     }
 
     /// <summary>

@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
+
 using Windows.Win32;
 using Windows.Win32.Devices.Bluetooth;
 using Windows.Win32.Foundation;
@@ -37,10 +37,24 @@ public sealed partial class HostRadio
 
         if (hFind.IsInvalid) return false;
 
+        byte[] targetAddress = address.GetAddressBytes();
+        if (targetAddress.Length != 6)
+        {
+            return false;
+        }
+
+        Span<byte> reversed = stackalloc byte[6];
+        for (int i = 0; i < 6; i++)
+        {
+            reversed[i] = targetAddress[5 - i];
+        }
+
         do
         {
-            if (deviceInfo.Address.Anonymous.rgBytes.Equals(address.GetAddressBytes().AsEnumerable().Reverse().ToArray()
-                    .AsSpan())) return true;
+            if (deviceInfo.Address.Anonymous.rgBytes.Equals(reversed))
+            {
+                return true;
+            }
         } while (PInvoke.BluetoothFindNextDevice(hFind, ref deviceInfo));
 
         return false;

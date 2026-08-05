@@ -4,7 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 namespace Nefarius.Utilities.Bluetooth.Exceptions;
 
 /// <summary>
-///     Exception potentially thrown by <see cref="HostRadio" />.
+///     Exception potentially thrown by <see cref="HostRadio" /> service advertising APIs
+///     (<see cref="HostRadio.EnableService" /> / <see cref="HostRadio.DisableService" />).
 /// </summary>
 [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
 [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]

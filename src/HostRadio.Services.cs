@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Net.NetworkInformation;
-using System.Runtime.InteropServices;
+
 using Windows.Win32;
 using Windows.Win32.Devices.Bluetooth;
 using Windows.Win32.Foundation;
@@ -30,24 +30,22 @@ public sealed partial class HostRadio
 
         BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = true, szName = serviceName };
 
-        _ = PInvoke.BluetoothSetLocalServiceInfo(
+        uint error = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
             serviceGuid,
             0,
             svcInfo
         );
 
-        var error = (WIN32_ERROR)Marshal.GetLastWin32Error();
-
-        if (error != WIN32_ERROR.ERROR_SUCCESS)
-            throw new BluetoothServiceException("Failed to enable service.", (uint)error);
+        if (error != (uint)WIN32_ERROR.ERROR_SUCCESS)
+            throw new BluetoothServiceException("Failed to enable service.", error);
     }
 
     /// <summary>
     ///     Disables advertising a specified service.
     /// </summary>
     /// <remarks>This method requires administrative privileges.</remarks>
-    /// <param name="serviceGuid">The GUID of the service to expose. This should match the GUID in the server-side INF file.</param>
+    /// <param name="serviceGuid">The GUID of the service to disable. This should match the GUID in the server-side INF file.</param>
     /// <param name="serviceName">The service name.</param>
     /// <exception cref="BluetoothServiceException"></exception>
     /// <exception cref="AdjustProcessPrivilegesException"></exception>
@@ -57,17 +55,15 @@ public sealed partial class HostRadio
 
         BLUETOOTH_LOCAL_SERVICE_INFO svcInfo = new() { Enabled = false, szName = serviceName };
 
-        _ = PInvoke.BluetoothSetLocalServiceInfo(
+        uint error = PInvoke.BluetoothSetLocalServiceInfo(
             _radioHandle,
             serviceGuid,
             0,
             svcInfo
         );
 
-        var error = (WIN32_ERROR)Marshal.GetLastWin32Error();
-
-        if (error != WIN32_ERROR.ERROR_SUCCESS)
-            throw new BluetoothServiceException("Failed to enable service.", (uint)error);
+        if (error != (uint)WIN32_ERROR.ERROR_SUCCESS)
+            throw new BluetoothServiceException("Failed to disable service.", error);
     }
 
     /// <summary>
@@ -135,6 +131,6 @@ public sealed partial class HostRadio
             return true;
         }
 
-        return false;
+        return true;
     }
 }

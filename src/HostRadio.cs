@@ -43,9 +43,6 @@ public sealed partial class HostRadio : IDisposable
     private static readonly uint IoctlBthSdpDisconnect = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x81,
         PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
 
-    private static readonly uint IoctlHciCxn_ReadConnectedRssi = CTL_CODE(PInvoke.FILE_DEVICE_BLUETOOTH, 0x486,
-        PInvoke.METHOD_BUFFERED, PInvoke.FILE_ANY_ACCESS);
-
     private readonly SafeFileHandle _radioHandle;
 
     /// <summary>
@@ -53,7 +50,8 @@ public sealed partial class HostRadio : IDisposable
     /// </summary>
     /// <param name="autoEnable">
     ///     True to automatically enable the radio if currently disabled, false will throw an exception.
-    ///     You can also use <see cref="IsAvailable" /> to avoid this exception.
+    ///     Use <see cref="IsEnabled" /> or <see cref="IsOperable" /> to check whether the radio is already
+    ///     enabled before constructing with <c>autoEnable: false</c>.
     /// </param>
     /// <exception cref="HostRadioException">Radio handle access has failed.</exception>
     public HostRadio(bool autoEnable = true)
@@ -76,8 +74,7 @@ public sealed partial class HostRadio : IDisposable
 
         if (!autoEnable)
         {
-            throw new HostRadioException("Bluetooth host radio found but disabled.",
-                (uint)Marshal.GetLastWin32Error());
+            throw new HostRadioException("Bluetooth host radio found but disabled.");
         }
 
         // open handle the old-fashioned way
@@ -99,7 +96,15 @@ public sealed partial class HostRadio : IDisposable
         }
 
         // send packet that enables all device functions
-        EnableRadio();
+        try
+        {
+            EnableRadio();
+        }
+        catch
+        {
+            _radioHandle.Dispose();
+            throw;
+        }
     }
 
     /// <summary>
@@ -230,7 +235,7 @@ public sealed partial class HostRadio : IDisposable
 
         if (!ret)
         {
-            throw new HostRadioException("Failed to connect remote device.", (uint)Marshal.GetLastWin32Error());
+            throw new HostRadioException("Failed to establish SDP connection.", (uint)Marshal.GetLastWin32Error());
         }
 
         handle = sdpConnect.hConnection;
@@ -257,7 +262,7 @@ public sealed partial class HostRadio : IDisposable
 
         if (!ret)
         {
-            throw new HostRadioException("Failed to disconnect remote device.", (uint)Marshal.GetLastWin32Error());
+            throw new HostRadioException("Failed to disconnect SDP connection.", (uint)Marshal.GetLastWin32Error());
         }
     }
 
