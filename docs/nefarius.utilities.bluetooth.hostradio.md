@@ -152,7 +152,8 @@ public HostRadio(bool autoEnable)
 
 `autoEnable` [Boolean](https://learn.microsoft.com/dotnet/api/system.boolean)<br>
 True to automatically enable the radio if currently disabled, false will throw an exception.
- You can also use [HostRadio.IsAvailable](./nefarius.utilities.bluetooth.hostradio.md#isavailable) to avoid this exception.
+ Use [HostRadio.IsEnabled](./nefarius.utilities.bluetooth.hostradio.md#isenabled) or [HostRadio.IsOperable](./nefarius.utilities.bluetooth.hostradio.md#isoperable) to check whether the radio is already
+ enabled before constructing with `autoEnable: false`.
 
 #### Exceptions
 
@@ -190,7 +191,7 @@ public void DisableService(Guid serviceGuid, string serviceName)
 #### Parameters
 
 `serviceGuid` [Guid](https://learn.microsoft.com/dotnet/api/system.guid)<br>
-The GUID of the service to expose. This should match the GUID in the server-side INF file.
+The GUID of the service to disable. This should match the GUID in the server-side INF file.
 
 `serviceName` [String](https://learn.microsoft.com/dotnet/api/system.string)<br>
 The service name.

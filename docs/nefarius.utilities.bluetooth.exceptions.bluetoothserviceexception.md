@@ -2,7 +2,8 @@
 
 Namespace: Nefarius.Utilities.Bluetooth.Exceptions
 
-Exception potentially thrown by [HostRadio](./nefarius.utilities.bluetooth.hostradio.md).
+Exception potentially thrown by [HostRadio](./nefarius.utilities.bluetooth.hostradio.md) service advertising APIs
+ ([HostRadio.EnableService(Guid, String)](./nefarius.utilities.bluetooth.hostradio.md#enableserviceguid-string) / [HostRadio.DisableService(Guid, String)](./nefarius.utilities.bluetooth.hostradio.md#disableserviceguid-string)).
 
 ```csharp
 public sealed class BluetoothServiceException : System.Exception, System.Runtime.Serialization.ISerializable

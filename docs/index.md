@@ -20,8 +20,12 @@
 
 - [BthPortDevice](./nefarius.utilities.bluetooth.sdp.bthportdevice.md)
 
+- [SdpPatcher](./nefarius.utilities.bluetooth.sdp.sdppatcher.md)
+
 ## Namespace Nefarius.Utilities.Bluetooth.Util
 
 - [HidReportDescriptorItem](./nefarius.utilities.bluetooth.util.hidreportdescriptoritem.md)
 
 - [HidReportDescriptorParser](./nefarius.utilities.bluetooth.util.hidreportdescriptorparser.md)
+
+- [Pattern](./nefarius.utilities.bluetooth.util.pattern.md)

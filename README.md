@@ -1,8 +1,8 @@
 # <img src="assets/NSS-128x128.png" align="left" />Nefarius.Utilities.Bluetooth
 
 [![.NET](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml/badge.svg)](https://github.com/nefarius/Nefarius.Utilities.Bluetooth/actions/workflows/build.yml)
-![Requirements](https://img.shields.io/badge/Requires-.NET%206-blue.svg)
 ![Requirements](https://img.shields.io/badge/Requires-.NET%20Standard%202.0-blue.svg)
+![Requirements](https://img.shields.io/badge/Requires-.NET%206%2B%20(Windows)-blue.svg)
 [![Nuget](https://img.shields.io/nuget/v/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/)
 [![Nuget](https://img.shields.io/nuget/dt/Nefarius.Utilities.Bluetooth)](https://www.nuget.org/packages/Nefarius.Utilities.Bluetooth/)
 
@@ -15,8 +15,8 @@ Utility library for unconventional Bluetooth tasks on Windows.
 
 This is a collection of utility classes using undocumented Windows APIs to achieve wireless greatness! Ever needed a
 simple method of enabling or disabling Bluetooth without all that UWP and Store App nonsense? Wanna dive into modifying
-SDP records on your machine? This ever-growing library will provide without any bloated dependencies! Enjoy and use
-responsibly! 😃
+SDP records on your machine? This ever-growing library will provide the tools without any bloated dependencies! Enjoy
+and use responsibly! 😃
 
 ## Documentation
 
@@ -26,7 +26,7 @@ responsibly! 😃
 
 - `dotnet build -c:Release`
 - `dotnet tool install --global Nefarius.Tools.XMLDoc2Markdown`
-- `xmldoc2md .\bin\netstandard2.0\Nefarius.Utilities.Bluetooth.dll .\docs\`
+- `xmldoc2md .\bin\net9-windows\Nefarius.Utilities.Bluetooth.dll .\docs\`
 
 ## Examples
 
@@ -34,7 +34,7 @@ responsibly! 😃
 
 ```cs
 // gives you 'true' if a radio is available (enabled or disabled) 
-bool isVailable = HostRadio.IsAvailable;
+bool isAvailable = HostRadio.IsAvailable;
 // gives you 'true' if a radio is enabled (and therefore implicitly available)
 bool isEnabled = HostRadio.IsEnabled;
 // gives you 'true' if a radio is available and enabled
@@ -57,11 +57,17 @@ using var radio = new HostRadio();
 radio.DisableRadio();
 ```
 
-Restart/reload:
+Restart/reload (soft):
 
 ```cs
 using var radio = new HostRadio();
 radio.RestartRadio();
+```
+
+Restart the radio bus device (USB port cycle; requires administrative privileges):
+
+```cs
+HostRadio.RestartRadioDevice();
 ```
 
 ### Disconnect a remote device

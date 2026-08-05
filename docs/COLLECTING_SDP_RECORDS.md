@@ -19,7 +19,7 @@ If you do and want to help this project, read on!
 
 ## Why
 
-To test and improve the SDP parser and patcher, the authors need real-world samples to feed it into the parser. This little guide shows how to do it in two simple steps. Your contribution is apprechiated 🤩
+To test and improve the SDP parser and patcher, the authors need real-world samples to feed it into the parser. This little guide shows how to do it in two simple steps. Your contribution is appreciated 🤩
 
 Especially **Nintendo controllers** are currently an enigma. They do not seem to carry a traditional HID Report Descriptor like expected yet still work. Trying to figure out the differences here 🤔
 
